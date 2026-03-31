@@ -259,7 +259,28 @@
     #jnx-chat-input-row {
       padding: 12px; border-top: 1px solid var(--border);
       display: flex; gap: 8px; background: var(--dark); flex-shrink: 0;
+      position: relative;
     }
+    #jnx-emoji-btn {
+      width: 34px; height: 34px; border-radius: 50%; background: transparent;
+      border: 1px solid var(--border); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 1rem; transition: border-color .2s; align-self: center;
+    }
+    #jnx-emoji-btn:hover { border-color: var(--primary); }
+    #jnx-emoji-panel {
+      display: none; position: absolute; bottom: 62px; left: 12px;
+      background: var(--dark-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px; width: 252px;
+      display: none; flex-wrap: wrap; gap: 4px; z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    }
+    #jnx-emoji-panel.open { display: flex; }
+    #jnx-emoji-panel span {
+      font-size: 1.25rem; cursor: pointer; padding: 4px; border-radius: 6px;
+      transition: background .15s; line-height: 1;
+    }
+    #jnx-emoji-panel span:hover { background: var(--border); }
     #jnx-chat-input {
       flex: 1; background: var(--dark-card); border: 1px solid var(--border);
       border-radius: 20px; padding: 8px 14px; color: var(--white);
@@ -617,6 +638,8 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   </div>
   <div id="jnx-chat-messages"></div>
   <div id="jnx-chat-input-row">
+    <div id="jnx-emoji-panel"></div>
+    <button id="jnx-emoji-btn" aria-label="Emoji picker">😊</button>
     <input id="jnx-chat-input" type="text" placeholder="Ask JoNeX AI anything&#x2026;" autocomplete="off" maxlength="500">
     <button id="jnx-chat-send" aria-label="Send">
       <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
@@ -637,6 +660,33 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   var msgs   = document.getElementById('jnx-chat-messages');
   var input  = document.getElementById('jnx-chat-input');
   var send   = document.getElementById('jnx-chat-send');
+  var emojiBtn   = document.getElementById('jnx-emoji-btn');
+  var emojiPanel = document.getElementById('jnx-emoji-panel');
+
+  var EMOJIS = ['😊','😄','😂','🤣','😍','🥰','😎','🤩','😅','😬','😭','😢','😤','😡','🤔','🤯','😱','🙄','😴','🥱','👍','👎','👏','🙌','🙏','💪','✌️','🤝','❤️','🔥','✅','💯','🎉','🚀','💡','👀','😀','😃','🥳','😇'];
+
+  EMOJIS.forEach(function(e) {
+    var s = document.createElement('span');
+    s.textContent = e;
+    s.addEventListener('click', function() {
+      var pos = input.selectionStart;
+      var val = input.value;
+      input.value = val.slice(0, pos) + e + val.slice(pos);
+      input.focus();
+      input.selectionStart = input.selectionEnd = pos + e.length;
+      emojiPanel.classList.remove('open');
+    });
+    emojiPanel.appendChild(s);
+  });
+
+  emojiBtn.addEventListener('click', function(ev) {
+    ev.stopPropagation();
+    emojiPanel.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function() {
+    emojiPanel.classList.remove('open');
+  });
 
   function stripMarkdown(text) {
     return text
