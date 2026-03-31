@@ -745,16 +745,31 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   }
 
   var bubble = document.getElementById('jnx-chat-bubble');
-  var bubbleTimer;
+  var bubbleLoop;
 
-  function hideBubble() {
+  function stopBubble() {
+    clearTimeout(bubbleLoop);
     bubble.classList.remove('visible');
     bubble.classList.add('hide');
   }
 
+  function startBubbleLoop() {
+    clearTimeout(bubbleLoop);
+    // show after 2s, hide after 4s, reappear after 3s gap — repeats
+    bubbleLoop = setTimeout(function() {
+      if (win.classList.contains('open')) return;
+      bubble.classList.remove('hide');
+      bubble.classList.add('visible');
+      bubbleLoop = setTimeout(function() {
+        bubble.classList.remove('visible');
+        bubble.classList.add('hide');
+        bubbleLoop = setTimeout(startBubbleLoop, 3000);
+      }, 4000);
+    }, 2000);
+  }
+
   function openChat() {
-    hideBubble();
-    sessionStorage.setItem('jnx_interacted', '1');
+    stopBubble();
     win.classList.add('open');
     input.focus();
     if (!greeted) {
@@ -765,23 +780,22 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
     }
   }
 
-  // Show bubble on fresh page load only (not if user already interacted this session)
-  if (!sessionStorage.getItem('jnx_interacted')) {
-    setTimeout(function() {
-      bubble.classList.add('visible');
-      bubbleTimer = setTimeout(hideBubble, 8000);
-    }, 2000);
+  function closeChat() {
+    win.classList.remove('open');
+    startBubbleLoop();
   }
 
+  startBubbleLoop();
+
   bubble.addEventListener('click', function() {
-    clearTimeout(bubbleTimer);
+    stopBubble();
     openChat();
   });
 
   btn.addEventListener('click', function() {
-    if (win.classList.contains('open')) { win.classList.remove('open'); } else { openChat(); }
+    if (win.classList.contains('open')) { closeChat(); } else { openChat(); }
   });
-  close.addEventListener('click', function() { win.classList.remove('open'); });
+  close.addEventListener('click', closeChat);
 
   function sendMsg() {
     var text = input.value.trim();
