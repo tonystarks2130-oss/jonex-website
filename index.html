@@ -638,10 +638,17 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   var input  = document.getElementById('jnx-chat-input');
   var send   = document.getElementById('jnx-chat-send');
 
+  function linkify(text) {
+    return text.replace(/(https?:\/\/[^\s]+|(?:www\.|cal\.com\/)[^\s]+)/g, function(url) {
+      var href = url.startsWith('http') ? url : 'https://' + url;
+      return '<a href="' + href + '" target="_blank" rel="noopener" style="color:var(--primary);word-break:break-all;">' + url + '</a>';
+    });
+  }
+
   function addMsg(text, role) {
     var d = document.createElement('div');
     d.className = 'jnx-msg ' + role;
-    d.textContent = text;
+    d.innerHTML = linkify(text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
     msgs.appendChild(d);
     msgs.scrollTop = msgs.scrollHeight;
     return d;
