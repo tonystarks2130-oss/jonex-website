@@ -219,8 +219,7 @@
         0 1px 0 #00b8d9,
         0 2px 0 #009ab8,
         0 3px 0 #007a96,
-        0 4px 8px rgba(0,0,0,0.5),
-        0 0 14px rgba(0,212,255,0.45);
+        0 4px 6px rgba(0,0,0,0.4);
       box-shadow: 0 0 22px rgba(0,212,255,0.2), 0 6px 24px rgba(0,0,0,.45);
       cursor: pointer;
       opacity: 0; transform: translateY(10px);
@@ -760,6 +759,15 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
 
   var bubble = document.getElementById('jnx-chat-bubble');
   var bubbleLoop;
+  var bubbleMsgIndex = 0;
+  var bubbleMessages = [
+    '🤖 Curious how AI can help your business?',
+    '⚡ Save hours — automate your workflows.',
+    '💬 What would you automate first?',
+    '🚀 AI automation, built for your business.',
+    '🎯 Never miss a lead again.',
+    '🔧 Your business, running 24/7 on autopilot.'
+  ];
 
   function stopBubble() {
     clearTimeout(bubbleLoop);
@@ -769,9 +777,10 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
 
   function startBubbleLoop() {
     clearTimeout(bubbleLoop);
-    // show after 2s, hide after 4s, reappear after 3s gap — repeats
     bubbleLoop = setTimeout(function() {
       if (win.classList.contains('open')) return;
+      bubble.textContent = bubbleMessages[bubbleMsgIndex % bubbleMessages.length];
+      bubbleMsgIndex++;
       bubble.classList.remove('hide');
       bubble.classList.add('visible');
       bubbleLoop = setTimeout(function() {
