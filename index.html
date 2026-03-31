@@ -204,6 +204,23 @@
     }
     #jnx-chat-btn:hover { transform: scale(1.08); box-shadow: 0 6px 28px var(--primary-glow); }
     #jnx-chat-btn img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    #jnx-chat-bubble {
+      position: fixed; bottom: 100px; right: 28px; z-index: 999;
+      background: var(--white); color: #0a1628;
+      padding: 10px 14px; border-radius: 18px 18px 4px 18px;
+      font-size: .85rem; font-weight: 500; white-space: nowrap;
+      box-shadow: 0 4px 18px rgba(0,0,0,.25);
+      cursor: pointer;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .35s ease, transform .35s ease;
+      pointer-events: none;
+    }
+    #jnx-chat-bubble.visible {
+      opacity: 1; transform: translateY(0); pointer-events: auto;
+    }
+    #jnx-chat-bubble.hide {
+      opacity: 0; transform: translateY(10px); pointer-events: none;
+    }
 
     #jnx-chat-window {
       position: fixed; bottom: 100px; right: 28px; z-index: 1000;
@@ -623,6 +640,7 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
 </script>
 
 <!-- ════ CHAT WIDGET ════ -->
+<div id="jnx-chat-bubble">👋 Hi! I can help you.</div>
 <button id="jnx-chat-btn" aria-label="Chat with JoNeX AI">
   <img src="https://res.cloudinary.com/dgeotp5k4/image/upload/v1773666004/WhatsApp_Image_2026-03-16_at_20.56.36_encqv1.jpg" alt="JoNeX AI">
 </button>
@@ -726,7 +744,17 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
     return t;
   }
 
+  var bubble = document.getElementById('jnx-chat-bubble');
+  var bubbleTimer;
+
+  function hideBubble() {
+    bubble.classList.remove('visible');
+    bubble.classList.add('hide');
+  }
+
   function openChat() {
+    hideBubble();
+    sessionStorage.setItem('jnx_interacted', '1');
     win.classList.add('open');
     input.focus();
     if (!greeted) {
@@ -736,6 +764,19 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
       }, 300);
     }
   }
+
+  // Show bubble on fresh page load only (not if user already interacted this session)
+  if (!sessionStorage.getItem('jnx_interacted')) {
+    setTimeout(function() {
+      bubble.classList.add('visible');
+      bubbleTimer = setTimeout(hideBubble, 8000);
+    }, 2000);
+  }
+
+  bubble.addEventListener('click', function() {
+    clearTimeout(bubbleTimer);
+    openChat();
+  });
 
   btn.addEventListener('click', function() {
     if (win.classList.contains('open')) { win.classList.remove('open'); } else { openChat(); }
