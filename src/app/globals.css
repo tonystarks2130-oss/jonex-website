@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   JoNeX design tokens — DESIGN_CONTRACT §Visual system.
+   Dark is the default + brand moat. Light is a first-class
+   alternate, switched by [data-theme] on <html>. All component
+   colors consume these tokens — never raw hex / Tailwind palette,
+   or the theme toggle breaks silently.
+   ============================================================ */
+
+:root,
+[data-theme="dark"] {
+  --bg: #0a1628;            /* navy */
+  --bg-raised: #0f2038;     /* navy-lighter surface */
+  --surface: #122844;       /* cards */
+  --fg: #eaf1fb;            /* near-white */
+  --fg-muted: #9fb2cc;
+  --accent: #00d4ff;        /* cyan */
+  --accent-contrast: #06101f; /* text/icon on an accent fill */
+  --border: #1d3357;        /* navy hairline */
+  --seam-from: #0a1628;
+  --seam-to: #0f2038;
+  color-scheme: dark;
 }
 
+[data-theme="light"] {
+  --bg: #f7f9fc;
+  --bg-raised: #ffffff;
+  --surface: #ffffff;
+  --fg: #0a1628;            /* deep navy */
+  --fg-muted: #51617a;
+  --accent: #0077a3;        /* deepened cyan — AA on white for text/borders */
+  --accent-contrast: #ffffff;
+  --border: #dbe3ee;        /* light hairline */
+  --seam-from: #f7f9fc;
+  --seam-to: #eef3f9;
+  color-scheme: light;
+}
+
+/* Map tokens onto Tailwind v4 utilities (bg-bg, text-fg, text-accent, ...). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-border: var(--border);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 10px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth in-page anchor jumps; killed under reduced-motion below. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section targets clear the sticky nav after an anchor jump. */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Theme cross-fade — applied ONLY on user toggle (see ThemeToggle), never on
+   first load, so the no-flash script doesn't animate. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 0.35s ease, color 0.35s ease,
+    border-color 0.35s ease, fill 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important;
+  }
 }
