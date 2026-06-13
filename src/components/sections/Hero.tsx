@@ -16,7 +16,7 @@ export function Hero() {
       id="top"
       className="hero-grid hero-glow relative overflow-hidden py-24 md:py-32 lg:py-36"
     >
-      <Container className="grid items-center gap-14 md:grid-cols-2 md:gap-16 lg:gap-24 xl:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] xl:gap-28">
+      <Container className="grid items-start gap-14 md:grid-cols-2 md:gap-16 lg:gap-24 xl:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] xl:gap-28">
         <div>
           {/* glass pill badges */}
           <div className="flex flex-wrap gap-3">
