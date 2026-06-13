@@ -1,66 +1,148 @@
-import { BrandLockup } from "@/components/ui/BrandLockup";
-import { Container } from "@/components/ui/primitives";
-import { WhatsAppIcon, TelegramIcon } from "@/components/ui/BrandIcons";
-import { FOOTER_COPY } from "@/lib/content";
-import { CONTACT } from "@/lib/integrations";
+import { BrandLockup } from '@/components/ui/BrandLockup';
+import { LinkedInIcon, InstagramIcon } from '@/components/ui/BrandIcons';
+import { Container } from '@/components/ui/primitives';
+import { FOOTER_COPY } from '@/lib/content';
+import { CONTACT } from '@/lib/integrations';
+
+// Social profile URLs supplied by James (2026-06-13). Instagram = brand handle
+// jonex_ai; LinkedIn = Jeremy's personal profile "for now" (interim until a
+// JoNeX company page exists — swap in place, no layout change).
+const SOCIALS = [
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/jeremy-jay-suva-5b9471369',
+    Icon: LinkedInIcon,
+  },
+  { label: 'Instagram', href: 'https://www.instagram.com/jonex_ai/', Icon: InstagramIcon },
+] as const;
+
+const SOLUTIONS_LINKS: { label: string; href: string }[] = [
+  { label: 'Agentic AI', href: '#solutions' },
+  { label: 'AI Voice Agents', href: '#solutions' },
+  { label: 'Intelligent Automation', href: '#solutions' },
+  { label: 'Custom Software', href: '#solutions' },
+];
+
+const COMPANY_LINKS: { label: string; href: string }[] = [
+  { label: 'Industries', href: '#industries' },
+  { label: 'Our Work', href: '#work' },
+  { label: 'Hear the AI', href: '#hear-the-ai' },
+  { label: 'Behind JoNeX', href: '#behind' },
+  { label: 'About', href: '#about' },
+];
+
+const CONTACT_LINKS: { label: string; href: string }[] = [
+  { label: 'WhatsApp', href: CONTACT.whatsapp.url },
+  { label: `Telegram ${CONTACT.telegram.handle}`, href: CONTACT.telegram.url },
+];
+
+const columnHeadingClassName =
+  'text-xs font-semibold uppercase tracking-wider text-fg-muted';
+const footerLinkClassName =
+  'text-sm text-fg-muted transition-colors hover:text-fg';
 
 /**
- * Footer (DESIGN_CONTRACT IA §15) — brand-guide footer copy verbatim,
- * WhatsApp + Telegram message buttons (real brand glyphs), preserved legal links.
+ * Footer with four-column navigation and legal bar.
  */
 export function Footer() {
   return (
-    <footer id="contact" className="border-t border-border bg-bg-raised/40">
-      <Container className="grid gap-10 py-16 md:grid-cols-[1.5fr_1fr]">
-        <div className="max-w-md space-y-4">
-          <BrandLockup tagline="always" />
-          <p className="text-sm font-semibold text-fg">{FOOTER_COPY.tagline}</p>
-          <p className="text-sm leading-6 text-fg-muted">{FOOTER_COPY.blurb}</p>
-          <p className="text-sm leading-6 text-fg-muted">
-            {FOOTER_COPY.availability}
+    <footer id='contact' className='border-t border-border bg-bg-raised/40'>
+      <Container className='grid grid-cols-1 gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] lg:gap-12 lg:py-20'>
+        <div className='space-y-5'>
+          <BrandLockup tagline='always' />
+          <p className='max-w-sm text-sm leading-relaxed text-fg-muted'>
+            {FOOTER_COPY.blurb}
           </p>
+          <div className='flex items-center gap-3'>
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={label}
+                className='inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-fg-muted transition-colors hover:text-accent'
+              >
+                <Icon className='h-4 w-4' />
+              </a>
+            ))}
+          </div>
         </div>
 
-        <div className="space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-wider text-fg-muted">
-            Message us
-          </p>
-          <div className="flex flex-col gap-3">
-            <a
-              href={CONTACT.whatsapp.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lift inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg hover:text-accent"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              WhatsApp
-            </a>
-            <a
-              href={CONTACT.telegram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lift inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg hover:text-accent"
-            >
-              <TelegramIcon className="h-4 w-4" />
-              Telegram {CONTACT.telegram.handle}
-            </a>
+        <div className='space-y-4'>
+          <p className={columnHeadingClassName}>Solutions</p>
+          <nav aria-label='Solutions' className='flex flex-col gap-3'>
+            {SOLUTIONS_LINKS.map((link) => (
+              <a key={link.label} href={link.href} className={footerLinkClassName}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div className='space-y-4'>
+          <p className={columnHeadingClassName}>Company</p>
+          <nav aria-label='Company' className='flex flex-col gap-3'>
+            {COMPANY_LINKS.map((link) => (
+              <a key={link.label} href={link.href} className={footerLinkClassName}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div className='space-y-4'>
+          <p className={columnHeadingClassName}>Contact</p>
+          <div className='flex flex-col gap-3'>
+            {CONTACT_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target='_blank'
+                rel='noopener noreferrer'
+                className={footerLinkClassName}
+              >
+                {link.label}
+              </a>
+            ))}
+            <p className='text-sm text-fg-muted'>
+              Serving clients nationwide &amp; internationally
+            </p>
           </div>
         </div>
       </Container>
 
-      <div className="border-t border-border">
-        <Container className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-fg-muted md:flex-row">
-          <p>
-            © {new Date().getFullYear()} {FOOTER_COPY.name}. All rights reserved.
-          </p>
-          <nav className="flex gap-5" aria-label="Legal">
-            <a href="/privacy" className="hover:text-fg">
+      <div className='border-t border-border'>
+        <Container className='flex flex-col items-center gap-3 py-6 text-center md:flex-row md:justify-between md:text-left'>
+          <div className='flex flex-col items-center gap-2 sm:flex-row sm:gap-3'>
+            <p className='text-xs text-fg-muted'>
+              © {new Date().getFullYear()} {FOOTER_COPY.name}. All rights
+              reserved.
+            </p>
+            <span aria-hidden='true' className='hidden text-xs text-fg-muted sm:inline'>
+              |
+            </span>
+            <span className='text-xs text-fg-muted'>
+              🇵🇭 Proudly Philippine-Made
+            </span>
+          </div>
+          <nav aria-label='Legal' className='flex gap-5'>
+            <a
+              href='/privacy'
+              className='text-xs text-fg-muted transition-colors hover:text-fg'
+            >
               Privacy
             </a>
-            <a href="/terms" className="hover:text-fg">
+            <a
+              href='/terms'
+              className='text-xs text-fg-muted transition-colors hover:text-fg'
+            >
               Terms
             </a>
-            <a href="/data-deletion" className="hover:text-fg">
+            <a
+              href='/data-deletion'
+              className='text-xs text-fg-muted transition-colors hover:text-fg'
+            >
               Data Deletion
             </a>
           </nav>
