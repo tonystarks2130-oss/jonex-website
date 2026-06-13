@@ -9,7 +9,7 @@ import { CONTACT } from "@/lib/integrations";
  */
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-bg-raised/40">
+    <footer id="contact" className="border-t border-border bg-bg-raised/40">
       <Container className="grid gap-10 py-16 md:grid-cols-[1.5fr_1fr]">
         <div className="max-w-md space-y-4">
           <p className="font-display text-lg font-bold tracking-tight">
