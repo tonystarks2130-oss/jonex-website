@@ -1,6 +1,7 @@
+import { BrandLockup } from "@/components/ui/BrandLockup";
 import { Container } from "@/components/ui/primitives";
 import { WhatsAppIcon, TelegramIcon } from "@/components/ui/BrandIcons";
-import { BRAND, FOOTER_COPY } from "@/lib/content";
+import { FOOTER_COPY } from "@/lib/content";
 import { CONTACT } from "@/lib/integrations";
 
 /**
@@ -12,10 +13,7 @@ export function Footer() {
     <footer id="contact" className="border-t border-border bg-bg-raised/40">
       <Container className="grid gap-10 py-16 md:grid-cols-[1.5fr_1fr]">
         <div className="max-w-md space-y-4">
-          <p className="font-display text-lg font-bold tracking-tight">
-            {BRAND.short}
-            <span className="text-accent">.</span>
-          </p>
+          <BrandLockup tagline="always" />
           <p className="text-sm font-semibold text-fg">{FOOTER_COPY.tagline}</p>
           <p className="text-sm leading-6 text-fg-muted">{FOOTER_COPY.blurb}</p>
           <p className="text-sm leading-6 text-fg-muted">
