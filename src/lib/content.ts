@@ -178,19 +178,28 @@ export const FOUNDERS: Founder[] = [
   {
     name: "Jeremy",
     role: "Founder & CEO",
-    initials: "J",
+    initials: "Je",
     quoteDraft:
-      "We started JoNeX to give growing businesses the kind of intelligent systems that used to be out of reach — built properly, owned fully, supported like partners.",
-    photo: null,
+      "I started JoNeX to give growing businesses the intelligent systems that used to be out of reach — built properly, owned fully, and supported like a real partner.",
+    photo: "/team/jeremy.jpg",
     socials: [],
   },
   {
     name: "James",
     role: "Co-Founder & Engineering",
-    initials: "J",
+    initials: "Ja",
     quoteDraft:
       "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
     photo: null,
+    socials: [],
+  },
+  {
+    name: "Jimmy",
+    role: "Co-Founder & Infrastructure",
+    initials: "Ji",
+    quoteDraft:
+      "The systems we ship have to stay up when it matters most. I build the foundation underneath — fast, secure, and never the reason you miss a call.",
+    photo: "/team/jimmy.jpg",
     socials: [],
   },
 ];

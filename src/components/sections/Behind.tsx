@@ -24,7 +24,7 @@ export function Behind() {
         intro="No faceless agency. You work directly with the founders who design, build, and support what you run on."
       />
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
+      <div className="mx-auto mt-12 grid max-w-3xl gap-6">
         {FOUNDERS.map((f) => (
           <figure
             key={f.name}
@@ -82,9 +82,9 @@ export function Behind() {
       </div>
 
       {isDraft && (
-        <p className="mt-4 text-center text-xs text-fg-muted/70">
-          Founder photos and personal notes are placeholders — replaced with the
-          team’s real headshots and words once confirmed.
+        <p className="mt-6 text-center text-xs text-fg-muted/70">
+          One headshot is on the way and these founder notes are first drafts —
+          both swap in place once finalized.
         </p>
       )}
     </Section>
