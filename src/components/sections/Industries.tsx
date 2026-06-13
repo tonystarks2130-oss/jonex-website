@@ -38,8 +38,8 @@ export function Industries() {
           return (
             <div
               key={ind.name}
-              className={`lift rounded-[10px] border bg-surface p-6 ${
-                flagship ? "border-accent/60 lg:col-span-1" : "border-border"
+              className={`glass-card lift rounded-[10px] p-6 ${
+                flagship ? "ring-1 ring-accent/55" : ""
               }`}
             >
               <div className="flex items-center gap-3">

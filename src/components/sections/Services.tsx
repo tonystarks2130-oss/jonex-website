@@ -104,7 +104,7 @@ export function Services() {
           return (
             <article
               key={service.title}
-              className="lift flex flex-col rounded-2xl border border-border bg-surface p-7 lg:p-8"
+              className="glass-card lift flex flex-col rounded-2xl p-7 lg:p-8"
             >
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <Icon className="h-6 w-6" aria-hidden="true" />
@@ -140,7 +140,7 @@ export function Services() {
         })}
       </div>
 
-      <div className="mt-12 rounded-3xl border border-border bg-bg-raised/40 p-8 lg:mt-16 lg:p-12">
+      <div className="mt-12 glass-panel rounded-3xl p-8 lg:mt-16 lg:p-12">
         <h3 className="font-display text-lg font-semibold text-fg">
           How We Help
         </h3>

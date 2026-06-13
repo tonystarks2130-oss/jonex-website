@@ -212,14 +212,14 @@ export function ChatWidget() {
         <button
           type="button"
           onClick={openChat}
-          className="relative mr-1 max-w-[15.5rem] rounded-2xl rounded-br-md border border-border bg-surface px-4 py-3 text-left text-sm leading-5 text-fg shadow-xl after:absolute after:-bottom-1.5 after:right-5 after:h-3 after:w-3 after:rotate-45 after:border-b after:border-r after:border-border after:bg-surface after:content-['']"
+          className="relative mr-1 max-w-[15.5rem] rounded-2xl rounded-br-md glass-panel px-4 py-3 text-left text-sm leading-5 text-fg shadow-xl after:absolute after:-bottom-1.5 after:right-5 after:h-3 after:w-3 after:rotate-45 after:border-b after:border-r after:border-border after:bg-surface after:content-['']"
         >
           {teaser}
         </button>
       )}
 
       {open && (
-        <div className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl border border-border bg-bg-raised shadow-2xl">
+        <div className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl glass-panel shadow-2xl">
           <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-3">
             <span className="font-display text-sm font-semibold">JoNeX AI</span>
             <button
@@ -314,7 +314,7 @@ export function ChatWidget() {
         type="button"
         onClick={() => (open ? setOpen(false) : openChat())}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-contrast shadow-lg transition-transform hover:scale-105"
+        className="inline-flex h-14 w-14 items-center justify-center rounded-full btn-grad text-accent-contrast shadow-lg transition-transform hover:scale-105"
       >
         {open ? (
           <X className="h-6 w-6" aria-hidden="true" />

@@ -14,7 +14,7 @@ const LINKS = [
 /** Sticky glass nav (DESIGN_CONTRACT IA §1). */
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-bg/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 glass-nav">
       <Container className="flex h-20 items-center justify-between gap-6">
         <BrandLockup href="#top" />
 

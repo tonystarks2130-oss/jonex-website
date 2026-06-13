@@ -218,6 +218,35 @@ html {
   box-shadow: var(--glass-hover-shadow);
 }
 
+/* Frosted top bar — glass-card material, no radius / no lift (sticky nav). */
+.glass-nav {
+  background: var(--glass-layer);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 10px 34px -22px rgba(0, 0, 0, 0.5);
+}
+
+/* Fixed glass surface — chat panel / teaser: glass-card material, no hover-lift. */
+.glass-panel {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-layer);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glass-before);
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* Pill badge — small glass chip with a cyan tint. */
 .pill {
   display: inline-flex;
