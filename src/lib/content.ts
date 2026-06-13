@@ -155,6 +155,46 @@ export const SPEARHEAD = {
   primaryCta: "Book Your Free Strategy Call",
 } as const;
 
+/**
+ * "Behind JoNeX" founders (DESIGN_CONTRACT IA — Behind/Team, rapidmed.app
+ * founder-card style: photo + name + role + personal quote + socials).
+ *
+ * Names + roles are VERIFIED (PROJECT_STATE team roster). `quote` is `_draft`
+ * Creator-drafted placeholder pending each person's real words. `photo` is null
+ * until James confirms the headshot mapping — rendered as an initials avatar
+ * meanwhile (FLAGS.founders gates the swap to real). Never fabricate a person's
+ * words or face. Creator is deliberately absent (hidden from public surfaces).
+ */
+export type Founder = {
+  name: string;
+  role: string;
+  initials: string;
+  quoteDraft: string;
+  photo: string | null;
+  socials: { label: string; href: string }[];
+};
+
+export const FOUNDERS: Founder[] = [
+  {
+    name: "Jeremy",
+    role: "Founder & CEO",
+    initials: "J",
+    quoteDraft:
+      "We started JoNeX to give growing businesses the kind of intelligent systems that used to be out of reach — built properly, owned fully, supported like partners.",
+    photo: null,
+    socials: [],
+  },
+  {
+    name: "James",
+    role: "Co-Founder & Engineering",
+    initials: "J",
+    quoteDraft:
+      "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
+    photo: null,
+    socials: [],
+  },
+];
+
 export const FOOTER_COPY = {
   name: "JoNeX AI Technology Consulting",
   tagline: "Identify Bottlenecks. Build Intelligent Systems. Scale Operations.",

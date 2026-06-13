@@ -15,4 +15,10 @@ export const FLAGS = {
   screenRecording: "off" as "off" | "on",
   /** Case-study stat numbers — draft until backed by real data. */
   stats: "draft" as "draft" | "real",
+  /**
+   * "Behind JoNeX" founder cards. "draft" = initials-avatar placeholders +
+   * draft quotes (James has no headshot yet; photo mapping unconfirmed).
+   * "real" = swap in confirmed photos + each founder's approved words.
+   */
+  founders: "draft" as "draft" | "real",
 } as const;

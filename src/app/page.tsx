@@ -10,6 +10,7 @@ import { Process } from "@/components/sections/Process";
 import { Proof } from "@/components/sections/Proof";
 import { Services } from "@/components/sections/Services";
 import { About } from "@/components/sections/About";
+import { Behind } from "@/components/sections/Behind";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Footer } from "@/components/sections/Footer";
@@ -30,6 +31,7 @@ export default function Home() {
         <Proof />
         <Services />
         <About />
+        <Behind />
         <Faq />
         <FinalCta />
       </main>
