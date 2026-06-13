@@ -1,7 +1,10 @@
+"use client";
+
 import { AudioDemo } from "@/components/media/AudioDemo";
 import { Container } from "@/components/ui/primitives";
 import { VOICE_DEMOS } from "@/lib/integrations";
 import { Check } from "lucide-react";
+import { useState } from "react";
 
 type DemoMeta = {
   title: string;
@@ -38,6 +41,8 @@ const TRUST_PILLS = [
 ];
 
 export function HearTheAI() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
   return (
     <section
       id="hear-the-ai"
@@ -85,6 +90,10 @@ export function HearTheAI() {
                   description={meta.description}
                   badge={meta.badge}
                   duration={meta.duration}
+                  isPlaying={activeId === demo.id}
+                  onToggle={() =>
+                    setActiveId((cur) => (cur === demo.id ? null : demo.id))
+                  }
                 />
               );
             })}
