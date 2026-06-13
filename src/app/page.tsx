@@ -1,49 +1,39 @@
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { BRAND, HERO } from "@/lib/content";
+import { Nav } from "@/components/sections/Nav";
+import { Hero } from "@/components/sections/Hero";
+import { TrustBar } from "@/components/sections/TrustBar";
+import { Spearhead } from "@/components/sections/Spearhead";
+import { HearTheAI } from "@/components/sections/HearTheAI";
+import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
+import { Industries } from "@/components/sections/Industries";
+import { Capabilities } from "@/components/sections/Capabilities";
+import { Process } from "@/components/sections/Process";
+import { Proof } from "@/components/sections/Proof";
+import { Services } from "@/components/sections/Services";
+import { About } from "@/components/sections/About";
+import { Faq } from "@/components/sections/Faq";
+import { FinalCta } from "@/components/sections/FinalCta";
+import { Footer } from "@/components/sections/Footer";
 
-/**
- * Foundation placeholder — proves the token system + theme toggle render
- * before the 15 IA sections (Phase 1b) replace this. Uses only tokens.
- */
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-6 py-24">
-      <div className="w-full max-w-2xl space-y-8">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium uppercase tracking-widest text-accent">
-            {BRAND.short}
-          </span>
-          <ThemeToggle />
-        </div>
-
-        <div className="space-y-4">
-          <p className="text-xs font-medium uppercase tracking-widest text-fg-muted">
-            {HERO.titleLead}
-          </p>
-          <h1 className="font-display text-5xl font-bold leading-tight tracking-tight md:text-6xl">
-            Technology <span className="text-accent">Consulting</span>
-          </h1>
-          <p className="max-w-xl text-lg leading-8 text-fg-muted">
-            {HERO.subhead}
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {HERO.capabilityStrip.map((c) => (
-            <span
-              key={c}
-              className="rounded-[10px] border border-border bg-surface px-3 py-1.5 text-sm text-fg-muted"
-            >
-              {c}
-            </span>
-          ))}
-        </div>
-
-        <p className="text-sm text-fg-muted">
-          Foundation scaffold — token system + dark/light theme live. The 15 IA
-          sections land next.
-        </p>
-      </div>
-    </main>
+    <>
+      <Nav />
+      <main className="flex-1">
+        <Hero />
+        <TrustBar />
+        <Spearhead />
+        <HearTheAI />
+        <ProblemOutcome />
+        <Industries />
+        <Capabilities />
+        <Process />
+        <Proof />
+        <Services />
+        <About />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+    </>
   );
 }
