@@ -186,7 +186,7 @@ export const FOUNDERS: Founder[] = [
   },
   {
     name: "James",
-    role: "Co-Founder & Engineering",
+    role: "Founding Engineer",
     initials: "Ja",
     quoteDraft:
       "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
@@ -195,7 +195,7 @@ export const FOUNDERS: Founder[] = [
   },
   {
     name: "Jimmy",
-    role: "Co-Founder & Infrastructure",
+    role: "CTO",
     initials: "Ji",
     quoteDraft:
       "The systems we ship have to stay up when it matters most. I build the foundation underneath — fast, secure, and never the reason you miss a call.",
