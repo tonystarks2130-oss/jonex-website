@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="hero-grid hero-glow relative overflow-hidden py-24 md:py-32 lg:py-36"
+      className="hero-grid hero-glow relative overflow-hidden pt-10 pb-24 md:pt-14 md:pb-32 lg:pt-16 lg:pb-36"
     >
       <Container className="grid items-start gap-14 md:grid-cols-2 md:gap-16 lg:gap-24 xl:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] xl:gap-28">
         <div>
