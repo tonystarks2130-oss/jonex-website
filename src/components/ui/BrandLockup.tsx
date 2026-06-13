@@ -27,9 +27,9 @@ export function BrandLockup({
       <Image
         src="/brand/jonex-icon.png"
         alt="JoNeX"
-        width={40}
-        height={40}
-        className="h-10 w-10 shrink-0 rounded-full ring-1 ring-border"
+        width={44}
+        height={44}
+        className="h-[42px] w-[42px] shrink-0 rounded-full ring-1 ring-border"
         priority
       />
       <span className="flex items-baseline gap-2 whitespace-nowrap">
