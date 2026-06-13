@@ -1,30 +1,11 @@
 import { Section, Heading } from "@/components/ui/primitives";
+import { FAQS } from "@/lib/content";
 
 /**
  * FAQ (DESIGN_CONTRACT IA §13) — objection-handling. Native <details> for
- * keyboard-accessible accordion (no JS). NEW objection copy, Creator-drafted
- * pending James approval; healthcare-compliance entry is the one taraai can't
- * answer.
+ * keyboard-accessible accordion (no JS). Copy lives in content.ts (shared with
+ * the FAQPage JSON-LD); healthcare-compliance entry is the one taraai can't answer.
  */
-const FAQS = [
-  {
-    q: "I don't know exactly what I need yet.",
-    a: "That's the point of the free strategy call. We map your operation, find the bottleneck, and tell you what's worth building — no obligation.",
-  },
-  {
-    q: "How fast can we go live?",
-    a: "Most builds go live in about two weeks: a strategy call, we build it, we test it with you, then ship.",
-  },
-  {
-    q: "Do you handle healthcare data and compliance?",
-    a: "Yes. We build compliance-conscious systems for clinics and healthcare groups — revenue-cycle automation, eligibility, and claims — with security designed in, not bolted on.",
-  },
-  {
-    q: "Do we own what you build, or rent it?",
-    a: "You own it. We engineer systems on your infrastructure — no rented black box you can't leave.",
-  },
-];
-
 export function Faq() {
   return (
     <Section>

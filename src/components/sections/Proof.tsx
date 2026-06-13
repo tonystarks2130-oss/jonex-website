@@ -1,4 +1,5 @@
 import { Section, Heading } from "@/components/ui/primitives";
+import { CountUp } from "@/components/ui/CountUp";
 import { FLAGS } from "@/lib/flags";
 
 /**
@@ -37,10 +38,10 @@ export function Proof() {
         {STATS.map((s) => (
           <div
             key={s.label}
-            className="rounded-[10px] border border-border bg-surface p-6 text-center"
+            className="lift rounded-[10px] border border-border bg-surface p-6 text-center"
           >
             <div className="font-display text-4xl font-bold text-accent">
-              {s.value}
+              <CountUp value={s.value} />
             </div>
             <p className="mt-2 text-sm text-fg-muted">{s.label}</p>
           </div>
@@ -52,7 +53,7 @@ export function Proof() {
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.initials}
-              className="rounded-[10px] border border-border bg-surface p-6"
+              className="lift rounded-[10px] border border-border bg-surface p-6"
             >
               <blockquote className="leading-7 text-fg">
                 “{t.quote}”

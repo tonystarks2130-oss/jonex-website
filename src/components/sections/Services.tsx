@@ -25,7 +25,7 @@ export function Services() {
         {BUILD_CARDS.map(({ icon: Icon, title, body }) => (
           <div
             key={title}
-            className="rounded-[10px] border border-border bg-surface p-6"
+            className="lift rounded-[10px] border border-border bg-surface p-6"
           >
             <Icon className="h-6 w-6 text-accent" aria-hidden="true" />
             <h3 className="mt-4 font-display text-lg font-semibold">{title}</h3>

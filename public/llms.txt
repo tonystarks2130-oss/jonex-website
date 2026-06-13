@@ -1,0 +1,58 @@
+# JoNeX AI Technology Consulting
+
+> JoNeX builds and owns AI-powered business systems for organizations that want
+> their operations engineered, not wired together from no-code templates. The
+> spearhead product is an AI voice receptionist that answers every call, sounds
+> human, and never misses a lead; the broader practice identifies operational
+> bottlenecks and builds the intelligent systems that remove them.
+
+## What JoNeX is
+
+JoNeX AI Technology Consulting is a technology consultancy and engineering team.
+It is not a no-code automation reseller. JoNeX designs, builds, secures, and
+operates AI systems on the client's own infrastructure, so the client owns what
+is built rather than renting a black box they cannot leave.
+
+## What JoNeX does
+
+- AI Voice & Chat Agents — receptionists and sales agents that answer 24/7,
+  qualify leads, and book appointments. Live demos cover dental clinics,
+  barbershops, and real-estate agents.
+- Agentic AI Systems — autonomous workflows that carry operational load.
+- Intelligent Automation — process automation that removes repetitive work.
+- Custom Software Development — bespoke applications, dashboards, and integrations.
+- Technology Consulting — business-process analysis, workflow audits, process
+  mapping, AI-readiness assessment, and automation strategy.
+
+## Who JoNeX serves
+
+Global clients across six industries, with healthcare as the deepest specialty:
+
+- Healthcare (dermatology, dental, medical clinics, medspas, multi-location
+  groups): revenue-cycle automation, eligibility verification, prior
+  authorization, AI receptionists, medical OCR, claims processing, AR automation.
+- E-commerce, Home Services, Professional Services, Multi-Location & Franchise
+  Operations, and Construction & Field Operations.
+
+## Why JoNeX is the engineered tier
+
+- Healthcare-grade depth: real revenue-cycle, eligibility, and claims automation,
+  with compliance and security designed in rather than bolted on.
+- Owned, not rented: systems run on the client's infrastructure; no vendor lock-in.
+- Engineered, not templated: every build starts by mapping the operation and
+  finding the actual bottleneck before code is written.
+- Built and supported like a partner: strategy call, build, test together, go
+  live — most builds in about two weeks.
+
+## Engagement models
+
+Strategic technology consulting, project-based implementations, agentic AI &
+automation development, custom software development, dedicated development
+support, fractional AI & automation partner, managed services & optimization,
+and freelance & contract services.
+
+## Contact
+
+Book a free strategy call at https://jonex.site — JoNeX maps the operation,
+identifies the bottleneck, and recommends what is worth building, with no
+obligation.

@@ -1,13 +1,11 @@
-import { MessageCircle, Send } from "lucide-react";
 import { Container } from "@/components/ui/primitives";
+import { WhatsAppIcon, TelegramIcon } from "@/components/ui/BrandIcons";
 import { BRAND, FOOTER_COPY } from "@/lib/content";
 import { CONTACT } from "@/lib/integrations";
 
 /**
  * Footer (DESIGN_CONTRACT IA §15) — brand-guide footer copy verbatim,
- * WhatsApp + Telegram message buttons, preserved legal links.
- * NOTE: WhatsApp/Telegram use generic Lucide marks for now (lucide dropped
- * brand glyphs) — swap to proper brand SVGs in Phase 2 polish.
+ * WhatsApp + Telegram message buttons (real brand glyphs), preserved legal links.
  */
 export function Footer() {
   return (
@@ -34,18 +32,18 @@ export function Footer() {
               href={CONTACT.whatsapp.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
+              className="lift inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg hover:text-accent"
             >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp
             </a>
             <a
               href={CONTACT.telegram.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
+              className="lift inline-flex items-center gap-2 rounded-[10px] border border-border px-4 py-2.5 text-sm font-medium text-fg hover:text-accent"
             >
-              <Send className="h-4 w-4" aria-hidden="true" />
+              <TelegramIcon className="h-4 w-4" />
               Telegram {CONTACT.telegram.handle}
             </a>
           </div>

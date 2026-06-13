@@ -204,6 +204,31 @@ export const FOUNDERS: Founder[] = [
   },
 ];
 
+/**
+ * FAQ (DESIGN_CONTRACT IA §13). Single source for both the visible accordion
+ * and the FAQPage JSON-LD (schema MUST mirror visible content). NEW objection
+ * copy, Creator-drafted; healthcare-compliance entry is the taraai-can't-answer
+ * differentiator.
+ */
+export const FAQS = [
+  {
+    q: "I don't know exactly what I need yet.",
+    a: "That's the point of the free strategy call. We map your operation, find the bottleneck, and tell you what's worth building — no obligation.",
+  },
+  {
+    q: "How fast can we go live?",
+    a: "Most builds go live in about two weeks: a strategy call, we build it, we test it with you, then ship.",
+  },
+  {
+    q: "Do you handle healthcare data and compliance?",
+    a: "Yes. We build compliance-conscious systems for clinics and healthcare groups — revenue-cycle automation, eligibility, and claims — with security designed in, not bolted on.",
+  },
+  {
+    q: "Do we own what you build, or rent it?",
+    a: "You own it. We engineer systems on your infrastructure — no rented black box you can't leave.",
+  },
+] as const;
+
 export const FOOTER_COPY = {
   name: "JoNeX AI Technology Consulting",
   tagline: "Identify Bottlenecks. Build Intelligent Systems. Scale Operations.",

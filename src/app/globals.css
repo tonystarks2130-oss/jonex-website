@@ -82,6 +82,53 @@ html {
     border-color 0.35s ease, fill 0.35s ease;
 }
 
+/* ============================================================
+   Phase 2 polish — motion, seams, depth (DESIGN_CONTRACT §Motion,
+   §Visual). All opt-in + reduced-motion safe.
+   ============================================================ */
+
+/* Scroll-reveal. Hidden state applies ONLY after JS marks the root
+   `.reveal-ready`, so content is fully visible if JS is off (SEO/AEO + a11y). */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Gradient section seam — a soft top divider, never a flat band edge. */
+.seam-top {
+  position: relative;
+}
+.seam-top::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 28%, transparent),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* Card hover lift — soft cyan-tinted raise (DESIGN_CONTRACT §Visual). */
+.lift {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: 0 12px 30px -12px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -91,5 +138,18 @@ html {
   .theme-transition *::before,
   .theme-transition *::after {
     transition: none !important;
+  }
+  /* Neutralise reveal + lift motion; reveal content stays fully visible. */
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .lift {
+    transition: border-color 0.2s ease;
+  }
+  .lift:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

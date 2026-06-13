@@ -26,8 +26,10 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`py-20 md:py-32 ${className}`}>
-      <Container>{children}</Container>
+    <section id={id} className={`seam-top py-20 md:py-32 ${className}`}>
+      <Container>
+        <div data-reveal>{children}</div>
+      </Container>
     </section>
   );
 }

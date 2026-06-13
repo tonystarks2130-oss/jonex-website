@@ -27,7 +27,7 @@ export function Capabilities() {
           return (
             <div
               key={cap}
-              className="rounded-[10px] border border-border bg-surface p-6"
+              className="lift rounded-[10px] border border-border bg-surface p-6"
             >
               <div className="inline-flex h-11 w-11 items-center justify-center rounded-[10px] border border-accent/30 bg-accent/5">
                 <Icon className="h-5 w-5 text-accent" aria-hidden="true" />

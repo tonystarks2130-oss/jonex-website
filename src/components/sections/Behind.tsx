@@ -28,7 +28,7 @@ export function Behind() {
         {FOUNDERS.map((f) => (
           <figure
             key={f.name}
-            className="flex flex-col gap-5 rounded-[10px] border border-border bg-surface p-6 sm:flex-row sm:items-start"
+            className="lift flex flex-col gap-5 rounded-[10px] border border-border bg-surface p-6 sm:flex-row sm:items-start"
           >
             <div className="shrink-0">
               {f.photo ? (

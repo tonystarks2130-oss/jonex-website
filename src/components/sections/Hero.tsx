@@ -1,6 +1,7 @@
 import { Phone, Headphones } from "lucide-react";
 import { CalButton } from "@/components/integrations/CalButton";
 import { Container } from "@/components/ui/primitives";
+import { HeroArtifact } from "@/components/sections/HeroArtifact";
 import { HERO } from "@/lib/content";
 
 const TRUST = ["Never misses a lead", "Sounds human", "Works 24/7"];
@@ -49,13 +50,8 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* HeroArtifact placeholder slot — replaced in Phase 3 with the chosen render. */}
-        <div
-          aria-hidden="true"
-          className="relative hidden aspect-square items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-surface to-bg-raised md:flex"
-        >
-          <span className="text-sm text-fg-muted">[ hero artifact ]</span>
-        </div>
+        {/* HeroArtifact — Live Call Visualizer (DESIGN_CONTRACT Decision 4). */}
+        <HeroArtifact />
       </Container>
     </section>
   );
