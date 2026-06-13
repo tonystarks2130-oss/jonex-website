@@ -105,8 +105,8 @@ export function ChatWidget() {
   const [sending, setSending] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [teaser, setTeaser] = useState<string | null>(null);
-  // Keep the hero viewport calm: only start rotating teaser bubbles once the
-  // visitor has scrolled past the first screen (icon-only in the hero).
+  // Keep the hero viewport calm: only rotate teaser bubbles once the hero has
+  // essentially left the viewport (icon-only while the hero is visible).
   const [pastHero, setPastHero] = useState(false);
 
   const greeted = useRef(false);
@@ -118,30 +118,44 @@ export function ChatWidget() {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [messages, open]);
 
-  // Track whether the visitor has scrolled past the hero (~60% of viewport).
+  // Track whether the visitor has scrolled past the actual hero section.
   useEffect(() => {
-    const onScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.6) setPastHero(true);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.getElementById("top");
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setPastHero(entry.intersectionRatio < 0.1);
+      },
+      { threshold: [0, 0.1] },
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   // Teaser bubble rotation — interval with full cleanup (Strict-Mode safe).
-  // Suppressed in the hero viewport; starts only after the visitor scrolls down.
+  // Suppressed while the hero is visible; starts only after the hero leaves view.
   useEffect(() => {
     if (open || !pastHero) {
       setTeaser(null);
       return;
     }
     let i = 0;
+    let hideId: number | null = null;
     const id = window.setInterval(() => {
       setTeaser(TEASERS[i % TEASERS.length]);
       i++;
-      window.setTimeout(() => setTeaser(null), 4000);
+      if (hideId !== null) window.clearTimeout(hideId);
+      hideId = window.setTimeout(() => {
+        setTeaser(null);
+        hideId = null;
+      }, 4000);
     }, 9000);
-    return () => window.clearInterval(id);
+    return () => {
+      window.clearInterval(id);
+      if (hideId !== null) window.clearTimeout(hideId);
+    };
   }, [open, pastHero]);
 
   function pushGreetingOnce() {
@@ -198,7 +212,7 @@ export function ChatWidget() {
         <button
           type="button"
           onClick={openChat}
-          className="max-w-[15rem] rounded-2xl rounded-br-sm border border-border bg-surface px-4 py-2 text-left text-sm text-fg shadow-lg"
+          className="relative mr-1 max-w-[15.5rem] rounded-2xl rounded-br-md border border-border bg-surface px-4 py-3 text-left text-sm leading-5 text-fg shadow-xl after:absolute after:-bottom-1.5 after:right-5 after:h-3 after:w-3 after:rotate-45 after:border-b after:border-r after:border-border after:bg-surface after:content-['']"
         >
           {teaser}
         </button>
