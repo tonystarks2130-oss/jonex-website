@@ -87,14 +87,30 @@ html {
   scroll-margin-top: clamp(7rem, 14vh, 11rem);
 }
 
-/* Theme cross-fade — applied ONLY on user toggle (see ThemeToggle), never on
-   first load, so the no-flash script doesn't animate. */
+/* Theme crossfade via the View Transitions API (primary path — ThemeToggle).
+   Snapshots the whole page and dissolves it as a bitmap, so text, gradients,
+   glass and the accent fade together with no per-property snap or link blink. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.42s;
+  animation-timing-function: ease;
+}
+
+/* Fallback color crossfade — applied ONLY on user toggle (see ThemeToggle)
+   where View Transitions are unsupported, never on first load. */
 .theme-transition,
 .theme-transition *,
 .theme-transition *::before,
 .theme-transition *::after {
   transition: background-color 0.35s ease, color 0.35s ease,
     border-color 0.35s ease, fill 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
 /* ============================================================
