@@ -1,12 +1,18 @@
 import { BrandLockup } from '@/components/ui/BrandLockup';
-import { LinkedInIcon, InstagramIcon } from '@/components/ui/BrandIcons';
+import {
+  LinkedInIcon,
+  InstagramIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+  TelegramIcon,
+} from '@/components/ui/BrandIcons';
 import { Container } from '@/components/ui/primitives';
 import { FOOTER_COPY } from '@/lib/content';
 import { CONTACT } from '@/lib/integrations';
 
 // Social profile URLs supplied by James (2026-06-13). Instagram = brand handle
-// jonex_ai; LinkedIn = Jeremy's personal profile "for now" (interim until a
-// JoNeX company page exists — swap in place, no layout change).
+// jonex_ai; Facebook = brand page JoNeX122025; LinkedIn = Jeremy's personal
+// profile "for now" (interim until a JoNeX company page exists — swap in place).
 const SOCIALS = [
   {
     label: 'LinkedIn',
@@ -14,6 +20,15 @@ const SOCIALS = [
     Icon: LinkedInIcon,
   },
   { label: 'Instagram', href: 'https://www.instagram.com/jonex_ai/', Icon: InstagramIcon },
+  { label: 'Facebook', href: 'https://www.facebook.com/JoNeX122025', Icon: FacebookIcon },
+] as const;
+
+// Contact channels — icon next to the number/handle. WhatsApp number formatted
+// from CONTACT.whatsapp.number (639569871934 -> +63 956 987 1934); links use
+// the verified wire URLs in CONTACT (unchanged).
+const CONTACT_CHANNELS = [
+  { label: '+63 956 987 1934', href: CONTACT.whatsapp.url, Icon: WhatsAppIcon },
+  { label: CONTACT.telegram.handle, href: CONTACT.telegram.url, Icon: TelegramIcon },
 ] as const;
 
 const SOLUTIONS_LINKS: { label: string; href: string }[] = [
@@ -29,11 +44,6 @@ const COMPANY_LINKS: { label: string; href: string }[] = [
   { label: 'Hear the AI', href: '#hear-the-ai' },
   { label: 'Behind JoNeX', href: '#behind' },
   { label: 'About', href: '#about' },
-];
-
-const CONTACT_LINKS: { label: string; href: string }[] = [
-  { label: 'WhatsApp', href: CONTACT.whatsapp.url },
-  { label: `Telegram ${CONTACT.telegram.handle}`, href: CONTACT.telegram.url },
 ];
 
 const columnHeadingClassName =
@@ -94,15 +104,16 @@ export function Footer() {
         <div className='space-y-4'>
           <p className={columnHeadingClassName}>Contact</p>
           <div className='flex flex-col gap-3'>
-            {CONTACT_LINKS.map((link) => (
+            {CONTACT_CHANNELS.map(({ label, href, Icon }) => (
               <a
-                key={link.label}
-                href={link.href}
+                key={label}
+                href={href}
                 target='_blank'
                 rel='noopener noreferrer'
-                className={footerLinkClassName}
+                className={`inline-flex items-center gap-2.5 ${footerLinkClassName}`}
               >
-                {link.label}
+                <Icon className='h-4 w-4 shrink-0' />
+                {label}
               </a>
             ))}
             <p className='text-sm text-fg-muted'>
