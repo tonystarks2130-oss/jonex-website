@@ -1,65 +1,182 @@
-import { Globe, Smartphone, LayoutGrid } from "lucide-react";
-import { Section, Heading } from "@/components/ui/primitives";
-import { CONSULTING_SERVICES, ENGAGEMENT_MODELS } from "@/lib/content";
+/** Premium services section for JoNeX offerings. */
 
-/**
- * Services / engagement models (DESIGN_CONTRACT IA §11). Brand-guide lists
- * verbatim + the missing build cards (website / mobile app / SaaS).
- */
-const BUILD_CARDS = [
-  { icon: Globe, title: "Website Build", body: "Premium marketing sites engineered to convert." },
-  { icon: Smartphone, title: "Mobile App Build", body: "Native-grade apps for your operation and customers." },
-  { icon: LayoutGrid, title: "SaaS Product", body: "Full product builds — from MVP to scaling platform." },
-];
+import {
+  ArrowRight,
+  Bot,
+  Boxes,
+  Check,
+  Compass,
+  Globe,
+  Hammer,
+  LifeBuoy,
+  type LucideIcon,
+} from "lucide-react";
+
+import { Heading, Section } from "@/components/ui/primitives";
+
+type ServiceCard = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  bestFor: string;
+};
+
+type HelpColumn = {
+  icon: LucideIcon;
+  label: string;
+  items: string[];
+};
+
+const services = [
+  {
+    icon: Globe,
+    title: "Website & Landing Pages",
+    description:
+      "Conversion-focused websites with fast load times, clean messaging, and premium UI.",
+    bestFor: "Best for: service businesses, clinics, agencies, and local brands.",
+  },
+  {
+    icon: Bot,
+    title: "AI Agents & Automation",
+    description:
+      "Voice agents, chat agents, lead routing, CRM workflows, and follow-up systems.",
+    bestFor: "Best for: teams drowning in repetitive admin and sales tasks.",
+  },
+  {
+    icon: Boxes,
+    title: "Custom Software & SaaS",
+    description:
+      "Dashboards, portals, MVPs, internal tools, and scalable business platforms.",
+    bestFor: "Best for: businesses that need workflows turned into software.",
+  },
+] satisfies ServiceCard[];
+
+const helpColumns = [
+  {
+    icon: Compass,
+    label: "Strategy",
+    items: [
+      "Business Process Analysis",
+      "Workflow Audits",
+      "Process Mapping",
+      "AI Readiness Assessment",
+      "Automation Strategy",
+    ],
+  },
+  {
+    icon: Hammer,
+    label: "Build",
+    items: [
+      "Agentic AI & Automation Development",
+      "Custom Software Development",
+      "Project-Based Implementations",
+      "Website & App Builds",
+      "SaaS MVP Development",
+    ],
+  },
+  {
+    icon: LifeBuoy,
+    label: "Support",
+    items: [
+      "Dedicated Development Support",
+      "Fractional AI & Automation Partner",
+      "Managed Services & Optimization",
+      "Technology Consulting",
+      "Freelance & Contract Services",
+    ],
+  },
+] satisfies HelpColumn[];
 
 export function Services() {
   return (
     <Section>
       <Heading
-        eyebrow="Services & Engagement"
-        title="Consulting, builds, or a partner on retainer"
-        intro="Engage us the way that fits — a one-off project, an embedded development partner, or fully managed operations."
+        align="center"
+        eyebrow="What We Build"
+        title="AI Systems Built Around Your Business"
+        intro="AI-powered systems for businesses that need more than a pretty website — from websites and automation to custom software and managed operations."
       />
 
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
-        {BUILD_CARDS.map(({ icon: Icon, title, body }) => (
-          <div
-            key={title}
-            className="lift rounded-[10px] border border-border bg-surface p-6"
-          >
-            <Icon className="h-6 w-6 text-accent" aria-hidden="true" />
-            <h3 className="mt-4 font-display text-lg font-semibold">{title}</h3>
-            <p className="mt-2 text-sm leading-6 text-fg-muted">{body}</p>
-          </div>
-        ))}
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => {
+          const Icon = service.icon;
+
+          return (
+            <article
+              key={service.title}
+              className="lift flex flex-col rounded-2xl border border-border bg-surface p-7 lg:p-8"
+            >
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <Icon className="h-6 w-6" aria-hidden="true" />
+              </div>
+
+              <h3 className="mt-5 font-display text-xl font-semibold text-fg">
+                {service.title}
+              </h3>
+
+              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                {service.description}
+              </p>
+
+              <p className="mt-3 text-xs text-fg-muted">
+                <span className="font-semibold text-fg">Best for:</span>{" "}
+                {service.bestFor.replace("Best for: ", "")}
+              </p>
+
+              <div className="mt-auto pt-6">
+                <a
+                  href="#contact"
+                  className="group inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
+                >
+                  Explore service
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-2">
-        <div>
-          <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-fg-muted">
-            Consulting Services
-          </h3>
-          <ul className="mt-4 space-y-2">
-            {CONSULTING_SERVICES.map((s) => (
-              <li key={s} className="flex items-center gap-2 text-sm text-fg">
-                <span className="text-accent">▹</span>
-                {s}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-fg-muted">
-            Flexible Engagement Models
-          </h3>
-          <ul className="mt-4 space-y-2">
-            {ENGAGEMENT_MODELS.map((s) => (
-              <li key={s} className="flex items-center gap-2 text-sm text-fg">
-                <span className="text-accent">▹</span>
-                {s}
-              </li>
-            ))}
-          </ul>
+      <div className="mt-12 rounded-3xl border border-border bg-bg-raised/40 p-8 lg:mt-16 lg:p-12">
+        <h3 className="font-display text-lg font-semibold text-fg">
+          How We Help
+        </h3>
+
+        <div className="mt-8 grid gap-8 md:grid-cols-3 lg:gap-12">
+          {helpColumns.map((column) => {
+            const Icon = column.icon;
+
+            return (
+              <div key={column.label}>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex rounded-md bg-accent/10 p-1.5 text-accent">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-fg-muted">
+                    {column.label}
+                  </h4>
+                </div>
+
+                <ul className="mt-4 space-y-2.5">
+                  {column.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-sm text-fg"
+                    >
+                      <Check
+                        className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Section>
