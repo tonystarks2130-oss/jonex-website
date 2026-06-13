@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeScript } from "@/components/theme/ThemeScript";
+import { ChatWidget } from "@/components/integrations/ChatWidget";
+import { CalProvider } from "@/components/integrations/CalProvider";
 
 const display = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -40,6 +42,8 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col bg-bg font-body text-fg antialiased">
         <ThemeScript />
         {children}
+        <ChatWidget />
+        <CalProvider />
       </body>
     </html>
   );
