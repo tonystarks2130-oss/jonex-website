@@ -27,6 +27,25 @@ export const HERO = {
     "Intelligent Automation",
     "Custom Software",
   ],
+  // Glass pill badges above the H1 (approved 2026-06-13; badge 2 = brand vocab).
+  badges: [
+    "AI Receptionist Systems",
+    "Voice AI • Automation • Custom Software",
+  ],
+  // Glass proof strip under the CTAs — honest capability claims, no stats.
+  proof: [
+    "Never misses a caller",
+    "Captures lead details",
+    "Sends instant summaries",
+    "Works 24/7",
+  ],
+  // Floating outcome cards around the demo (desktop only) — what the AI does
+  // on a call. Descriptive, not fabricated metrics.
+  outcomes: [
+    { title: "Lead captured", detail: "Name • Phone • Service needed" },
+    { title: "Staff notified", detail: "Summary sent instantly" },
+    { title: "Follow-up ready", detail: "Booking link sent" },
+  ],
 } as const;
 
 export const CAPABILITIES = [

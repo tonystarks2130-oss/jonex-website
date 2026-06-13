@@ -105,6 +105,9 @@ export function ChatWidget() {
   const [sending, setSending] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [teaser, setTeaser] = useState<string | null>(null);
+  // Keep the hero viewport calm: only start rotating teaser bubbles once the
+  // visitor has scrolled past the first screen (icon-only in the hero).
+  const [pastHero, setPastHero] = useState(false);
 
   const greeted = useRef(false);
   const historyRef = useRef<{ role: "user" | "assistant"; content: string }[]>([]);
@@ -115,9 +118,20 @@ export function ChatWidget() {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [messages, open]);
 
-  // Teaser bubble rotation — interval with full cleanup (Strict-Mode safe).
+  // Track whether the visitor has scrolled past the hero (~60% of viewport).
   useEffect(() => {
-    if (open) {
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) setPastHero(true);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Teaser bubble rotation — interval with full cleanup (Strict-Mode safe).
+  // Suppressed in the hero viewport; starts only after the visitor scrolls down.
+  useEffect(() => {
+    if (open || !pastHero) {
       setTeaser(null);
       return;
     }
@@ -128,7 +142,7 @@ export function ChatWidget() {
       window.setTimeout(() => setTeaser(null), 4000);
     }, 9000);
     return () => window.clearInterval(id);
-  }, [open]);
+  }, [open, pastHero]);
 
   function pushGreetingOnce() {
     if (greeted.current) return;

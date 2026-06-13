@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Phone, PhoneOff } from "lucide-react";
+import { Phone, PhoneOff, UserPlus, BellRing } from "lucide-react";
 import { VOICE_DEMOS } from "@/lib/integrations";
+import { HERO } from "@/lib/content";
+
+// Two supporting outcome chips in the hero (3rd, "Follow-up ready", dropped to
+// reduce hero clutter — still present in HERO.outcomes for use elsewhere).
+const OUTCOME_ICONS = [UserPlus, BellRing] as const;
 
 /**
  * Hero artifact (DESIGN_CONTRACT Decision 4) — the signature interactive element.
@@ -158,17 +163,34 @@ export function HeroArtifact() {
   const demo = VOICE_DEMOS[active];
 
   return (
-    <div className="relative mx-auto w-full max-w-md md:max-w-none">
+    <div className="relative mx-auto w-full max-w-md md:mx-0 md:ml-auto md:max-w-[430px]">
       {/* ambient cyan glow — single, soft, behind the panel (not a pulse) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-6 -z-10 rounded-[28px] opacity-60 blur-2xl"
+        className="pointer-events-none absolute -inset-8 -z-10 rounded-[32px] opacity-60 blur-3xl"
         style={{
           background:
-            "radial-gradient(60% 60% at 70% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%)",
+            "radial-gradient(58% 58% at 65% 32%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%)",
         }}
       />
-      <div className="rounded-2xl border border-border bg-gradient-to-br from-surface to-bg-raised p-5 shadow-2xl shadow-black/20">
+
+      {/* Two supporting outcome chips — desktop only (md+), seated in the left
+          gutter so they flank the card without covering its content. Mobile:
+          hidden (no absolute overlap). */}
+      <div
+        className="floater glass absolute top-8 -left-40 z-20 hidden w-36 rounded-2xl p-2.5 xl:block"
+        aria-hidden="true"
+      >
+        <OutcomeCard index={0} />
+      </div>
+      <div
+        className="floater floater-2 glass absolute bottom-9 -left-40 z-20 hidden w-36 rounded-2xl p-2.5 xl:block"
+        aria-hidden="true"
+      >
+        <OutcomeCard index={1} />
+      </div>
+
+      <div className="glass relative rounded-[20px] p-6">
         {/* status header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -232,7 +254,7 @@ export function HeroArtifact() {
         <button
           type="button"
           onClick={() => (status === "live" ? stop() : answer(active))}
-          className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-accent px-5 text-sm font-semibold text-accent-contrast transition-opacity hover:opacity-90"
+          className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-contrast transition-opacity hover:opacity-90"
         >
           {status === "live" ? (
             <>
@@ -252,6 +274,23 @@ export function HeroArtifact() {
         onEnded={stop}
         className="hidden"
       />
+    </div>
+  );
+}
+
+/** Small decorative outcome chip floated around the call card (desktop only). */
+function OutcomeCard({ index }: { index: number }) {
+  const o = HERO.outcomes[index];
+  const Icon = OUTCOME_ICONS[index];
+  return (
+    <div className="flex items-start gap-2">
+      <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-accent/12 text-accent ring-1 ring-accent/25">
+        <Icon className="h-3.5 w-3.5" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-[13px] font-semibold leading-tight text-fg">{o.title}</p>
+        <p className="mt-0.5 text-[11px] leading-snug text-fg-muted">{o.detail}</p>
+      </div>
     </div>
   );
 }

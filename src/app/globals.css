@@ -129,9 +129,115 @@ html {
   box-shadow: 0 12px 30px -12px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
+/* ============================================================
+   Hero richness pass — grid texture, ambient glows, glass surfaces,
+   pill badges, gradient CTA. Theme-aware via tokens, pure CSS (no
+   images / deps), tasteful by default. Decorative layers are
+   pointer-events:none and -z-10 so they never block interaction.
+   ============================================================ */
+
+/* Faint grid texture; masked so it dissolves toward the edges. */
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--fg) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--fg) 6%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(125% 78% at 50% 0%, #000 22%, transparent 80%);
+  mask-image: radial-gradient(125% 78% at 50% 0%, #000 22%, transparent 80%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Ambient radial glows — a cyan key light + a cool indigo fill, blurred. */
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  inset: -12% -6% auto -6%;
+  height: 78%;
+  z-index: -10;
+  background:
+    radial-gradient(38% 55% at 82% 24%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 72%),
+    radial-gradient(44% 50% at 14% 14%, color-mix(in srgb, #6366f1 11%, transparent), transparent 74%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* Frosted glass surface — hero card, badges, proof strip, floaters. */
+.glass {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border: 1px solid color-mix(in srgb, var(--fg) 9%, var(--border));
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, #fff 7%, transparent),
+    0 24px 60px -28px color-mix(in srgb, var(--accent) 20%, #000);
+}
+
+/* Pill badge — small glass chip with a cyan tint. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--accent) 80%, var(--fg));
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.pill-dot {
+  height: 0.42rem;
+  width: 0.42rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+/* Gradient primary CTA — cyan sheen with depth + lift on hover. */
+.btn-grad {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 92%, #fff 8%),
+    color-mix(in srgb, var(--accent) 74%, #1e3a8a 26%)
+  );
+  color: var(--accent-contrast);
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--accent) 48%, transparent);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-grad:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* Floating outcome card — soft entrance + gentle idle bob (desktop only). */
+@keyframes floatbob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.floater {
+  animation: floatbob 7s ease-in-out infinite;
+}
+.floater-2 { animation-delay: -2s; }
+.floater-3 { animation-delay: -4s; }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .floater {
+    animation: none;
+  }
+  .btn-grad:hover {
+    transform: none;
   }
   .theme-transition,
   .theme-transition *,

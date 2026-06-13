@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-/** Centered max-width container with responsive gutters. */
+/** Centered premium-width container with responsive gutters. */
 export function Container({
   children,
   className = "",
@@ -9,7 +9,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto w-full max-w-6xl px-6 md:px-8 ${className}`}>
+    <div className={`mx-auto w-full max-w-[84rem] px-6 md:px-8 lg:px-10 ${className}`}>
       {children}
     </div>
   );
@@ -83,11 +83,11 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "inline-flex h-12 items-center justify-center gap-2 rounded-[10px] px-6 text-sm font-semibold transition-colors";
+    "inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold";
   const styles =
     variant === "primary"
-      ? "bg-accent text-accent-contrast hover:opacity-90"
-      : "border border-border text-fg hover:border-accent hover:text-accent";
+      ? "btn-grad"
+      : "glass text-fg transition-colors hover:border-accent hover:text-accent";
   return (
     <a href={href} className={`${base} ${styles} ${className}`}>
       {children}
