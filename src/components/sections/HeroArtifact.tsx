@@ -1,296 +1,518 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Phone, PhoneOff, UserPlus, BellRing } from "lucide-react";
-import { VOICE_DEMOS } from "@/lib/integrations";
-import { HERO } from "@/lib/content";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Bot,
+  CalendarCheck,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Database,
+  MessageSquareText,
+  PhoneIncoming,
+  Sparkles,
+  Workflow,
+} from "lucide-react";
 
-// Two supporting outcome chips in the hero (3rd, "Follow-up ready", dropped to
-// reduce hero clutter — still present in HERO.outcomes for use elsewhere).
-const OUTCOME_ICONS = [UserPlus, BellRing] as const;
+const WAVEFORM = [
+  22, 34, 48, 64, 42, 76, 54, 88, 62, 46, 72, 92, 58, 78, 44, 60, 36, 24,
+];
+
+const DECK_TRANSITION =
+  "transform 560ms cubic-bezier(0.22, 1, 0.36, 1), opacity 360ms ease, filter 360ms ease, box-shadow 360ms ease";
+const SHUFFLE_INTERVAL_MS = 4200;
+
+type DeckItem = {
+  id: "signal" | "operator" | "automation";
+  title: string;
+  subtitle: string;
+  status: string;
+  icon: typeof Bot;
+};
+
+const DECK: DeckItem[] = [
+  {
+    id: "signal",
+    title: "Incoming Lead",
+    subtitle: "Customer intent captured",
+    status: "New",
+    icon: PhoneIncoming,
+  },
+  {
+    id: "operator",
+    title: "JoNeX AI Operator",
+    subtitle: "Conversation handled live",
+    status: "Live",
+    icon: Bot,
+  },
+  {
+    id: "automation",
+    title: "Automated Follow-up",
+    subtitle: "Business systems updated",
+    status: "Running",
+    icon: Workflow,
+  },
+];
+
+type Slot = "front" | "left" | "right";
+
+function slotFor(index: number, active: number): Slot {
+  const offset = (index - active + DECK.length) % DECK.length;
+  if (offset === 0) return "front";
+  return offset === 1 ? "right" : "left";
+}
+
+function initialTransform(slot: Slot) {
+  if (slot === "front") return "translate3d(-50%, 0, 70px) scale(1)";
+  if (slot === "left") {
+    return "translate3d(calc(-50% - 120px), 68px, -55px) rotateY(-10deg) scale(0.86)";
+  }
+  return "translate3d(calc(-50% + 120px), 72px, -35px) rotateY(10deg) scale(0.88)";
+}
 
 /**
- * Hero artifact (DESIGN_CONTRACT Decision 4) — the signature interactive element.
- *
- * "Live Call Visualizer": a stylised incoming-call panel that, on Answer, plays
- * a REAL Cloudinary voice demo and animates a cyan waveform while it speaks.
- * Ties the hero to the actual differentiator (the 3 voice demos neither
- * reference site has). Cyan-restrained (bars + status only), token-driven so it
- * themes, and reduced-motion safe (static waveform, audio still plays).
- *
- * The waveform is a decorative visualisation driven by rAF — the audio playing
- * underneath is the real demo. No Web Audio / CORS dependency, so it never
- * silently flat-lines on a tainted cross-origin stream.
+ * Auto-shuffling workflow catalog with manual controls and cursor depth.
+ * The active card rotates through signal, AI handling, and business actions.
  */
-
-const BAR_COUNT = 36;
-
-type Status = "idle" | "live";
-
 export function HeroArtifact() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const levelsRef = useRef<number[]>(new Array(BAR_COUNT).fill(0.12));
-  const targetsRef = useRef<number[]>(new Array(BAR_COUNT).fill(0.12));
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const activeRef = useRef(1);
+  const pausedRef = useRef(false);
+  const reducedMotionRef = useRef(false);
+  const [active, setActive] = useState(1);
 
-  const [status, setStatus] = useState<Status>("idle");
-  const [active, setActive] = useState(0);
+  const applyDeck = useCallback((x: number, y: number) => {
+    const stage = stageRef.current;
+    if (!stage) return;
 
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const width = stage.clientWidth || 520;
+    const compact = width < 480;
+    const spread = compact ? Math.min(72, width * 0.19) : Math.min(132, width * 0.25);
+    const rearY = compact ? 70 : 68;
 
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    cardRefs.current.forEach((card, index) => {
+      if (!card) return;
+      const slot = slotFor(index, activeRef.current);
 
-    const dpr = window.devicePixelRatio || 1;
-    const cssW = canvas.clientWidth;
-    const cssH = canvas.clientHeight;
-    if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
-      canvas.width = cssW * dpr;
-      canvas.height = cssH * dpr;
+      if (slot === "front") {
+        card.style.transform = `translate3d(calc(-50% + ${x * 9}px), ${
+          y * 7
+        }px, 70px) rotateX(${-y * 2.7}deg) rotateY(${x * 3.6}deg) scale(1)`;
+        card.style.opacity = "1";
+        card.style.filter = "none";
+        card.style.zIndex = "30";
+        card.style.boxShadow =
+          "0 42px 100px -34px color-mix(in srgb, var(--accent) 52%, #000), 0 22px 54px -34px #000, inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent)";
+        return;
+      }
+
+      const direction = slot === "left" ? -1 : 1;
+      const pointerX = direction * x * -7;
+      const pointerY = direction * y * 4;
+      const depth = slot === "left" ? -55 : -35;
+      const scale = slot === "left" ? 0.86 : 0.88;
+      const rotation = direction * 10 + x * direction * 1.6;
+
+      card.style.transform = `translate3d(calc(-50% + ${
+        direction * spread + pointerX
+      }px), ${rearY + (slot === "right" ? 4 : 0) + pointerY}px, ${
+        depth
+      }px) rotateX(${-y * 1.1}deg) rotateY(${rotation}deg) scale(${scale})`;
+      card.style.opacity = compact ? "0.42" : "0.5";
+      card.style.filter = "saturate(0.72) brightness(0.78)";
+      card.style.zIndex = slot === "left" ? "10" : "20";
+      card.style.boxShadow =
+        "0 28px 70px -42px color-mix(in srgb, var(--accent) 28%, #000), inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent)";
+    });
+
+    if (glowRef.current) {
+      glowRef.current.style.transform = `translate3d(${x * 20}px, ${y * 14}px, 0)`;
     }
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, cssW, cssH);
-
-    const accent =
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--accent")
-        .trim() || "#00d4ff";
-
-    const gap = cssW / BAR_COUNT;
-    const barW = Math.max(2, gap * 0.42);
-    const mid = cssH / 2;
-    const levels = levelsRef.current;
-
-    for (let i = 0; i < BAR_COUNT; i++) {
-      const h = Math.max(2, levels[i] * cssH * 0.92);
-      const x = i * gap + (gap - barW) / 2;
-      // Fade bars toward the edges so the waveform reads as a centred voiceprint.
-      const edge = 1 - Math.abs(i / (BAR_COUNT - 1) - 0.5) * 1.1;
-      ctx.globalAlpha = 0.25 + Math.max(0, edge) * 0.75;
-      ctx.fillStyle = accent;
-      const r = barW / 2;
-      const y = mid - h / 2;
-      ctx.beginPath();
-      ctx.roundRect(x, y, barW, h, r);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
   }, []);
 
-  // Animation loop: ease levels toward targets; refresh targets while live.
-  useEffect(() => {
-    let frame = 0;
-    const tick = () => {
-      frame++;
-      const levels = levelsRef.current;
-      const targets = targetsRef.current;
-      if (status === "live" && frame % 4 === 0) {
-        for (let i = 0; i < BAR_COUNT; i++) {
-          const center = 1 - Math.abs(i / (BAR_COUNT - 1) - 0.5) * 1.4;
-          targets[i] = 0.1 + Math.random() * Math.max(0.15, center) * 0.95;
-        }
-      } else if (status === "idle") {
-        // Calm resting wave — a slow traveling sine so the artifact breathes
-        // before it's tapped (not a dead flat row).
-        const t = frame / 30;
-        for (let i = 0; i < BAR_COUNT; i++) {
-          const center = 1 - Math.abs(i / (BAR_COUNT - 1) - 0.5) * 1.2;
-          const wave = 0.5 + 0.5 * Math.sin(i * 0.5 - t);
-          targets[i] = 0.07 + wave * Math.max(0.05, center) * 0.18;
-        }
-      }
-      for (let i = 0; i < BAR_COUNT; i++) {
-        levels[i] += (targets[i] - levels[i]) * 0.22;
-      }
-      draw();
-      rafRef.current = requestAnimationFrame(tick);
-    };
+  const resetDeck = useCallback(() => applyDeck(0, 0), [applyDeck]);
 
-    if (reducedMotion) {
-      // Static symmetric voiceprint, no animation.
-      const levels = levelsRef.current;
-      for (let i = 0; i < BAR_COUNT; i++) {
-        const center = 1 - Math.abs(i / (BAR_COUNT - 1) - 0.5) * 1.4;
-        levels[i] = status === "live" ? 0.25 + Math.max(0, center) * 0.55 : 0.12;
-      }
-      draw();
-      return;
-    }
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [status, draw, reducedMotion]);
-
-  // Redraw on resize so the canvas stays crisp.
-  useEffect(() => {
-    const onResize = () => draw();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [draw]);
-
-  const stop = useCallback(() => {
-    const el = audioRef.current;
-    if (el) {
-      el.pause();
-      el.currentTime = 0;
-    }
-    setStatus("idle");
+  const selectCard = useCallback((index: number) => {
+    const next = (index + DECK.length) % DECK.length;
+    activeRef.current = next;
+    setActive(next);
   }, []);
 
-  const answer = useCallback(
-    (index: number) => {
-      const el = audioRef.current;
-      if (!el) return;
-      setActive(index);
-      el.src = VOICE_DEMOS[index].src;
-      el.currentTime = 0;
-      el.play().catch(() => {
-        /* autoplay/network guard — UI still shows live state */
-      });
-      setStatus("live");
-    },
-    [],
+  const stepDeck = useCallback(
+    (direction: number) => selectCard(activeRef.current + direction),
+    [selectCard],
   );
 
-  const demo = VOICE_DEMOS[active];
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = query.matches;
+    const onChange = (event: MediaQueryListEvent) => {
+      reducedMotionRef.current = event.matches;
+      resetDeck();
+    };
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, [resetDeck]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(resetDeck);
+    return () => cancelAnimationFrame(frame);
+  }, [active, resetDeck]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const stage = stageRef.current;
+      const isInteracting =
+        pausedRef.current ||
+        stage?.matches(":hover") ||
+        (stage ? stage.contains(document.activeElement) : false);
+      if (isInteracting || reducedMotionRef.current || document.hidden) return;
+      selectCard(activeRef.current + 1);
+    }, SHUFFLE_INTERVAL_MS);
+    return () => window.clearInterval(timer);
+  }, [selectCard]);
+
+  const onPointerMove = useCallback(
+    (event: PointerEvent) => {
+      if (reducedMotionRef.current || event.pointerType === "touch") return;
+      const stage = stageRef.current;
+      if (!stage) return;
+      const bounds = stage.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+      const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => applyDeck(x, y));
+    },
+    [applyDeck],
+  );
+
+  const onPointerEnter = useCallback(() => {
+    pausedRef.current = true;
+  }, []);
+
+  const onPointerLeave = useCallback(() => {
+    pausedRef.current = false;
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    resetDeck();
+  }, [resetDeck]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const onFocusIn = () => {
+      pausedRef.current = true;
+    };
+    const onFocusOut = () => {
+      requestAnimationFrame(() => {
+        pausedRef.current = stage.contains(document.activeElement);
+      });
+    };
+    const onResize = () => resetDeck();
+
+    stage.addEventListener("pointermove", onPointerMove);
+    stage.addEventListener("pointerenter", onPointerEnter);
+    stage.addEventListener("pointerleave", onPointerLeave);
+    stage.addEventListener("focusin", onFocusIn);
+    stage.addEventListener("focusout", onFocusOut);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      stage.removeEventListener("pointermove", onPointerMove);
+      stage.removeEventListener("pointerenter", onPointerEnter);
+      stage.removeEventListener("pointerleave", onPointerLeave);
+      stage.removeEventListener("focusin", onFocusIn);
+      stage.removeEventListener("focusout", onFocusOut);
+      window.removeEventListener("resize", onResize);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
+  }, [onPointerEnter, onPointerLeave, onPointerMove, resetDeck]);
 
   return (
-    <div className="relative mx-auto w-full max-w-md md:mx-0 md:ml-auto md:max-w-[430px]">
-      {/* ambient cyan glow — single, soft, behind the panel (not a pulse) */}
+    <div
+      ref={stageRef}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="JoNeX AI workflow catalog"
+      className="relative mx-auto h-[500px] w-full max-w-[620px] select-none md:mt-1 md:h-[530px] [perspective:1200px]"
+    >
+      <p className="sr-only" aria-live="polite">
+        Showing {DECK[active].title}: {DECK[active].subtitle}
+      </p>
+
       <div
+        ref={glowRef}
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-8 -z-10 rounded-[32px] opacity-60 blur-3xl"
+        className="pointer-events-none absolute top-[18%] left-[20%] h-[56%] w-[62%] rounded-full opacity-60 blur-3xl motion-reduce:transition-none"
         style={{
           background:
-            "radial-gradient(58% 58% at 65% 32%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%)",
+            "radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 68%)",
+          transition: DECK_TRANSITION,
         }}
       />
 
-      {/* Two supporting outcome chips — desktop only (md+), seated in the left
-          gutter so they flank the card without covering its content. Mobile:
-          hidden (no absolute overlap). */}
       <div
-        className="floater glass absolute top-8 -left-40 z-20 hidden w-36 rounded-2xl p-2.5 xl:block"
         aria-hidden="true"
-      >
-        <OutcomeCard index={0} />
-      </div>
+        className="pointer-events-none absolute inset-x-[9%] top-[8%] h-[78%] rounded-[32px] border border-border/45 opacity-50"
+      />
       <div
-        className="floater floater-2 glass absolute bottom-9 -left-40 z-20 hidden w-36 rounded-2xl p-2.5 xl:block"
         aria-hidden="true"
-      >
-        <OutcomeCard index={1} />
-      </div>
+        className="pointer-events-none absolute inset-x-[3%] top-[14%] h-[66%] rounded-[32px] border border-border/30 opacity-45"
+      />
 
-      <div className="glass relative rounded-[20px] p-6">
-        {/* status header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2.5 w-2.5">
-              {status === "live" && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              )}
-              <span
-                className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
-                  status === "live" ? "bg-accent" : "bg-fg-muted"
-                }`}
-              />
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              {status === "live" ? "On a live call" : "Incoming call"}
-            </span>
-          </div>
-          <span className="font-display text-sm font-semibold text-fg">JoNeX AI</span>
-        </div>
+      {DECK.map((item, index) => {
+        const slot = slotFor(index, active);
+        return (
+          <DeckCard
+            key={item.id}
+            ref={(node) => {
+              cardRefs.current[index] = node;
+            }}
+            item={item}
+            slot={slot}
+            active={index === active}
+            onSelect={() => selectCard(index)}
+          />
+        );
+      })}
 
-        {/* caller line */}
-        <div className="mt-5 flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/12 text-accent ring-1 ring-accent/25">
-            <Phone className="h-5 w-5" aria-hidden="true" />
-          </div>
-          <div className="min-w-0">
-            <p className="truncate font-medium text-fg">{demo.label}</p>
-            <p className="truncate text-sm text-fg-muted">
-              {status === "live"
-                ? "Answering — no hold, no missed lead"
-                : "Tap a line to hear the AI pick up"}
-            </p>
-          </div>
-        </div>
+      <div className="absolute inset-x-0 bottom-0 z-40 flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={() => stepDeck(-1)}
+          aria-label="Show previous workflow card"
+          className="glass flex h-9 w-9 items-center justify-center rounded-full text-fg-muted transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
 
-        {/* waveform */}
-        <div className="mt-5 h-24 rounded-xl border border-border/70 bg-bg/40 px-3 py-2">
-          <canvas ref={canvasRef} className="h-full w-full" aria-hidden="true" />
-        </div>
-
-        {/* line selector */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {VOICE_DEMOS.map((d, i) => (
+        <div className="glass flex items-center gap-2 rounded-full px-3 py-2" aria-label="Choose workflow card">
+          {DECK.map((item, index) => (
             <button
-              key={d.id}
+              key={item.id}
               type="button"
-              onClick={() => answer(i)}
-              aria-pressed={status === "live" && active === i}
-              className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
-                status === "live" && active === i
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-border text-fg-muted hover:border-accent hover:text-accent"
+              onClick={() => selectCard(index)}
+              aria-label={`Show ${item.title}`}
+              aria-current={index === active ? "true" : undefined}
+              className={`h-2 rounded-full transition-[width,background-color] duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                index === active ? "w-6 bg-accent" : "w-2 bg-fg-muted/45 hover:bg-fg-muted"
               }`}
-            >
-              {d.label}
-            </button>
+            />
           ))}
         </div>
 
-        {/* primary action */}
         <button
           type="button"
-          onClick={() => (status === "live" ? stop() : answer(active))}
-          className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-contrast transition-opacity hover:opacity-90"
+          onClick={() => stepDeck(1)}
+          aria-label="Show next workflow card"
+          className="glass flex h-9 w-9 items-center justify-center rounded-full text-fg-muted transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
-          {status === "live" ? (
-            <>
-              <PhoneOff className="h-4 w-4" aria-hidden="true" /> End call
-            </>
-          ) : (
-            <>
-              <Phone className="h-4 w-4" aria-hidden="true" /> Answer with JoNeX AI
-            </>
-          )}
+          <ChevronRight className="h-4 w-4" />
         </button>
       </div>
-
-      <audio
-        ref={audioRef}
-        preload="none"
-        onEnded={stop}
-        className="hidden"
-      />
     </div>
   );
 }
 
-/** Small decorative outcome chip floated around the call card (desktop only). */
-function OutcomeCard({ index }: { index: number }) {
-  const o = HERO.outcomes[index];
-  const Icon = OUTCOME_ICONS[index];
+type DeckCardProps = {
+  item: DeckItem;
+  slot: Slot;
+  active: boolean;
+  onSelect: () => void;
+};
+
+const DeckCard = function DeckCard({
+  ref,
+  item,
+  slot,
+  active,
+  onSelect,
+}: DeckCardProps & { ref: (node: HTMLButtonElement | null) => void }) {
+  const Icon = item.icon;
+
   return (
-    <div className="flex items-start gap-2">
-      <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-accent/12 text-accent ring-1 ring-accent/25">
+    <button
+      ref={ref}
+      type="button"
+      onClick={onSelect}
+      aria-label={`${active ? "Current" : "Show"} ${item.title} workflow card`}
+      aria-pressed={active}
+      className="glass absolute top-[6%] left-1/2 h-[415px] w-[88%] max-w-[390px] overflow-hidden rounded-[28px] border-accent/20 p-5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none md:p-6 lg:w-[72%]"
+      style={{
+        transform: initialTransform(slot),
+        transformStyle: "preserve-3d",
+        transition: DECK_TRANSITION,
+        opacity: slot === "front" ? 1 : 0.5,
+        filter: slot === "front" ? "none" : "saturate(0.72) brightness(0.78)",
+        zIndex: slot === "front" ? 30 : slot === "right" ? 20 : 10,
+        background:
+          "linear-gradient(145deg, color-mix(in srgb, #fff 8%, transparent), transparent 36%), color-mix(in srgb, var(--surface) 96%, var(--bg))",
+        backdropFilter: "blur(26px) saturate(1.2)",
+      }}
+    >
+      <div aria-hidden="true" className="flex h-full flex-col">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/30">
+              <Icon className="h-5 w-5" />
+            </span>
+            <div className="min-w-0">
+              <p className="font-display text-[13px] font-semibold leading-tight text-fg md:text-sm">
+                {item.title}
+              </p>
+              <p className="truncate text-[11px] text-fg-muted">{item.subtitle}</p>
+            </div>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-accent md:px-2.5 md:tracking-[0.14em]">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" /> {item.status}
+          </span>
+        </div>
+
+        <div className="mt-5 flex-1">{renderCardBody(item.id)}</div>
+
+        <div className="mt-3 flex items-center justify-between border-t border-border/70 pt-3 md:mt-4 md:pt-4">
+          <div className="flex items-center gap-2 text-xs text-fg-muted">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent/12 text-accent">
+              <Check className="h-3.5 w-3.5" />
+            </span>
+            {item.id === "signal" && "Lead understood instantly"}
+            {item.id === "operator" && "No hold. No missed lead."}
+            {item.id === "automation" && "Team ready to follow up"}
+          </div>
+          <span className="font-display text-xs font-semibold text-fg">JoNeX</span>
+        </div>
+      </div>
+    </button>
+  );
+};
+
+function renderCardBody(id: DeckItem["id"]) {
+  if (id === "signal") return <SignalBody />;
+  if (id === "automation") return <AutomationBody />;
+  return <OperatorBody />;
+}
+
+function SignalBody() {
+  return (
+    <>
+      <div className="rounded-2xl border border-border/70 bg-bg/50 p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
+          After-hours call
+        </p>
+        <p className="mt-2 font-display text-lg font-semibold text-fg">Dental appointment</p>
+        <p className="mt-1 text-xs leading-5 text-fg-muted">
+          New patient looking for the earliest available visit this week.
+        </p>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <Metric label="Source" value="Phone" />
+        <Metric label="Intent" value="Booking" />
+        <Metric label="Urgency" value="This week" accent />
+      </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-border/60 bg-bg/35 px-3 py-2.5 text-xs text-fg-muted">
+        <PhoneIncoming className="h-4 w-4 shrink-0 text-accent" />
+        Routed to the right AI workflow
+      </div>
+    </>
+  );
+}
+
+function OperatorBody() {
+  return (
+    <>
+      <div className="rounded-2xl border border-border/70 bg-bg/50 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
+              AI is speaking
+            </p>
+            <p className="mt-1 text-sm font-medium text-fg">
+              &quot;I can help you book that.&quot;
+            </p>
+          </div>
+          <Sparkles className="h-5 w-5 text-accent" />
+        </div>
+        <div className="mt-4 flex h-12 items-center justify-center gap-1">
+          {WAVEFORM.map((height, index) => (
+            <span
+              key={`${height}-${index}`}
+              className="w-1 rounded-full bg-accent/80 motion-safe:animate-pulse"
+              style={{
+                height: `${height}%`,
+                animationDelay: `${index * -70}ms`,
+                animationDuration: "1.4s",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <Metric label="Intent" value="Booking" />
+        <Metric label="Sentiment" value="Positive" />
+        <Metric label="Action" value="Schedule" accent />
+      </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-border/60 bg-bg/35 px-3 py-2.5 text-xs text-fg-muted">
+        <Bot className="h-4 w-4 shrink-0 text-accent" />
+        Natural conversation, business rules applied
+      </div>
+    </>
+  );
+}
+
+function AutomationBody() {
+  return (
+    <>
+      <div className="space-y-2">
+        <ActionRow icon={Database} label="Lead created in CRM" />
+        <ActionRow icon={CalendarCheck} label="Appointment slot held" />
+        <ActionRow icon={MessageSquareText} label="Team summary drafted" />
+      </div>
+      <div className="mt-3 rounded-2xl border border-border/70 bg-bg/45 p-3 md:mt-4 md:p-4">
+        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.14em] text-fg-muted">
+          <span>Workflow progress</span>
+          <span className="text-accent">3 of 3 complete</span>
+        </div>
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60">
+          <div className="h-full w-full rounded-full bg-accent" />
+        </div>
+      </div>
+    </>
+  );
+}
+
+type IconComponent = typeof Database;
+
+function ActionRow({ icon: Icon, label }: { icon: IconComponent; label: string }) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-xl border border-border/60 bg-bg/40 px-3 py-2 md:py-2.5">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
         <Icon className="h-3.5 w-3.5" />
       </span>
-      <div className="min-w-0">
-        <p className="text-[13px] font-semibold leading-tight text-fg">{o.title}</p>
-        <p className="mt-0.5 text-[11px] leading-snug text-fg-muted">{o.detail}</p>
-      </div>
+      <span className="text-xs font-medium text-fg">{label}</span>
+      <Check className="ml-auto h-3.5 w-3.5 text-accent" />
+    </div>
+  );
+}
+
+function Metric({
+  label,
+  value,
+  accent = false,
+}: {
+  label: string;
+  value: string;
+  accent?: boolean;
+}) {
+  return (
+    <div className="rounded-xl border border-border/60 bg-bg/35 px-2 py-2.5 text-center">
+      <p className="text-[9px] uppercase tracking-[0.12em] text-fg-muted">{label}</p>
+      <p className={`mt-1 text-[11px] font-semibold ${accent ? "text-accent" : "text-fg"}`}>
+        {value}
+      </p>
     </div>
   );
 }
