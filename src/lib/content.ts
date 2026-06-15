@@ -252,6 +252,8 @@ export const SPEARHEAD = {
 export type Founder = {
   name: string;
   role: string;
+  /** Optional secondary descriptor shown smaller/muted under the role. */
+  subRole?: string;
   initials: string;
   quoteDraft: string;
   photo: string | null;
@@ -271,6 +273,7 @@ export const FOUNDERS: Founder[] = [
   {
     name: "James",
     role: "Founding Engineer",
+    subRole: "Forward Deployed Engineer",
     initials: "Ja",
     quoteDraft:
       "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
@@ -279,7 +282,7 @@ export const FOUNDERS: Founder[] = [
   },
   {
     name: "Jimmy",
-    role: "CTO",
+    role: "Chief Technical Officer",
     initials: "Ji",
     quoteDraft:
       "The systems we ship have to stay up when it matters most. I build the foundation underneath — fast, secure, and never the reason you miss a call.",
