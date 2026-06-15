@@ -55,6 +55,71 @@ export const CAPABILITIES = [
   "Custom Software Development",
 ] as const;
 
+export type ServiceOffering = {
+  title: string;
+  description: string;
+  bestFor: string;
+};
+
+export const SERVICE_OFFERINGS: ServiceOffering[] = [
+  {
+    title: "Website & Landing Pages",
+    description:
+      "Conversion-focused websites with fast load times, clean messaging, and premium UI.",
+    bestFor: "Best for: service businesses, clinics, agencies, and local brands.",
+  },
+  {
+    title: "AI Agents & Automation",
+    description:
+      "Voice agents, chat agents, lead routing, CRM workflows, and follow-up systems.",
+    bestFor: "Best for: teams drowning in repetitive admin and sales tasks.",
+  },
+  {
+    title: "Custom Software & SaaS",
+    description:
+      "Dashboards, portals, MVPs, internal tools, and scalable business platforms.",
+    bestFor: "Best for: businesses that need workflows turned into software.",
+  },
+];
+
+export type HelpArea = {
+  label: string;
+  items: string[];
+};
+
+export const HELP_AREAS: HelpArea[] = [
+  {
+    label: "Strategy",
+    items: [
+      "Business Process Analysis",
+      "Workflow Audits",
+      "Process Mapping",
+      "AI Readiness Assessment",
+      "Automation Strategy",
+    ],
+  },
+  {
+    label: "Build",
+    items: [
+      "Agentic AI & Automation Development",
+      "Custom Software Development",
+      "Project-Based Implementations",
+      "Website & App Builds",
+      "SaaS MVP Development",
+    ],
+  },
+  {
+    label: "Support",
+    items: [
+      "Dedicated Development Support",
+      "Fractional AI & Automation Partner",
+      "Managed Services & Optimization",
+      "Technology Consulting",
+      "Freelance & Contract Services",
+    ],
+  },
+];
+
 export type Industry = {
   name: string;
   segments: string;

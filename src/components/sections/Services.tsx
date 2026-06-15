@@ -13,79 +13,10 @@ import {
 } from "lucide-react";
 
 import { Heading, Section } from "@/components/ui/primitives";
+import { HELP_AREAS, SERVICE_OFFERINGS } from "@/lib/content";
 
-type ServiceCard = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  bestFor: string;
-};
-
-type HelpColumn = {
-  icon: LucideIcon;
-  label: string;
-  items: string[];
-};
-
-const services = [
-  {
-    icon: Globe,
-    title: "Website & Landing Pages",
-    description:
-      "Conversion-focused websites with fast load times, clean messaging, and premium UI.",
-    bestFor: "Best for: service businesses, clinics, agencies, and local brands.",
-  },
-  {
-    icon: Bot,
-    title: "AI Agents & Automation",
-    description:
-      "Voice agents, chat agents, lead routing, CRM workflows, and follow-up systems.",
-    bestFor: "Best for: teams drowning in repetitive admin and sales tasks.",
-  },
-  {
-    icon: Boxes,
-    title: "Custom Software & SaaS",
-    description:
-      "Dashboards, portals, MVPs, internal tools, and scalable business platforms.",
-    bestFor: "Best for: businesses that need workflows turned into software.",
-  },
-] satisfies ServiceCard[];
-
-const helpColumns = [
-  {
-    icon: Compass,
-    label: "Strategy",
-    items: [
-      "Business Process Analysis",
-      "Workflow Audits",
-      "Process Mapping",
-      "AI Readiness Assessment",
-      "Automation Strategy",
-    ],
-  },
-  {
-    icon: Hammer,
-    label: "Build",
-    items: [
-      "Agentic AI & Automation Development",
-      "Custom Software Development",
-      "Project-Based Implementations",
-      "Website & App Builds",
-      "SaaS MVP Development",
-    ],
-  },
-  {
-    icon: LifeBuoy,
-    label: "Support",
-    items: [
-      "Dedicated Development Support",
-      "Fractional AI & Automation Partner",
-      "Managed Services & Optimization",
-      "Technology Consulting",
-      "Freelance & Contract Services",
-    ],
-  },
-] satisfies HelpColumn[];
+const serviceIcons: LucideIcon[] = [Globe, Bot, Boxes];
+const helpIcons: LucideIcon[] = [Compass, Hammer, LifeBuoy];
 
 export function Services() {
   return (
@@ -98,8 +29,8 @@ export function Services() {
       />
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => {
-          const Icon = service.icon;
+        {SERVICE_OFFERINGS.map((service, index) => {
+          const Icon = serviceIcons[index] ?? Globe;
 
           return (
             <article
@@ -146,8 +77,8 @@ export function Services() {
         </h3>
 
         <div className="mt-8 grid gap-8 md:grid-cols-3 lg:gap-12">
-          {helpColumns.map((column) => {
-            const Icon = column.icon;
+          {HELP_AREAS.map((column, index) => {
+            const Icon = helpIcons[index] ?? Compass;
 
             return (
               <div key={column.label}>

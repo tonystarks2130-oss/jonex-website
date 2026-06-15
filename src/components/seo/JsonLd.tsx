@@ -1,9 +1,10 @@
 import {
   BRAND,
   CAPABILITIES,
-  CONSULTING_SERVICES,
-  INDUSTRIES,
   FAQS,
+  HELP_AREAS,
+  INDUSTRIES,
+  SERVICE_OFFERINGS,
 } from "@/lib/content";
 import { LOGO_SRC } from "@/lib/integrations";
 
@@ -53,7 +54,11 @@ const graph = {
         "Engineered AI systems and technology consulting: AI voice receptionists, agentic AI, intelligent automation, and custom software built and owned by the client — with healthcare-grade, compliance-conscious depth.",
       provider: { "@id": `${SITE}/#organization` },
       areaServed: { "@type": "Place", name: "Worldwide" },
-      serviceType: [...CAPABILITIES, ...CONSULTING_SERVICES],
+      serviceType: [
+        ...CAPABILITIES,
+        ...SERVICE_OFFERINGS.map((service) => service.title),
+        ...HELP_AREAS.flatMap((area) => area.items),
+      ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Industries served",
