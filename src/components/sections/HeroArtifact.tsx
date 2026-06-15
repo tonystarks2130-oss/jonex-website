@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
+  BarChart3,
+  BellRing,
   Bot,
   CalendarCheck,
   Check,
@@ -11,6 +13,8 @@ import {
   MessageSquareText,
   PhoneIncoming,
   Sparkles,
+  Star,
+  UserPlus,
   Workflow,
 } from "lucide-react";
 
@@ -23,7 +27,7 @@ const DECK_TRANSITION =
 const SHUFFLE_INTERVAL_MS = 4200;
 
 type DeckItem = {
-  id: "signal" | "operator" | "automation";
+  id: "signal" | "operator" | "booking" | "records" | "automation" | "reviews" | "dashboard";
   title: string;
   subtitle: string;
   status: string;
@@ -46,20 +50,50 @@ const DECK: DeckItem[] = [
     icon: Bot,
   },
   {
+    id: "booking",
+    title: "Appointment Booked",
+    subtitle: "Slot confirmed on the calendar",
+    status: "Booked",
+    icon: CalendarCheck,
+  },
+  {
+    id: "records",
+    title: "CRM Updated",
+    subtitle: "Contact and deal logged",
+    status: "Synced",
+    icon: Database,
+  },
+  {
     id: "automation",
     title: "Automated Follow-up",
-    subtitle: "Business systems updated",
+    subtitle: "Confirmations and reminders sent",
     status: "Running",
     icon: Workflow,
   },
+  {
+    id: "reviews",
+    title: "Review Requested",
+    subtitle: "Happy customer, review invited",
+    status: "Sent",
+    icon: Star,
+  },
+  {
+    id: "dashboard",
+    title: "Insights Dashboard",
+    subtitle: "Your business at a glance",
+    status: "Live",
+    icon: BarChart3,
+  },
 ];
 
-type Slot = "front" | "left" | "right";
+type Slot = "front" | "left" | "right" | "hidden";
 
 function slotFor(index: number, active: number): Slot {
   const offset = (index - active + DECK.length) % DECK.length;
   if (offset === 0) return "front";
-  return offset === 1 ? "right" : "left";
+  if (offset === 1) return "right";
+  if (offset === DECK.length - 1) return "left";
+  return "hidden";
 }
 
 function initialTransform(slot: Slot) {
@@ -67,6 +101,7 @@ function initialTransform(slot: Slot) {
   if (slot === "left") {
     return "translate3d(calc(-50% - 120px), 68px, -55px) rotateY(-10deg) scale(0.86)";
   }
+  if (slot === "hidden") return "translate3d(-50%, 84px, -90px) scale(0.8)";
   return "translate3d(calc(-50% + 120px), 72px, -35px) rotateY(10deg) scale(0.88)";
 }
 
@@ -97,6 +132,16 @@ export function HeroArtifact() {
       if (!card) return;
       const slot = slotFor(index, activeRef.current);
 
+      if (slot === "hidden") {
+        card.style.transform = "translate3d(-50%, 84px, -90px) scale(0.8)";
+        card.style.opacity = "0";
+        card.style.filter = "saturate(0.6) brightness(0.7)";
+        card.style.zIndex = "0";
+        card.style.pointerEvents = "none";
+        card.style.boxShadow = "none";
+        return;
+      }
+
       if (slot === "front") {
         card.style.transform = `translate3d(calc(-50% + ${x * 9}px), ${
           y * 7
@@ -104,6 +149,7 @@ export function HeroArtifact() {
         card.style.opacity = "1";
         card.style.filter = "none";
         card.style.zIndex = "30";
+        card.style.pointerEvents = "auto";
         card.style.boxShadow =
           "0 42px 100px -34px color-mix(in srgb, var(--accent) 52%, #000), 0 22px 54px -34px #000, inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent)";
         return;
@@ -124,6 +170,7 @@ export function HeroArtifact() {
       card.style.opacity = compact ? "0.42" : "0.5";
       card.style.filter = "saturate(0.72) brightness(0.78)";
       card.style.zIndex = slot === "left" ? "10" : "20";
+      card.style.pointerEvents = "auto";
       card.style.boxShadow =
         "0 28px 70px -42px color-mix(in srgb, var(--accent) 28%, #000), inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent)";
     });
@@ -338,6 +385,7 @@ const DeckCard = function DeckCard({
     <button
       ref={ref}
       type="button"
+      tabIndex={slot === "hidden" ? -1 : 0}
       onClick={onSelect}
       aria-label={`${active ? "Current" : "Show"} ${item.title} workflow card`}
       aria-pressed={active}
@@ -346,9 +394,10 @@ const DeckCard = function DeckCard({
         transform: initialTransform(slot),
         transformStyle: "preserve-3d",
         transition: DECK_TRANSITION,
-        opacity: slot === "front" ? 1 : 0.5,
+        opacity: slot === "hidden" ? 0 : slot === "front" ? 1 : 0.5,
         filter: slot === "front" ? "none" : "saturate(0.72) brightness(0.78)",
-        zIndex: slot === "front" ? 30 : slot === "right" ? 20 : 10,
+        pointerEvents: slot === "hidden" ? "none" : "auto",
+        zIndex: slot === "hidden" ? 0 : slot === "front" ? 30 : slot === "right" ? 20 : 10,
         background:
           "linear-gradient(145deg, color-mix(in srgb, #fff 8%, transparent), transparent 36%), color-mix(in srgb, var(--surface) 96%, var(--bg))",
         backdropFilter: "blur(26px) saturate(1.2)",
@@ -381,7 +430,11 @@ const DeckCard = function DeckCard({
             </span>
             {item.id === "signal" && "Lead understood instantly"}
             {item.id === "operator" && "No hold. No missed lead."}
-            {item.id === "automation" && "Team ready to follow up"}
+            {item.id === "booking" && "Slot confirmed instantly"}
+            {item.id === "records" && "Every detail captured"}
+            {item.id === "automation" && "Customer kept in the loop"}
+            {item.id === "reviews" && "Reputation grows on autopilot"}
+            {item.id === "dashboard" && "You stay in control"}
           </div>
           <span className="font-display text-xs font-semibold text-fg">JoNeX</span>
         </div>
@@ -392,8 +445,12 @@ const DeckCard = function DeckCard({
 
 function renderCardBody(id: DeckItem["id"]) {
   if (id === "signal") return <SignalBody />;
+  if (id === "operator") return <OperatorBody />;
+  if (id === "booking") return <BookingBody />;
+  if (id === "records") return <RecordsBody />;
   if (id === "automation") return <AutomationBody />;
-  return <OperatorBody />;
+  if (id === "reviews") return <ReviewsBody />;
+  return <DashboardBody />;
 }
 
 function SignalBody() {
@@ -463,18 +520,43 @@ function OperatorBody() {
   );
 }
 
-function AutomationBody() {
+function BookingBody() {
+  return (
+    <>
+      <div className="rounded-2xl border border-border/70 bg-bg/50 p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
+          After-hours booking
+        </p>
+        <p className="mt-2 font-display text-lg font-semibold text-fg">Tue &middot; 10:30 AM</p>
+        <p className="mt-1 text-xs leading-5 text-fg-muted">
+          Dental cleaning &mdash; new patient
+        </p>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <Metric label="Date" value="Tue" />
+        <Metric label="Time" value="10:30 AM" />
+        <Metric label="Status" value="Confirmed" accent />
+      </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-border/60 bg-bg/35 px-3 py-2.5 text-xs text-fg-muted">
+        <CalendarCheck className="h-4 w-4 shrink-0 text-accent" />
+        Added to your calendar
+      </div>
+    </>
+  );
+}
+
+function RecordsBody() {
   return (
     <>
       <div className="space-y-2">
-        <ActionRow icon={Database} label="Lead created in CRM" />
-        <ActionRow icon={CalendarCheck} label="Appointment slot held" />
-        <ActionRow icon={MessageSquareText} label="Team summary drafted" />
+        <ActionRow icon={Database} label="Contact created" />
+        <ActionRow icon={UserPlus} label="Deal added &mdash; New lead" />
+        <ActionRow icon={MessageSquareText} label="Call notes attached" />
       </div>
       <div className="mt-3 rounded-2xl border border-border/70 bg-bg/45 p-3 md:mt-4 md:p-4">
         <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.14em] text-fg-muted">
-          <span>Workflow progress</span>
-          <span className="text-accent">3 of 3 complete</span>
+          <span>Record completeness</span>
+          <span className="text-accent">100%</span>
         </div>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60">
           <div className="h-full w-full rounded-full bg-accent" />
@@ -484,9 +566,95 @@ function AutomationBody() {
   );
 }
 
+function AutomationBody() {
+  return (
+    <>
+      <div className="space-y-2">
+        <ActionRow icon={MessageSquareText} label="Confirmation sent to customer" />
+        <ActionRow icon={BellRing} label="Reminder scheduled" />
+        <ActionRow icon={MessageSquareText} label="Owner notified" />
+      </div>
+      <div className="mt-3 rounded-2xl border border-border/70 bg-bg/45 p-3 md:mt-4 md:p-4">
+        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.14em] text-fg-muted">
+          <span>Workflow complete</span>
+          <span className="text-accent">7 of 7</span>
+        </div>
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60">
+          <div className="h-full w-full rounded-full bg-accent" />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ReviewsBody() {
+  return (
+    <>
+      <div className="rounded-2xl border border-border/70 bg-bg/50 p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
+          Post-visit
+        </p>
+        <div className="mt-2 flex items-center gap-1">
+          {[0, 1, 2, 3, 4].map((star) => (
+            <Star key={star} className="h-3.5 w-3.5 fill-current text-accent" />
+          ))}
+        </div>
+        <p className="mt-2 font-display text-lg font-semibold text-fg">Review invite sent</p>
+        <p className="mt-1 text-xs leading-5 text-fg-muted">
+          Right after a great experience
+        </p>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <Metric label="Trigger" value="Visit done" />
+        <Metric label="Channel" value="SMS" />
+        <Metric label="Status" value="Sent" accent />
+      </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-border/60 bg-bg/35 px-3 py-2.5 text-xs text-fg-muted">
+        <Star className="h-4 w-4 shrink-0 fill-current text-accent" />
+        More 5-star reviews, automatically
+      </div>
+    </>
+  );
+}
+
+function DashboardBody() {
+  const bars = [38, 64, 48, 78, 58, 86, 72, 96];
+
+  return (
+    <>
+      <div className="rounded-2xl border border-border/70 bg-bg/50 p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-fg-muted">
+            This week
+          </p>
+          <BarChart3 className="h-5 w-5 text-accent" />
+        </div>
+        <div className="mt-4 flex h-16 items-end gap-1.5 rounded-xl border border-border/50 bg-bg/35 px-3 py-2.5">
+          {bars.map((height, index) => (
+            <span
+              key={`${height}-${index}`}
+              className="flex-1 rounded-full bg-accent/80"
+              style={{ height: `${height}%` }}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        <Metric label="Calls" value="100%" />
+        <Metric label="Leads" value="24" />
+        <Metric label="Booked" value="18" accent />
+      </div>
+      <div className="mt-3 flex items-center gap-2 rounded-xl border border-border/60 bg-bg/35 px-3 py-2.5 text-xs text-fg-muted">
+        <BarChart3 className="h-4 w-4 shrink-0 text-accent" />
+        Your whole operation at a glance
+      </div>
+    </>
+  );
+}
+
 type IconComponent = typeof Database;
 
-function ActionRow({ icon: Icon, label }: { icon: IconComponent; label: string }) {
+function ActionRow({ icon: Icon, label }: { icon: IconComponent; label: ReactNode }) {
   return (
     <div className="flex items-center gap-2.5 rounded-xl border border-border/60 bg-bg/40 px-3 py-2 md:py-2.5">
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
