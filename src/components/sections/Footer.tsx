@@ -7,6 +7,7 @@ import {
   TelegramIcon,
 } from '@/components/ui/BrandIcons';
 import { Container } from '@/components/ui/primitives';
+import { Mail } from 'lucide-react';
 import { FOOTER_COPY } from '@/lib/content';
 import { CONTACT } from '@/lib/integrations';
 
@@ -28,6 +29,7 @@ const SOCIALS = [
 // the verified wire URLs in CONTACT (unchanged).
 const CONTACT_CHANNELS = [
   { label: '+63 956 987 1934', href: CONTACT.whatsapp.url, Icon: WhatsAppIcon },
+  { label: CONTACT.email.address, href: CONTACT.email.url, Icon: Mail },
   { label: CONTACT.telegram.handle, href: CONTACT.telegram.url, Icon: TelegramIcon },
 ] as const;
 
