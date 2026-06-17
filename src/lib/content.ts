@@ -353,3 +353,88 @@ export const ENGINEERED_STACK: StackLayer[] = [
     items: ["n8n", "Next.js", "React", "FastAPI", "PostgreSQL", "GitHub", "GoHighLevel"],
   },
 ];
+
+export type HealthcareTrustPoint = { label: string; detail: string };
+export type HealthcareCapability = {
+  name: string;
+  detail: string;
+  flagship?: boolean;
+};
+
+export const HEALTHCARE_SPECIALTY: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  trustPoints: HealthcareTrustPoint[];
+  capabilities: HealthcareCapability[];
+  servedSegments: string[];
+  disclosure: string;
+} = {
+  eyebrow: "Our Flagship Specialty",
+  title: "Healthcare AI, engineered HIPAA-aligned",
+  intro:
+    "Deployed in your own Azure tenant — you keep ownership of your data and your compliance chain. We build, configure, and manage the systems; protected health information stays under your control.",
+  trustPoints: [
+    {
+      label: "Your Azure tenant",
+      detail:
+        "Systems deploy into your cloud, not ours — you own the data and the BAA chain.",
+    },
+    {
+      label: "HIPAA-aligned by design",
+      detail:
+        "Enterprise architecture with encryption, least-privilege access, and audit logging.",
+    },
+    {
+      label: "No PHI in AI tooling",
+      detail:
+        "Reasoning models and dev tools never touch protected health information.",
+    },
+    {
+      label: "End-to-end",
+      detail:
+        "Discovery, build, deploy, and managed services — we don't hand you a half-built system.",
+    },
+  ],
+  capabilities: [
+    {
+      name: "AI Voice Receptionists",
+      flagship: true,
+      detail:
+        "Answers calls 24/7, books appointments, handles FAQs, and routes urgent calls to staff.",
+    },
+    {
+      name: "Workflow Automation",
+      detail:
+        "Intake, reminders, recalls, insurance prompts, follow-ups, and charge capture.",
+    },
+    {
+      name: "Custom Healthcare Software",
+      detail:
+        "Patient portals, internal tools, dashboards, and lightweight EHR add-ons.",
+    },
+    {
+      name: "Patient Websites & Booking",
+      detail:
+        "Fast, secure sites with online booking wired into your existing scheduler.",
+    },
+    {
+      name: "CRM / GoHighLevel",
+      detail:
+        "Lead capture and nurture for cosmetic and elective patient acquisition.",
+    },
+    {
+      name: "Internal Dashboards",
+      detail:
+        "Role-based KPIs — schedule, no-show rate, and pending charges at a glance.",
+    },
+  ],
+  servedSegments: [
+    "Dental",
+    "Dermatology & Aesthetic",
+    "Medical & Specialty Clinics",
+    "Multi-Location Healthcare Groups",
+  ],
+  disclosure:
+    "We build healthcare technology solutions using HIPAA-aligned architecture, security controls, and industry best practices, in collaboration with client compliance requirements.",
+};
