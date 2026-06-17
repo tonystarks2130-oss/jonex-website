@@ -134,8 +134,8 @@ export function Behind() {
 
       {isDraft && (
         <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-fg-muted/70">
-          One headshot is on the way, these founder notes are first drafts, and the
-          contact buttons are placeholders — all swap in place once finalized.
+          These founder notes are first drafts and the contact buttons are
+          placeholders — both swap in place once finalized.
         </p>
       )}
     </Section>

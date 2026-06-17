@@ -277,7 +277,7 @@ export const FOUNDERS: Founder[] = [
     initials: "Ja",
     quoteDraft:
       "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
-    photo: null,
+    photo: "/team/james.jpg",
     socials: [],
   },
   {
