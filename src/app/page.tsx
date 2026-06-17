@@ -8,6 +8,7 @@ import { Industries } from "@/components/sections/Industries";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { EngineeredStack } from "@/components/sections/EngineeredStack";
 import { HealthcareSpecialty } from "@/components/sections/HealthcareSpecialty";
+import { AiVoice } from "@/components/sections/AiVoice";
 import { Process } from "@/components/sections/Process";
 import { Proof } from "@/components/sections/Proof";
 import { Services } from "@/components/sections/Services";
@@ -31,6 +32,7 @@ export default function Home() {
         <Capabilities />
         <EngineeredStack />
         <HealthcareSpecialty />
+        <AiVoice />
         <Process />
         <Proof />
         <Services />

@@ -438,3 +438,54 @@ export const HEALTHCARE_SPECIALTY: {
   disclosure:
     "We build healthcare technology solutions using HIPAA-aligned architecture, security controls, and industry best practices, in collaboration with client compliance requirements.",
 };
+
+export type CallTurn = { speaker: "AI" | "Caller"; line: string };
+
+export const AI_VOICE_HIGHLIGHT: {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  sampleClinic: string;
+  sampleLabel: string;
+  transcript: CallTurn[];
+  steps: string[];
+  capabilities: string[];
+} = {
+  eyebrow: "Flagship Service",
+  title: "Hear how a clinic call actually goes",
+  intro:
+    "Every call answered, day or night. The AI receptionist books appointments, handles the routine questions, and routes anything urgent to your staff — so the front desk never has to choose between the phone and the patient in the room.",
+  sampleClinic: "Brightsmile Dental",
+  sampleLabel: "Example call",
+  transcript: [
+    { speaker: "AI", line: "Thanks for calling Brightsmile Dental — how can I help?" },
+    { speaker: "Caller", line: "I chipped a tooth and I need to come in this week." },
+    {
+      speaker: "AI",
+      line: "I'm sorry to hear that. I can book you in — can I get your name and a callback number?",
+    },
+    { speaker: "Caller", line: "Maria Santos, (415) 555-0142." },
+    {
+      speaker: "AI",
+      line: "Thanks, Maria. Dr. Lee has Thursday at 2:00 PM or Friday at 10:30 AM. Which works better?",
+    },
+    { speaker: "Caller", line: "Thursday at 2." },
+    {
+      speaker: "AI",
+      line: "Booked for Thursday at 2:00 PM with Dr. Lee. I've texted your confirmation. If it becomes painful before then, please call us or seek urgent care.",
+    },
+  ],
+  steps: [
+    "Answers every call, 24/7",
+    "Understands the request",
+    "Checks your scheduler and books",
+    "Texts the confirmation",
+    "Routes urgent or clinical calls to staff",
+  ],
+  capabilities: [
+    "Never miss an after-hours call",
+    "Fewer no-shows with reminders",
+    "Front desk freed from the phone",
+    "Books into your existing scheduler",
+  ],
+};
