@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local working scratch (design source assets, pre-edit backups)
+_source/
+_snapshots/
