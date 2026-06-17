@@ -324,3 +324,32 @@ export const FOOTER_COPY = {
   availability:
     "Available for consulting, project-based, retainer, managed services, and freelance engagements.",
 } as const;
+
+export type StackLayer = {
+  label: string;
+  caption: string;
+  items: string[];
+};
+
+export const ENGINEERED_STACK: StackLayer[] = [
+  {
+    label: "Clinical Systems",
+    caption: "Systems we integrate with",
+    items: ["ModMed / EMA", "Nextech", "Open Dental", "athenahealth", "Epic", "Oracle Health (Cerner)", "eClinicalWorks", "FHIR / HL7"],
+  },
+  {
+    label: "Cloud & Security",
+    caption: "HIPAA-aligned foundation",
+    items: ["Microsoft Azure", "AWS", "Microsoft Entra ID", "Azure Key Vault", "Blob Storage", "Azure Monitor"],
+  },
+  {
+    label: "AI & Voice",
+    caption: "The reasoning and conversation layer",
+    items: ["Azure OpenAI", "Claude", "Retell AI", "ElevenLabs", "Twilio"],
+  },
+  {
+    label: "Automation & Build",
+    caption: "How the systems get built and wired",
+    items: ["n8n", "Next.js", "React", "FastAPI", "PostgreSQL", "GitHub", "GoHighLevel"],
+  },
+];

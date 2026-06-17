@@ -6,6 +6,7 @@ import { HearTheAI } from "@/components/sections/HearTheAI";
 import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
 import { Industries } from "@/components/sections/Industries";
 import { Capabilities } from "@/components/sections/Capabilities";
+import { EngineeredStack } from "@/components/sections/EngineeredStack";
 import { Process } from "@/components/sections/Process";
 import { Proof } from "@/components/sections/Proof";
 import { Services } from "@/components/sections/Services";
@@ -27,6 +28,7 @@ export default function Home() {
         <ProblemOutcome />
         <Industries />
         <Capabilities />
+        <EngineeredStack />
         <Process />
         <Proof />
         <Services />
