@@ -489,3 +489,10 @@ export const AI_VOICE_HIGHLIGHT: {
     "Books into your existing scheduler",
   ],
 };
+
+export const STACK_ORBIT_COPY = {
+  eyebrow: "Full-Stack Engineering",
+  title: "One team. The entire stack.",
+  intro:
+    "From the clinical systems you already run to the cloud, AI, and automation underneath — we engineer across the whole stack, end to end. No hand-offs, no gaps.",
+} as const;

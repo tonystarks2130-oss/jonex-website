@@ -7,6 +7,7 @@ import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
 import { Industries } from "@/components/sections/Industries";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { EngineeredStack } from "@/components/sections/EngineeredStack";
+import { StackOrbit } from "@/components/sections/StackOrbit";
 import { HealthcareSpecialty } from "@/components/sections/HealthcareSpecialty";
 import { AiVoice } from "@/components/sections/AiVoice";
 import { Process } from "@/components/sections/Process";
@@ -31,6 +32,7 @@ export default function Home() {
         <Industries />
         <Capabilities />
         <EngineeredStack />
+        <StackOrbit />
         <HealthcareSpecialty />
         <AiVoice />
         <Process />

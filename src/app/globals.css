@@ -399,3 +399,30 @@ html {
     animation: none;
   }
 }
+
+/* ============================================================
+   Stack orbit — tech-stack constellation (Engineered Stack flex).
+   Ring layers rotate; each chip counter-rotates at the same duration
+   so labels stay upright. Speed set per-ring via --orbit-dur.
+   ============================================================ */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes orbit-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.orbit-rotate {
+  animation: orbit-spin var(--orbit-dur, 64s) linear infinite;
+}
+.orbit-rotate-rev {
+  animation: orbit-spin-rev var(--orbit-dur, 64s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-rotate,
+  .orbit-rotate-rev {
+    animation: none;
+  }
+}
