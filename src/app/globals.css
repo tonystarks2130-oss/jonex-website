@@ -547,6 +547,136 @@ html {
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.32));
 }
 
+.stack-orbit-stage {
+  isolation: isolate;
+}
+
+.orbit-integration-tile-motion,
+.orbit-integration-foreign,
+.orbit-integration-tile {
+  pointer-events: auto;
+}
+
+.orbit-integration-foreign {
+  overflow: visible;
+}
+
+/* Uniform circular white chip holding the integration's real logo, with
+   breathing room so circular + square brand marks all read consistently
+   (favicon-grade marks read best on white, in both themes). */
+.orbit-integration-tile {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  border: 1px solid rgba(10, 22, 40, 0.1);
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 0;
+  box-shadow:
+    0 10px 22px -10px rgba(8, 24, 50, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.orbit-integration-tile:hover,
+.orbit-integration-tile:focus-visible,
+.orbit-integration-tile[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow:
+    0 16px 30px -12px color-mix(in srgb, var(--accent) 42%, #000),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.orbit-integration-tile:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.orbit-integration-tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.orbit-integration-logo {
+  width: 64%;
+  height: 64%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+/* Hover tooltip — non-blocking so it never steals the pointer from the moving
+   tiles underneath (positioning handled by inline translate utilities). */
+/* Hover tooltip — a solid speech bubble with a tail pointing at the tile.
+   Non-blocking + solid (no backdrop-filter) so it can follow a moving tile
+   smoothly. */
+.orbit-tooltip {
+  pointer-events: none;
+  border-radius: 16px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 18px 40px -16px rgba(6, 24, 50, 0.5),
+    0 4px 12px rgba(6, 24, 50, 0.16);
+  transform: translate(-50%, 0);
+}
+.orbit-tooltip[data-placement="above"] {
+  transform: translate(-50%, -100%);
+}
+.orbit-tooltip::after {
+  content: "";
+  position: absolute;
+  left: var(--tail-x, 50%);
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  background: var(--bg-raised);
+  transform: rotate(45deg);
+}
+.orbit-tooltip[data-placement="above"]::after {
+  bottom: -7px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.orbit-tooltip[data-placement="below"]::after {
+  top: -7px;
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+
+.orbit-integration-close {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  color: var(--fg);
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.orbit-integration-close:hover,
+.orbit-integration-close:focus-visible {
+  border-color: var(--glass-hover-border);
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
+  color: var(--fg);
+}
+
+.orbit-integration-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* Tiles use the site's glass language (translucent surface + cyan hairline +
    theme-flipped glyph) instead of solid-white stickers, so the orbit reads as
    part of JoNeX rather than a pasted-in graphic. */
@@ -603,6 +733,46 @@ html {
   animation: meme-badge-spin 16s linear infinite reverse;
 }
 
+/* Interactive cloud-service bubbles (OrbitBubbles): JS drives idle drift +
+   cursor-flee via transform on .orbit-bubble, so the skin itself carries no
+   animation. */
+.orbit-bubble {
+  will-change: transform;
+}
+/* Clean glass circle (no blue droplet) — matches the site's glass surfaces. */
+/* Same glass material as the site's cards (.glass-card tokens), just circular —
+   dark glass in dark mode, white glass in light — so the bubbles match the rest
+   of the site. */
+/* No backdrop-filter here: re-blurring the backdrop behind 6 moving circles
+   every frame is what made the orbit laggy. The layered translucent gradient
+   keeps the glass look without the per-frame blur cost. */
+.orbit-bubble-mark {
+  border-radius: 50%;
+  background: var(--glass-layer);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 18px -6px rgba(6, 24, 50, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+/* Filtered to monochrome while preserving the source SVG's internal detail. */
+.orbit-bubble-glyph {
+  display: block;
+  width: 42%;
+  height: 34%;
+  object-fit: contain;
+}
+.orbit-bubble-name {
+  margin-top: 5%;
+  max-width: 86%;
+  text-align: center;
+  line-height: 1.05;
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--fg);
+}
+
 .meme-nurse-image {
   filter:
     brightness(0.9)
@@ -640,6 +810,74 @@ html {
   .meme-tech-tile,
   .meme-brand-badge,
   .meme-brand-badge-core {
+    animation: none;
+  }
+
+  .orbit-integration-tile,
+  .orbit-integration-close {
+    transition: none;
+  }
+
+  .orbit-integration-tile:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   AI Voice — self-playing call demo (AiVoice section).
+   ============================================================ */
+@keyframes ai-voice-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.ai-voice-msg {
+  animation: ai-voice-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ai-voice-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 0.9rem;
+}
+.ai-voice-typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--accent);
+  opacity: 0.45;
+  animation: ai-voice-bounce 1s ease-in-out infinite;
+}
+.ai-voice-typing i:nth-child(2) { animation-delay: 0.15s; }
+.ai-voice-typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ai-voice-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.ai-voice-live {
+  animation: ai-voice-blink 1.5s ease-in-out infinite;
+}
+@keyframes ai-voice-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* The active "thinking" step pulses a ring while the AI works it. */
+.ai-step-active {
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: ai-step-pulse 1.3s ease-in-out infinite;
+}
+@keyframes ai-step-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-voice-msg,
+  .ai-voice-typing i,
+  .ai-voice-live,
+  .ai-step-active {
     animation: none;
   }
 }

@@ -458,7 +458,7 @@ export const AI_VOICE_HIGHLIGHT: {
   sampleClinic: "Brightsmile Dental",
   sampleLabel: "Example call",
   transcript: [
-    { speaker: "AI", line: "Thanks for calling Brightsmile Dental — how can I help?" },
+    { speaker: "AI", line: "Thanks for calling Brightsmile Dental, this is Dex — how can I help?" },
     { speaker: "Caller", line: "I chipped a tooth and I need to come in this week." },
     {
       speaker: "AI",
@@ -496,3 +496,56 @@ export const STACK_ORBIT_COPY = {
   intro:
     "From the clinical systems you already run to the cloud, AI, and automation underneath — we engineer across the whole stack, end to end. No hand-offs, no gaps.",
 } as const;
+
+export const ORBIT_INTEGRATIONS = [
+  {
+    name: "ModMed",
+    logo: "/logos/ehr/modmed.png",
+    blurb:
+      "Specialty EHR/PM for dermatology, aesthetics & ophthalmology. We connect via FHIR so the AI books visits, updates charts, and captures charges inside it.",
+  },
+  {
+    name: "Epic",
+    logo: "/logos/ehr/epic.png",
+    blurb:
+      "The enterprise EHR standard. We integrate through SMART-on-FHIR — automation and patient tools work alongside Epic with no workflow disruption.",
+  },
+  {
+    name: "Oracle Health",
+    logo: "/logos/ehr/oraclehealth.png",
+    blurb:
+      "Enterprise hospital EHR (formerly Cerner). We connect via FHIR to bring schedules, encounters, and records to your AI and dashboards.",
+  },
+  {
+    name: "athenahealth",
+    logo: "/logos/ehr/athenahealth.png",
+    blurb:
+      "Cloud EHR/PM with a clean API. We wire intake, reminders, and booking straight in via its Marketplace + FHIR.",
+  },
+  {
+    name: "eClinicalWorks",
+    logo: "/logos/ehr/ecw.png",
+    blurb:
+      "Widely-used EHR/PM. We integrate through the eCW Open API + FHIR to automate intake, recalls, and follow-ups.",
+  },
+  {
+    name: "NextGen",
+    logo: "/logos/ehr/nextgen.png",
+    blurb:
+      "Ambulatory EHR/PM with a strong API. We connect via FHIR + the App Gallery so voice and automation fit your specialty workflows.",
+  },
+  {
+    name: "DrChrono",
+    logo: "/logos/ehr/drchrono.png",
+    blurb:
+      "Modern cloud + mobile EHR. Its public REST/FHIR API lets us connect patient, clinical, and billing data fast.",
+  },
+  {
+    name: "Open Dental",
+    logo: "/logos/ehr/opendental.png",
+    blurb:
+      "The most open dental PM. Its well-documented API is the cleanest place to wire AI booking, reminders, and recalls.",
+  },
+] as const;
+
+export type OrbitIntegration = (typeof ORBIT_INTEGRATIONS)[number];

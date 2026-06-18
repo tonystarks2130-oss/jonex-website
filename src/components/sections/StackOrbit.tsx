@@ -1,61 +1,56 @@
-import type { CSSProperties } from "react";
+"use client";
 
 import Image from "next/image";
-import type { IconType } from "react-icons";
-import {
-  SiClaude,
-  SiTwilio,
-  SiElevenlabs,
-  SiReact,
-  SiOpenai,
-  SiPostgresql,
-  SiGithub,
-  SiNextdotjs,
-  SiN8N,
-  SiPython,
-  SiMongodb,
-} from "react-icons/si";
+import { useEffect, useRef, useState } from "react";
 
 import { Section, Heading } from "@/components/ui/primitives";
-import { STACK_ORBIT_COPY } from "@/lib/content";
+import {
+  ORBIT_INTEGRATIONS,
+  STACK_ORBIT_COPY,
+  type OrbitIntegration,
+} from "@/lib/content";
 
-type TechTile = {
-  label: string;
-  mark?: string;
-  Icon?: IconType;
+import { OrbitBubbles } from "./OrbitBubbles";
+
+type OrbitIntegrationTile = OrbitIntegration & {
   orbit: number;
   delay: string;
-  hideOnMobile?: boolean;
+  angle: number;
 };
 
-type BrandBadge = {
-  x: number;
-  y: number;
-  size: number;
-  rotate: number;
-  delay: string;
-  hideOnMobile?: boolean;
-};
+const ORBIT_TILE_BOX = {
+  width: 58,
+  height: 58,
+} as const;
 
-const TECH_TILES: TechTile[] = [
-  { label: "Claude", Icon: SiClaude, orbit: 0, delay: "-1s" },
-  { label: "Twilio", Icon: SiTwilio, orbit: 0, delay: "-15s" },
-  { label: "ElevenLabs", Icon: SiElevenlabs, orbit: 0, delay: "-29s" },
-  { label: "React", Icon: SiReact, orbit: 1, delay: "-5s" },
-  { label: "Azure OpenAI", Icon: SiOpenai, orbit: 1, delay: "-23s", hideOnMobile: true },
-  { label: "PostgreSQL", Icon: SiPostgresql, orbit: 1, delay: "-40s", hideOnMobile: true },
-  { label: "GitHub", Icon: SiGithub, orbit: 2, delay: "-8s", hideOnMobile: true },
-  { label: "AWS", mark: "AWS", orbit: 0, delay: "-24s", hideOnMobile: true },
-  { label: "Next.js", Icon: SiNextdotjs, orbit: 1, delay: "-42s", hideOnMobile: true },
-  { label: "n8n", Icon: SiN8N, orbit: 2, delay: "-4s", hideOnMobile: true },
-  { label: "Python", Icon: SiPython, orbit: 2, delay: "-21s", hideOnMobile: true },
-  { label: "MongoDB", Icon: SiMongodb, orbit: 2, delay: "-36s", hideOnMobile: true },
-];
+
+const ORBIT_TILE_PLACEMENT = [
+  { orbit: 0, delay: "-1s", angle: 8 },
+  { orbit: 1, delay: "-8s", angle: 52 },
+  { orbit: 2, delay: "-15s", angle: 96 },
+  { orbit: 0, delay: "-22s", angle: 140 },
+  { orbit: 1, delay: "-29s", angle: 188 },
+  { orbit: 2, delay: "-36s", angle: 232 },
+  { orbit: 0, delay: "-43s", angle: 278 },
+  { orbit: 1, delay: "-50s", angle: 324 },
+] as const;
+
+const ORBIT_TILES: OrbitIntegrationTile[] = ORBIT_INTEGRATIONS.map(
+  (integration, index) => ({
+    ...integration,
+    ...ORBIT_TILE_PLACEMENT[index % ORBIT_TILE_PLACEMENT.length],
+  }),
+);
 
 type OrbitPath = {
   d: string;
   duration: number;
   width: number;
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  rotationDeg: number;
 };
 
 function rotatedPoint(
@@ -127,136 +122,229 @@ function atomEllipsePath(
   ].join(" ");
 }
 
-const ATOM_ORBITS: OrbitPath[] = [
-  { d: atomEllipsePath(450, 370, 430, 126, -12), duration: 48, width: 5 },
-  { d: atomEllipsePath(450, 370, 424, 158, 24), duration: 58, width: 4 },
-  { d: atomEllipsePath(450, 370, 408, 136, -38), duration: 54, width: 2.5 },
-];
+function buildAtomOrbit(
+  cx: number,
+  cy: number,
+  rx: number,
+  ry: number,
+  rotationDeg: number,
+  duration: number,
+  width: number,
+): OrbitPath {
+  return {
+    d: atomEllipsePath(cx, cy, rx, ry, rotationDeg),
+    duration,
+    width,
+    cx,
+    cy,
+    rx,
+    ry,
+    rotationDeg,
+  };
+}
 
-const BRAND_BADGES: BrandBadge[] = [
-  { x: 12, y: 38, size: 74, rotate: -24, delay: "-1s" },
-  { x: 55, y: 9, size: 72, rotate: 8, delay: "-3s", hideOnMobile: true },
-  { x: 88, y: 48, size: 78, rotate: -14, delay: "-2s" },
-  { x: 9, y: 88, size: 68, rotate: 18, delay: "-4s", hideOnMobile: true },
-];
-
-function FloatingBrandBadge({ badge }: { badge: BrandBadge }) {
-  const style = {
-    left: `${badge.x}%`,
-    top: `${badge.y}%`,
-    width: badge.size,
-    height: badge.size,
-    transform: `translate(-50%, -50%) rotate(${badge.rotate}deg)`,
-    "--badge-delay": badge.delay,
-  } as CSSProperties;
-
-  return (
-    <div
-      className={`meme-brand-badge absolute z-20 grid place-items-center ${
-        badge.hideOnMobile ? "hidden sm:grid" : ""
-      }`}
-      style={style}
-      aria-hidden="true"
-    >
-      <div className="meme-brand-badge-core grid h-[58%] w-[58%] place-items-center rounded-full border-2 border-white bg-[#252a58] shadow-inner">
-        <Image
-          src="/brand/jonex-icon.png"
-          alt=""
-          width={34}
-          height={34}
-          className="h-7 w-7 rounded-full object-cover"
-        />
-      </div>
-    </div>
+function pointOnAtomEllipse(orbit: OrbitPath, angleDeg: number) {
+  const angle = (angleDeg * Math.PI) / 180;
+  return rotatedPoint(
+    orbit.cx,
+    orbit.cy,
+    orbit.cx + orbit.rx * Math.cos(angle),
+    orbit.cy + orbit.ry * Math.sin(angle),
+    orbit.rotationDeg,
   );
 }
 
-function OrbitSketch({ layer = "back" }: { layer?: "back" | "front" }) {
-  const isFront = layer === "front";
-  const foregroundClipId = "atomForegroundWindow";
-  const techTiles = TECH_TILES.map((tile) => {
+const ATOM_ORBITS: OrbitPath[] = [
+  buildAtomOrbit(450, 370, 430, 126, -12, 48, 5),
+  buildAtomOrbit(450, 370, 424, 158, 24, 58, 4),
+  buildAtomOrbit(450, 370, 408, 136, -38, 54, 2.5),
+];
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(true);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    updatePreference();
+    mediaQuery.addEventListener("change", updatePreference);
+
+    return () => mediaQuery.removeEventListener("change", updatePreference);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+type OrbitSketchProps = {
+  layer: "lines" | "tiles";
+  onHover: (integration: OrbitIntegration, el: HTMLElement) => void;
+  onHoverEnd: () => void;
+  hoveredName?: string;
+  paused: boolean;
+  reducedMotion: boolean;
+};
+
+function OrbitSketch({
+  layer,
+  onHover,
+  onHoverEnd,
+  hoveredName,
+  paused,
+  reducedMotion,
+}: OrbitSketchProps) {
+  const isTiles = layer === "tiles";
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+
+    if (!svg) {
+      return;
+    }
+
+    if (paused || reducedMotion) {
+      svg.pauseAnimations();
+      return;
+    }
+
+    svg.unpauseAnimations();
+  }, [paused, reducedMotion]);
+
+  const integrationTiles = ORBIT_TILES.map((tile) => {
     const orbit = ATOM_ORBITS[tile.orbit];
-    const { Icon } = tile;
+    const staticPoint = pointOnAtomEllipse(orbit, tile.angle);
+
     return (
       <g
-        key={tile.label}
-        className={`meme-svg-tile ${tile.hideOnMobile ? "hidden sm:block" : ""}`}
-        aria-label={tile.label}
+        key={tile.name}
+        className="meme-svg-tile orbit-integration-tile-motion"
+        aria-label={tile.name}
+        transform={
+          reducedMotion
+            ? `translate(${staticPoint.x.toFixed(1)} ${staticPoint.y.toFixed(1)})`
+            : undefined
+        }
       >
-        <animateMotion
-          dur={`${orbit.duration}s`}
-          begin={tile.delay}
-          repeatCount="indefinite"
-          path={orbit.d}
-        />
-        <rect className="meme-tile-bg" x="-26" y="-26" width="52" height="52" rx="13" />
-        <rect
-          className="meme-tile-edge"
-          x="-26"
-          y="-26"
-          width="52"
-          height="52"
-          rx="13"
-          fill="none"
-          strokeWidth="1.5"
-        />
-        {Icon ? (
-          <Icon className="meme-tile-glyph" x={-15} y={-15} width={30} height={30} />
-        ) : (
-          <text
-            x="0"
-            y="1"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className="meme-svg-tile-text"
-          >
-            {tile.mark}
-          </text>
+        {reducedMotion ? null : (
+          <animateMotion
+            dur={`${orbit.duration}s`}
+            begin={tile.delay}
+            repeatCount="indefinite"
+            path={orbit.d}
+          />
         )}
+        <foreignObject
+          className="orbit-integration-foreign"
+          x={ORBIT_TILE_BOX.width / -2}
+          y={ORBIT_TILE_BOX.height / -2}
+          width={ORBIT_TILE_BOX.width}
+          height={ORBIT_TILE_BOX.height}
+        >
+          <button
+            type="button"
+            className="orbit-integration-tile"
+            aria-label={`${tile.name} integration`}
+            data-active={hoveredName === tile.name ? "true" : undefined}
+            onMouseEnter={(event) => onHover(tile, event.currentTarget)}
+            onMouseLeave={onHoverEnd}
+            onFocus={(event) => onHover(tile, event.currentTarget)}
+            onBlur={onHoverEnd}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={tile.logo} alt="" className="orbit-integration-logo" />
+          </button>
+        </foreignObject>
       </g>
     );
   });
 
   return (
     <svg
+      ref={svgRef}
       className={`meme-atom-stage pointer-events-none absolute left-1/2 top-1/2 h-[124%] w-[124%] -translate-x-1/2 -translate-y-1/2 ${
-        isFront ? "z-30" : "z-10"
+        isTiles ? "z-30" : "z-10"
       }`}
       viewBox="0 0 900 700"
       preserveAspectRatio="xMidYMid meet"
-      aria-hidden="true"
+      role={isTiles ? "group" : undefined}
+      aria-label={isTiles ? "Clinical system integrations" : undefined}
+      aria-hidden={isTiles ? undefined : true}
     >
-      <defs>
-        <filter id="atomLineShadow" x="-8%" y="-8%" width="116%" height="116%">
-          <feDropShadow dx="3" dy="5" stdDeviation="3" floodColor="#000" floodOpacity="0.22" />
-        </filter>
-        {isFront ? (
-          <clipPath id={foregroundClipId}>
-            <rect x="0" y="388" width="900" height="250" />
-            <rect x="0" y="276" width="282" height="178" />
-            <rect x="614" y="276" width="286" height="192" />
-            <rect x="316" y="306" width="284" height="92" />
-          </clipPath>
-        ) : null}
-      </defs>
-
-      <g clipPath={isFront ? `url(#${foregroundClipId})` : undefined}>
-        {ATOM_ORBITS.map((orbit, i) => (
-          <g key={`orbit-line-${i}`}>
-            <path className="meme-atom-path-shadow" d={orbit.d} strokeWidth={orbit.width + 3} />
-            <path className="meme-atom-path" d={orbit.d} strokeWidth={orbit.width} />
-            <path className="meme-atom-path-highlight" d={orbit.d} strokeWidth={Math.max(1, orbit.width * 0.36)} />
-          </g>
-        ))}
-      </g>
-
-      {isFront ? <g clipPath={`url(#${foregroundClipId})`}>{techTiles}</g> : techTiles}
+      {isTiles ? (
+        integrationTiles
+      ) : (
+        <>
+          <defs>
+            <filter id="atomLineShadow" x="-8%" y="-8%" width="116%" height="116%">
+              <feDropShadow dx="3" dy="5" stdDeviation="3" floodColor="#000" floodOpacity="0.22" />
+            </filter>
+          </defs>
+          {ATOM_ORBITS.map((orbit, i) => (
+            <g key={`orbit-line-${i}`}>
+              <path className="meme-atom-path-shadow" d={orbit.d} strokeWidth={orbit.width + 3} />
+              <path className="meme-atom-path" d={orbit.d} strokeWidth={orbit.width} />
+              <path className="meme-atom-path-highlight" d={orbit.d} strokeWidth={Math.max(1, orbit.width * 0.36)} />
+            </g>
+          ))}
+        </>
+      )}
     </svg>
   );
 }
 
 export function StackOrbit() {
   const { eyebrow, title, intro } = STACK_ORBIT_COPY;
+  const [hovered, setHovered] = useState<OrbitIntegration | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  // Orbit never stops for interaction — hovering a tile just pops a tooltip.
+  const orbitPaused = prefersReducedMotion;
+
+  const stageRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLElement>(null);
+  const hoveredElRef = useRef<HTMLElement | null>(null);
+
+  const handleHover = (integration: OrbitIntegration, el: HTMLElement) => {
+    hoveredElRef.current = el;
+    setHovered(integration);
+  };
+  const handleHoverEnd = () => {
+    hoveredElRef.current = null;
+    setHovered(null);
+  };
+
+  // The tooltip rides the (moving) hovered tile every frame so it stays
+  // attached as the tile orbits.
+  useEffect(() => {
+    if (!hovered) return;
+    let raf = 0;
+    const follow = () => {
+      const el = hoveredElRef.current;
+      const stage = stageRef.current;
+      const tip = tooltipRef.current;
+      if (el && stage && tip) {
+        const s = stage.getBoundingClientRect();
+        const b = el.getBoundingClientRect();
+        const cx = b.left + b.width / 2 - s.left;
+        const cy = b.top + b.height / 2 - s.top;
+        const above = cy > s.height * 0.5;
+        const w = tip.offsetWidth;
+        const half = w / 2 + 8;
+        const gap = b.height / 2 + 14;
+        const x = Math.min(Math.max(cx, half), s.width - half);
+        tip.style.left = `${x}px`;
+        tip.style.top = `${above ? cy - gap : cy + gap}px`;
+        tip.dataset.placement = above ? "above" : "below";
+        // Move the tail so it always points at the tile, even when the bubble
+        // is clamped to stay on-screen.
+        const tailX = Math.min(Math.max(cx - (x - w / 2), 16), w - 16);
+        tip.style.setProperty("--tail-x", `${tailX}px`);
+      }
+      raf = requestAnimationFrame(follow);
+    };
+    raf = requestAnimationFrame(follow);
+    return () => cancelAnimationFrame(raf);
+  }, [hovered]);
 
   return (
     <Section
@@ -268,17 +356,34 @@ export function StackOrbit() {
         <Heading eyebrow={eyebrow} title={title} intro={intro} />
 
         {/* Right — orbit */}
-        <div className="relative mx-auto aspect-square w-full max-w-[560px]">
-          <OrbitSketch layer="back" />
+        <div
+          ref={stageRef}
+          className="stack-orbit-stage relative mx-auto aspect-square w-full max-w-[560px]"
+          data-orbit-paused={orbitPaused ? "true" : "false"}
+        >
+          <OrbitSketch
+            layer="lines"
+            onHover={handleHover}
+            onHoverEnd={handleHoverEnd}
+            hoveredName={hovered?.name}
+            paused={orbitPaused}
+            reducedMotion={prefersReducedMotion}
+          />
 
-          {BRAND_BADGES.map((badge) => (
-            <FloatingBrandBadge
-              key={`${badge.x}-${badge.y}-${badge.rotate}`}
-              badge={badge}
-            />
-          ))}
+          <OrbitBubbles />
 
-          <div className="absolute left-1/2 top-1/2 z-20 w-[64%] -translate-x-1/2 -translate-y-[44%]">
+          <OrbitSketch
+            layer="tiles"
+            onHover={handleHover}
+            onHoverEnd={handleHoverEnd}
+            hoveredName={hovered?.name}
+            paused={orbitPaused}
+            reducedMotion={prefersReducedMotion}
+          />
+
+          {/* Robot body (z-20) sits BEHIND the orbiting stack, so tiles pass in
+              front of her desk + body. */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 w-[64%] -translate-x-1/2 -translate-y-[44%]">
             <div className="relative">
               <Image
                 src="/orbit/robot-nurse-desk.png"
@@ -292,7 +397,39 @@ export function StackOrbit() {
             </div>
           </div>
 
-          <OrbitSketch layer="front" />
+          {/* Head re-drawn ABOVE the stack (z-40), clipped to just her head, so
+              the tiles pass BEHIND her face but in front of her body. */}
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 z-40 w-[64%] -translate-x-1/2 -translate-y-[44%]"
+            style={{ clipPath: "inset(0 0 60% 0)" }}
+            aria-hidden
+          >
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/orbit/robot-nurse-desk.png"
+                alt=""
+                className="meme-nurse-image h-auto w-full object-contain"
+              />
+              <span aria-hidden className="meme-nurse-grade" />
+            </div>
+          </div>
+
+          {hovered ? (
+            <aside
+              ref={tooltipRef}
+              className="orbit-tooltip absolute z-50 w-[min(17rem,80%)] p-3.5 text-left"
+              data-placement="above"
+              role="tooltip"
+            >
+              <h3 className="font-display text-sm font-bold leading-tight text-fg">
+                {hovered.name}
+              </h3>
+              <p className="mt-1.5 text-xs leading-5 text-fg-muted">
+                {hovered.blurb}
+              </p>
+            </aside>
+          ) : null}
         </div>
       </div>
     </Section>

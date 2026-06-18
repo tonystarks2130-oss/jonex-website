@@ -1,26 +1,36 @@
-import { Search, Workflow, Rocket } from "lucide-react";
+import {
+  ShieldCheck,
+  Users,
+  Laptop,
+  ScrollText,
+  Lock,
+  DatabaseBackup,
+  ShieldAlert,
+  LockKeyhole,
+  GraduationCap,
+  ClipboardCheck,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Section, Heading } from "@/components/ui/primitives";
 
 /**
- * Problem → outcome (DESIGN_CONTRACT IA §6) — the consultative "tier-above"
- * signal. NEW copy (Creator-drafted, pending James approval → CONTENT-NEW.md).
+ * "How We Work" — the security baseline every engagement runs on. Healthcare
+ * buyers scrutinise this, so each control is paired with a plain-English "what
+ * it means for you" line (from the JoNeX blueprint's ten core controls).
  */
-const STEPS = [
-  {
-    icon: Search,
-    title: "Identify Bottlenecks",
-    body: "We map where time, leads, and revenue leak out of your operations — before writing a line of code.",
-  },
-  {
-    icon: Workflow,
-    title: "Build Intelligent Systems",
-    body: "Engineered, secure automation and custom software that removes the bottleneck for good.",
-  },
-  {
-    icon: Rocket,
-    title: "Scale Operations",
-    body: "Your team does more without adding headcount — the system carries the load as you grow.",
-  },
+type Control = { icon: LucideIcon; title: string; body: string };
+
+const CONTROLS: Control[] = [
+  { icon: ShieldCheck, title: "Multi-factor authentication", body: "A stolen password alone never gets into your systems." },
+  { icon: Users, title: "Role-based access", body: "People see only what their role needs — nothing more." },
+  { icon: Laptop, title: "Device encryption", body: "Every machine that touches your data is fully encrypted." },
+  { icon: ScrollText, title: "Audit logging", body: "Every access is recorded: who, what, and when." },
+  { icon: Lock, title: "Encrypted data", body: "Protected at rest and in transit, end to end." },
+  { icon: DatabaseBackup, title: "Tested backups", body: "Encrypted backups, restore-tested — nothing gets lost." },
+  { icon: ShieldAlert, title: "Incident response", body: "A documented plan in place before anything goes wrong." },
+  { icon: LockKeyhole, title: "Least-privilege access", body: "Access is minimal and pulled the moment it isn't needed." },
+  { icon: GraduationCap, title: "Security training", body: "The whole team is trained to handle PHI safely." },
+  { icon: ClipboardCheck, title: "Vendor vetting", body: "Every third-party tool is assessed before it touches your data." },
 ];
 
 export function ProblemOutcome() {
@@ -28,23 +38,29 @@ export function ProblemOutcome() {
     <Section>
       <Heading
         eyebrow="How We Work"
-        title="We don't sell tools. We engineer outcomes."
-        intro="Most shops wire up a no-code template and walk away. We start with your operation, find what's actually slowing it down, and build the system that fixes it."
+        title="Secure by default — at every step."
+        intro="We deploy into your own cloud and build on a ten-point security baseline — the same controls on every engagement, so patient data is protected from day one."
       />
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {STEPS.map(({ icon: Icon, title, body }, i) => (
-          <div key={title} className="relative">
-            <div className="flex items-center gap-3">
-              <span className="font-display text-sm font-bold text-accent">
-                0{i + 1}
+
+      <ol className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {CONTROLS.map(({ icon: Icon, title, body }, i) => (
+          <li
+            key={title}
+            className="glass-card lift flex flex-col rounded-2xl p-5"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-display text-xs font-black tracking-wide text-accent">
+                {String(i + 1).padStart(2, "0")}
               </span>
               <Icon className="h-5 w-5 text-accent" aria-hidden="true" />
             </div>
-            <h3 className="mt-4 font-display text-xl font-semibold">{title}</h3>
-            <p className="mt-2 leading-7 text-fg-muted">{body}</p>
-          </div>
+            <h3 className="mt-4 font-display text-sm font-semibold leading-snug">
+              {title}
+            </h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-fg-muted">{body}</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </Section>
   );
 }
