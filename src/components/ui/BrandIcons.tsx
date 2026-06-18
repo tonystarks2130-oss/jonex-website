@@ -46,26 +46,6 @@ export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/**
- * Monochrome JoNex badge (currentColor), a "J" monogram in the brand ring, used
- * inline at icon size to mark the company email (vs a plain envelope for personal).
- * Single-color so it matches the surrounding mail/telegram glyphs in any theme.
- */
-export function JonexMarkIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <circle cx="12" cy="12" r="10.25" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M14.25 6.75v6.6a3.4 3.4 0 0 1-6.3 1.75"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>

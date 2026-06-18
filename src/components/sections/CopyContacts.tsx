@@ -1,18 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Mail, Check } from "lucide-react";
-import { TelegramIcon, JonexMarkIcon } from "@/components/ui/BrandIcons";
+import { TelegramIcon } from "@/components/ui/BrandIcons";
 
 type CopyContact = { label: "Email" | "Telegram"; value: string };
 
-// Company email (@jonex.site) gets the JoNex badge; personal email gets a plain
-// envelope, so the two are tellable apart at a glance.
-function iconFor({ label, value }: CopyContact) {
-  if (label === "Telegram") return TelegramIcon;
-  if (label === "Email" && value.toLowerCase().endsWith("@jonex.site")) return JonexMarkIcon;
-  return Mail;
+// The company email (@jonex.site) shows the actual JoNex logo mark; personal email
+// gets a plain envelope, so the two are tellable apart at a glance.
+function isCompanyEmail({ label, value }: CopyContact) {
+  return label === "Email" && value.toLowerCase().endsWith("@jonex.site");
+}
+
+function glyphFor({ label }: CopyContact) {
+  return label === "Telegram" ? TelegramIcon : Mail;
 }
 
 export function CopyContacts({ contacts, name }: { contacts: CopyContact[]; name: string }) {
@@ -42,16 +45,31 @@ export function CopyContacts({ contacts, name }: { contacts: CopyContact[]; name
     <>
       <div className="mt-6 flex flex-wrap items-center gap-2.5">
         {contacts.map((contact) => {
-          const Icon = iconFor(contact);
+          const company = isCompanyEmail(contact);
+          const Glyph = glyphFor(contact);
           return (
             <div key={contact.value} className="group relative">
               <button
                 type="button"
                 onClick={() => void copy(contact.value)}
                 aria-label={`Copy ${name}'s ${contact.label.toLowerCase()}: ${contact.value}`}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
+                className={
+                  company
+                    ? "flex h-9 w-9 items-center justify-center overflow-hidden rounded-full ring-1 ring-border transition hover:ring-accent"
+                    : "flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
+                }
               >
-                <Icon className="h-4 w-4" />
+                {company ? (
+                  <Image
+                    src="/brand/jonex-icon.png"
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <Glyph className="h-4 w-4" />
+                )}
               </button>
               <span className="pointer-events-none absolute -top-9 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-md bg-fg px-2 py-1 text-xs font-medium text-bg opacity-0 shadow-md transition-opacity duration-150 group-hover:opacity-100">
                 Click to copy
