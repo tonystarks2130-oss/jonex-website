@@ -260,6 +260,9 @@ export type Founder = {
   /** Optional contact email — renders a "Get in touch" mailto when present. */
   email?: string;
   socials: { label: string; href: string }[];
+  /** Optional click-to-copy contacts (e.g. email/Telegram) — shown as copy buttons
+   *  instead of profile links for founders who prefer a minimal contact surface. */
+  copyContacts?: { label: "Email" | "Telegram"; value: string }[];
 };
 
 export const FOUNDERS: Founder[] = [
@@ -287,6 +290,11 @@ export const FOUNDERS: Founder[] = [
       "What excites me most is building systems that take real pain off our clients' shoulders — fixing what slows them down, simplifying what overwhelms them, and giving them the freedom to focus on growing their business.",
     photo: "/team/james.jpg",
     socials: [],
+    copyContacts: [
+      { label: "Email", value: "james@jonex.site" },
+      { label: "Email", value: "santiagobarruga@gmail.com" },
+      { label: "Telegram", value: "@JamesB_Dev" },
+    ],
   },
   {
     name: "Jimmy",
@@ -295,6 +303,7 @@ export const FOUNDERS: Founder[] = [
     quote:
       "Good AI is invisible. You don't notice it; you just notice that things stopped breaking.",
     photo: "/team/jimmy.jpg",
+    email: "jimpot66@gmail.com",
     socials: [
       { label: "LinkedIn", href: "https://www.linkedin.com/in/jamesbaydal" },
       { label: "Facebook", href: "https://www.facebook.com/Jimpooot" },

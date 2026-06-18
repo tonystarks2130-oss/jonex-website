@@ -11,6 +11,7 @@ import {
   WhatsAppIcon,
 } from "@/components/ui/BrandIcons";
 import { FOUNDERS, type Founder } from "@/lib/content";
+import { CopyContacts } from "@/components/sections/CopyContacts";
 
 /**
  * "Behind JoNeX" (DESIGN_CONTRACT IA — Behind/Team) — founder cards in the
@@ -108,6 +109,10 @@ function FounderCard({ founder }: { founder: Founder }) {
               </a>
             )}
           </div>
+        )}
+
+        {founder.copyContacts && founder.copyContacts.length > 0 && (
+          <CopyContacts contacts={founder.copyContacts} name={founder.name} />
         )}
       </div>
     </figure>
