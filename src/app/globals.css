@@ -426,3 +426,220 @@ html {
     animation: none;
   }
 }
+
+/* Meme-reference orbit poster — molecule lines and drifting chips. */
+@keyframes meme-tile-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+
+@keyframes meme-badge-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 8px -10px; }
+}
+
+@keyframes meme-badge-spin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+@keyframes meme-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes meme-orbit-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes meme-orbit-counter-spin {
+  from { transform: rotate(var(--meme-chip-counter, 0deg)); }
+  to { transform: rotate(calc(var(--meme-chip-counter, 0deg) - 360deg)); }
+}
+
+@keyframes meme-orbit-counter-spin-rev {
+  from { transform: rotate(var(--meme-chip-counter, 0deg)); }
+  to { transform: rotate(calc(var(--meme-chip-counter, 0deg) + 360deg)); }
+}
+
+@keyframes meme-word-wiggle {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(2deg) translateY(-1px); }
+}
+
+.meme-word-pop {
+  -webkit-text-stroke: 1.25px var(--accent-contrast);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 46%, transparent);
+  animation: meme-word-wiggle 4s ease-in-out infinite;
+}
+
+.meme-atom-stage {
+  overflow: visible;
+}
+
+.meme-atom-path-shadow,
+.meme-atom-path,
+.meme-atom-path-highlight,
+.meme-orbit-lines path,
+.meme-orbit-lines ellipse,
+.meme-orbit-lines circle {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.meme-atom-path-shadow {
+  stroke: rgba(0, 0, 0, 0.32);
+  filter: url(#atomLineShadow);
+}
+
+.meme-atom-path {
+  stroke: #00b4e0;
+  filter: url(#atomLineShadow);
+}
+
+.meme-atom-path-highlight {
+  stroke: rgba(150, 235, 255, 0.85);
+  transform: translate(-1px, -1px);
+}
+
+.meme-orbit-lines path,
+.meme-orbit-lines ellipse,
+.meme-orbit-lines circle {
+  stroke: currentColor;
+  stroke-width: 0.35;
+  opacity: 0.88;
+}
+
+.meme-orbit-lines circle {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.92;
+}
+
+.meme-orbit-wheel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: meme-orbit-spin var(--meme-orbit-dur, 64s) linear infinite;
+  transform-origin: center;
+}
+
+.meme-orbit-wheel.is-reverse {
+  animation-name: meme-orbit-spin-rev;
+}
+
+.meme-orbit-counter {
+  animation: meme-orbit-counter-spin var(--meme-orbit-dur, 64s) linear infinite;
+  transform-origin: center;
+}
+
+.meme-orbit-wheel.is-reverse .meme-orbit-counter {
+  animation-name: meme-orbit-counter-spin-rev;
+}
+
+.meme-tech-tile {
+  animation: none;
+}
+
+.meme-svg-tile {
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.32));
+}
+
+/* Tiles use the site's glass language (translucent surface + cyan hairline +
+   theme-flipped glyph) instead of solid-white stickers, so the orbit reads as
+   part of JoNeX rather than a pasted-in graphic. */
+.meme-tile-bg {
+  fill: rgba(16, 38, 66, 0.62);
+}
+.meme-tile-edge {
+  stroke: rgba(125, 220, 255, 0.34);
+}
+.meme-tile-glyph {
+  color: #d7ecff;
+}
+.meme-svg-tile-text {
+  fill: #d7ecff;
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+[data-theme="light"] .meme-tile-bg {
+  fill: rgba(255, 255, 255, 0.9);
+}
+[data-theme="light"] .meme-tile-edge {
+  stroke: rgba(0, 119, 163, 0.26);
+}
+[data-theme="light"] .meme-tile-glyph {
+  color: #0a1628;
+}
+[data-theme="light"] .meme-svg-tile-text {
+  fill: #0a1628;
+}
+
+.meme-tech-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem -0.12rem -0.12rem 0.18rem;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.32);
+}
+
+.meme-brand-badge {
+  border-radius: 52% 48% 52% 48%;
+  background:
+    radial-gradient(circle at 62% 50%, #fff 0 18%, transparent 19%),
+    conic-gradient(from 210deg, #118dff 0 72%, #0bd0ff 72% 100%);
+  box-shadow: 5px 7px 0 rgba(0, 0, 0, 0.28);
+  animation: meme-badge-float 8s ease-in-out infinite;
+  animation-delay: var(--badge-delay, 0s);
+}
+
+.meme-brand-badge-core {
+  animation: meme-badge-spin 16s linear infinite reverse;
+}
+
+.meme-nurse-image {
+  filter:
+    brightness(0.9)
+    contrast(1.06)
+    saturate(1.05)
+    drop-shadow(0 24px 30px rgba(0, 0, 0, 0.42))
+    drop-shadow(0 0 34px rgba(0, 180, 224, 0.22));
+  mix-blend-mode: normal;
+}
+
+/* Brand color-grade: tints the robot's white surfaces toward our navy/cyan
+   palette without rotating its existing hues (no red shift). Masked to the
+   robot silhouette so only the figure is graded, not the band behind it. */
+.meme-nurse-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: url(/orbit/robot-nurse-desk.png);
+  mask-image: url(/orbit/robot-nurse-desk.png);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(180deg, #1a4a78 0%, #103458 58%, #0a2342 100%);
+  mix-blend-mode: color;
+  opacity: 0.62;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meme-word-pop,
+  .meme-orbit-wheel,
+  .meme-orbit-counter,
+  .meme-tech-tile,
+  .meme-brand-badge,
+  .meme-brand-badge-core {
+    animation: none;
+  }
+}

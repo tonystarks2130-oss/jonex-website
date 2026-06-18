@@ -276,7 +276,7 @@ export const FOUNDERS: Founder[] = [
     subRole: "Forward Deployed Engineer",
     initials: "Ja",
     quoteDraft:
-      "Anyone can wire a template. We engineer systems around how your business actually runs — secure, reliable, and built to last.",
+      "What excites me most is building systems that take real pain off our clients' shoulders — fixing what slows them down, simplifying what overwhelms them, and giving them the freedom to focus on growing their business.",
     photo: "/team/james.jpg",
     socials: [],
   },
