@@ -1,13 +1,16 @@
 import Image from "next/image";
+import type { ComponentType, SVGProps } from "react";
 import { Mail, ArrowUpRight } from "lucide-react";
 import { Section, Heading } from "@/components/ui/primitives";
 import {
   LinkedInIcon,
   FacebookIcon,
   InstagramIcon,
+  YouTubeIcon,
+  TikTokIcon,
+  WhatsAppIcon,
 } from "@/components/ui/BrandIcons";
 import { FOUNDERS, type Founder } from "@/lib/content";
-import { FLAGS } from "@/lib/flags";
 
 /**
  * "Behind JoNeX" (DESIGN_CONTRACT IA — Behind/Team) — founder cards in the
@@ -17,23 +20,22 @@ import { FLAGS } from "@/lib/flags";
  * Hierarchy (James, 2026-06-14): Jeremy (Founder & CEO) + Jimmy (CTO) sit on the
  * top row at equal weight; James (Founding Engineer) sits one tier lower, centered.
  *
- * Flag-driven (FLAGS.founders): "draft" renders an initials-avatar placeholder,
- * draft quotes, and PLACEHOLDER (disabled) social/contact buttons — James has no
- * headshot yet and the founders' real links aren't supplied. "real" swaps in each
- * person's confirmed photo, approved words, and live links — in place, no
- * structural change. Names + roles are verified; faces/words/links are never guessed.
+ * Each founder shows their confirmed photo, approved words, and live links. A
+ * founder with no supplied links simply omits the link row (shown once they send
+ * them) — names/roles are verified, faces/words/links are never guessed.
  */
 
-// Placeholder social set shown until each founder supplies real links. Icons use
-// the site's brand glyphs; buttons are disabled (no fabricated URLs).
-const SOCIAL_PLACEHOLDERS = [
-  { label: "LinkedIn", Icon: LinkedInIcon },
-  { label: "Facebook", Icon: FacebookIcon },
-  { label: "Instagram", Icon: InstagramIcon },
-  { label: "Email", Icon: Mail },
-] as const;
+const SOCIAL_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  LinkedIn: LinkedInIcon,
+  Facebook: FacebookIcon,
+  Instagram: InstagramIcon,
+  YouTube: YouTubeIcon,
+  TikTok: TikTokIcon,
+  WhatsApp: WhatsAppIcon,
+};
 
 function FounderCard({ founder }: { founder: Founder }) {
+  const hasLinks = founder.socials.length > 0 || Boolean(founder.email);
   return (
     <figure className="lift flex h-full flex-col gap-6 rounded-2xl border border-border bg-surface p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-7">
       <div className="shrink-0">
@@ -71,42 +73,48 @@ function FounderCard({ founder }: { founder: Founder }) {
         </figcaption>
 
         <blockquote className="mt-4 border-l-2 border-accent/60 pl-4 text-sm italic leading-7 text-fg-muted">
-          “{founder.quoteDraft}”
+          “{founder.quote}”
         </blockquote>
 
-        {/* Placeholder buttons — real links wired in once James supplies them. */}
-        <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          {SOCIAL_PLACEHOLDERS.map(({ label, Icon }) => (
-            <button
-              key={label}
-              type="button"
-              disabled
-              title={`${label} — link coming soon`}
-              aria-label={`${founder.name} on ${label} — coming soon`}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted/70 transition-colors hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:border-border disabled:hover:text-fg-muted/70"
-            >
-              <Icon className="h-4 w-4" />
-            </button>
-          ))}
+        {hasLinks && (
+          <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            {founder.socials.map(({ label, href }) => {
+              const Icon = SOCIAL_ICONS[label] ?? Mail;
+              return (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${founder.name} on ${label}`}
+                  aria-label={`${founder.name} on ${label}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
 
-          <button
-            type="button"
-            disabled
-            title="Contact — coming soon"
-            className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-xs font-semibold text-accent transition-colors hover:bg-accent/20 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-accent/10"
-          >
-            Get in touch
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
+            {founder.email && (
+              <a
+                href={`mailto:${founder.email}`}
+                title={`Email ${founder.name}`}
+                aria-label={`Email ${founder.name}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-xs font-semibold text-accent transition-colors hover:bg-accent/20"
+              >
+                <Mail className="h-3.5 w-3.5" />
+                Get in touch
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </figure>
   );
 }
 
 export function Behind() {
-  const isDraft = FLAGS.founders === "draft";
-
   // Top tier = everyone except the Founding Engineer (Jeremy, Jimmy); James drops
   // one tier lower, centered. Order preserved from the verified FOUNDERS roster.
   const leads = FOUNDERS.filter((f) => f.role !== "Founding Engineer");
@@ -130,13 +138,6 @@ export function Behind() {
         <div className="mx-auto mt-6 max-w-3xl">
           <FounderCard founder={engineer} />
         </div>
-      )}
-
-      {isDraft && (
-        <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-fg-muted/70">
-          These founder notes are first drafts and the contact buttons are
-          placeholders — both swap in place once finalized.
-        </p>
       )}
     </Section>
   );

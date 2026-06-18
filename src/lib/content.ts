@@ -243,11 +243,11 @@ export const SPEARHEAD = {
  * "Behind JoNeX" founders (DESIGN_CONTRACT IA — Behind/Team, rapidmed.app
  * founder-card style: photo + name + role + personal quote + socials).
  *
- * Names + roles are VERIFIED (PROJECT_STATE team roster). `quote` is `_draft`
- * Creator-drafted placeholder pending each person's real words. `photo` is null
- * until James confirms the headshot mapping — rendered as an initials avatar
- * meanwhile (FLAGS.founders gates the swap to real). Never fabricate a person's
- * words or face. Creator is deliberately absent (hidden from public surfaces).
+ * Names + roles are VERIFIED (PROJECT_STATE team roster). Quotes are each person's
+ * own approved words; `socials`/`email` are their real public handles where supplied
+ * (an empty `socials` array simply hides that founder's link row until they send them).
+ * Never fabricate a person's words, face, or links. Creator is deliberately absent
+ * (hidden from public surfaces).
  */
 export type Founder = {
   name: string;
@@ -255,8 +255,10 @@ export type Founder = {
   /** Optional secondary descriptor shown smaller/muted under the role. */
   subRole?: string;
   initials: string;
-  quoteDraft: string;
+  quote: string;
   photo: string | null;
+  /** Optional contact email — renders a "Get in touch" mailto when present. */
+  email?: string;
   socials: { label: string; href: string }[];
 };
 
@@ -265,17 +267,23 @@ export const FOUNDERS: Founder[] = [
     name: "Jeremy",
     role: "Founder & CEO",
     initials: "Je",
-    quoteDraft:
-      "I started JoNeX to give growing businesses the intelligent systems that used to be out of reach — built properly, owned fully, and supported like a real partner.",
+    quote:
+      "I believe AI should remove complexity, giving businesses the freedom to focus on innovation, growth, and what matters most.",
     photo: "/team/jeremy.jpg",
-    socials: [],
+    email: "jeremy@jonex.site",
+    socials: [
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/jeremy-jay-suva-5b9471369/" },
+      { label: "Facebook", href: "https://www.facebook.com/jeremy.suva/" },
+      { label: "Instagram", href: "https://www.instagram.com/jay_avus/" },
+      { label: "WhatsApp", href: "https://wa.me/639569871934" },
+    ],
   },
   {
     name: "James",
     role: "Founding Engineer",
     subRole: "Forward Deployed Engineer",
     initials: "Ja",
-    quoteDraft:
+    quote:
       "What excites me most is building systems that take real pain off our clients' shoulders — fixing what slows them down, simplifying what overwhelms them, and giving them the freedom to focus on growing their business.",
     photo: "/team/james.jpg",
     socials: [],
@@ -284,10 +292,16 @@ export const FOUNDERS: Founder[] = [
     name: "Jimmy",
     role: "Chief Technical Officer",
     initials: "Ji",
-    quoteDraft:
-      "The systems we ship have to stay up when it matters most. I build the foundation underneath — fast, secure, and never the reason you miss a call.",
+    quote:
+      "Good AI is invisible. You don't notice it; you just notice that things stopped breaking.",
     photo: "/team/jimmy.jpg",
-    socials: [],
+    socials: [
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/jamesbaydal" },
+      { label: "Facebook", href: "https://www.facebook.com/Jimpooot" },
+      { label: "Instagram", href: "https://www.instagram.com/jamestbaydal/" },
+      { label: "YouTube", href: "https://www.youtube.com/@Pot00790" },
+      { label: "TikTok", href: "https://www.tiktok.com/@jimpot305" },
+    ],
   },
 ];
 
