@@ -54,9 +54,7 @@ export function CopyContacts({ contacts, name }: { contacts: CopyContact[]; name
                 type="button"
                 onClick={() => void copy(contact.value)}
                 aria-label={`Copy ${name}'s ${contact.label.toLowerCase()}: ${contact.value}`}
-                className={`flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent ${
-                  companyEmail ? "overflow-hidden bg-bg-raised/70" : ""
-                }`}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent hover:text-accent"
               >
                 {companyEmail ? (
                   <Image
@@ -64,7 +62,7 @@ export function CopyContacts({ contacts, name }: { contacts: CopyContact[]; name
                     alt=""
                     width={36}
                     height={36}
-                    className="h-full w-full rounded-full object-cover opacity-95 transition-opacity group-hover:opacity-100"
+                    className="h-7 w-7 object-contain opacity-90 transition-opacity group-hover:opacity-100"
                   />
                 ) : (
                   <Icon className="h-4 w-4" />
