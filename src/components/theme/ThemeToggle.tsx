@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react";
 
 type Theme = "dark" | "light";
 
-/** View Transitions API — present in modern Chromium; absent in older Safari/FF. */
+/** View Transitions API, present in modern Chromium; absent in older Safari/FF. */
 type DocumentWithViewTransition = Document & {
   startViewTransition?: (callback: () => void) => unknown;
 };
@@ -14,7 +14,7 @@ type DocumentWithViewTransition = Document & {
  * Theme toggle (DESIGN_CONTRACT §Theme toggle spec). Real <button> with
  * aria-label; persists to localStorage. The swap is a smooth full-page
  * crossfade via the View Transitions API (snapshots the page and dissolves
- * text + gradients + glass together — no per-property snap or link "blink").
+ * text + gradients + glass together, no per-property snap or link "blink").
  * Falls back to the .theme-transition class crossfade where View Transitions
  * are unsupported, and to an instant swap under prefers-reduced-motion. The
  * no-flash script (ThemeScript) sets the initial theme before paint; this
@@ -33,7 +33,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     try {
       localStorage.setItem("jonex-theme", next);
     } catch {
-      /* private mode / storage disabled — toggle still works for the session */
+      /* private mode / storage disabled, toggle still works for the session */
     }
     setTheme(next);
   }

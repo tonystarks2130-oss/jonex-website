@@ -51,7 +51,7 @@ export function AiVoice() {
   }, [transcript.length]);
 
   // Plays the call turn by turn (AI "types" before speaking), holds the ended
-  // call briefly, then loops — and resets whenever it leaves the screen.
+  // call briefly, then loops, and resets whenever it leaves the screen.
   useEffect(() => {
     if (!inView) {
       setCount(0);
@@ -117,7 +117,7 @@ export function AiVoice() {
         ref={rootRef}
         className="mt-12 grid gap-4 lg:grid-cols-[3fr_2fr] lg:gap-6"
       >
-        {/* Left — the live call */}
+        {/* Left: the live call */}
         <article className="glass-card lift flex flex-col rounded-[10px] p-4 md:p-5">
           <div className="flex flex-wrap items-center gap-2.5">
             <PhoneCall className="h-5 w-5 text-accent" aria-hidden="true" />
@@ -179,7 +179,7 @@ export function AiVoice() {
           </div>
         </article>
 
-        {/* Right — behind the call, firing in sync */}
+        {/* Right: behind the call, firing in sync */}
         <article className="glass-card lift flex flex-col rounded-[10px] p-4 md:p-5">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Behind the call

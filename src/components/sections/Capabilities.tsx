@@ -3,13 +3,13 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { CAPABILITIES } from "@/lib/content";
 
 /**
- * Core capabilities (DESIGN_CONTRACT IA §8) — 4-item icon grid, real icons.
+ * Core capabilities (DESIGN_CONTRACT IA §8), 4-item icon grid, real icons.
  * Labels verbatim from the brand guide.
  */
 const ICONS: LucideIcon[] = [Bot, MessagesSquare, Workflow, Code2];
 const BLURBS = [
   "Autonomous agents that reason, act, and complete real work end-to-end.",
-  "Human-grade voice and chat that answer, qualify, and book — on every channel.",
+  "Human-grade voice and chat that answer, qualify, and book on every channel.",
   "Workflows wired across your tools so the busywork runs itself.",
   "Custom software built around your operation, not a rigid template.",
 ];

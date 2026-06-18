@@ -5,11 +5,11 @@ import { CAL } from "@/lib/integrations";
  * Loads cal.com embed.js once and initializes it (verbatim wire port of the
  * prior site's inline loader, index.html lines 631-639). After init, embed.js
  * delegates clicks on every [data-cal-link] element (see CalButton) to open the
- * booking popup — so booking CTAs work no matter when they hydrate.
+ * booking popup, so booking CTAs work no matter when they hydrate.
  *
  * The inline script is our own static loader (not user content); next/script
  * afterInteractive is the idiomatic way to run it. Values come from the CAL
- * wire contract — do not hardcode divergent ones here.
+ * wire contract, do not hardcode divergent ones here.
  */
 export function CalProvider() {
   return (

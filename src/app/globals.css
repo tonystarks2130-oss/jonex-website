@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /* ============================================================
-   JoNeX design tokens — DESIGN_CONTRACT §Visual system.
+   JoNex design tokens, DESIGN_CONTRACT §Visual system.
    Dark is the default + brand moat. Light is a first-class
    alternate, switched by [data-theme] on <html>. All component
-   colors consume these tokens — never raw hex / Tailwind palette,
+   colors consume these tokens, never raw hex / Tailwind palette,
    or the theme toggle breaks silently.
    ============================================================ */
 
@@ -37,7 +37,7 @@
   --surface: #ffffff;
   --fg: #0a1628;            /* deep navy */
   --fg-muted: #51617a;
-  --accent: #0077a3;        /* deepened cyan — AA on white for text/borders */
+  --accent: #0077a3;        /* deepened cyan, AA on white for text/borders */
   --accent-contrast: #ffffff;
   --border: #dbe3ee;        /* light hairline */
   --seam-from: #f7f9fc;
@@ -87,7 +87,7 @@ html {
   scroll-margin-top: clamp(7rem, 14vh, 11rem);
 }
 
-/* Theme crossfade via the View Transitions API (primary path — ThemeToggle).
+/* Theme crossfade via the View Transitions API (primary path: ThemeToggle).
    Snapshots the whole page and dissolves it as a bitmap, so text, gradients,
    glass and the accent fade together with no per-property snap or link blink. */
 ::view-transition-old(root),
@@ -96,7 +96,7 @@ html {
   animation-timing-function: ease;
 }
 
-/* Fallback color crossfade — applied ONLY on user toggle (see ThemeToggle)
+/* Fallback color crossfade, applied ONLY on user toggle (see ThemeToggle)
    where View Transitions are unsupported, never on first load. */
 .theme-transition,
 .theme-transition *,
@@ -114,7 +114,7 @@ html {
 }
 
 /* ============================================================
-   Phase 2 polish — motion, seams, depth (DESIGN_CONTRACT §Motion,
+   Phase 2 polish: motion, seams, depth (DESIGN_CONTRACT §Motion,
    §Visual). All opt-in + reduced-motion safe.
    ============================================================ */
 
@@ -131,7 +131,7 @@ html {
   transform: none;
 }
 
-/* Gradient section seam — a soft top divider, never a flat band edge. */
+/* Gradient section seam, a soft top divider, never a flat band edge. */
 .seam-top {
   position: relative;
 }
@@ -149,7 +149,7 @@ html {
   opacity: 0.5;
 }
 
-/* Card hover lift — soft cyan-tinted raise (DESIGN_CONTRACT §Visual). */
+/* Card hover lift, soft cyan-tinted raise (DESIGN_CONTRACT §Visual). */
 .lift {
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease,
     background-color 0.25s ease;
@@ -161,7 +161,7 @@ html {
 }
 
 /* ============================================================
-   Hero richness pass — grid texture, ambient glows, glass surfaces,
+   Hero richness pass: grid texture, ambient glows, glass surfaces,
    pill badges, gradient CTA. Theme-aware via tokens, pure CSS (no
    images / deps), tasteful by default. Decorative layers are
    pointer-events:none and -z-10 so they never block interaction.
@@ -183,7 +183,7 @@ html {
   pointer-events: none;
 }
 
-/* Ambient radial glows — a cyan key light + a cool indigo fill, blurred. */
+/* Ambient radial glows, a cyan key light + a cool indigo fill, blurred. */
 .hero-glow::after {
   content: "";
   position: absolute;
@@ -197,7 +197,7 @@ html {
   pointer-events: none;
 }
 
-/* Frosted glass surface — hero card, badges, proof strip, floaters. */
+/* Frosted glass surface: hero card, badges, proof strip, floaters. */
 .glass {
   background: color-mix(in srgb, var(--surface) 70%, transparent);
   backdrop-filter: blur(14px) saturate(1.1);
@@ -234,7 +234,7 @@ html {
   box-shadow: var(--glass-hover-shadow);
 }
 
-/* Frosted top bar — glass-card material, no radius / no lift (sticky nav). */
+/* Frosted top bar, glass-card material, no radius / no lift (sticky nav). */
 .glass-nav {
   background: var(--glass-layer);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -243,7 +243,7 @@ html {
   box-shadow: 0 10px 34px -22px rgba(0, 0, 0, 0.5);
 }
 
-/* Fixed glass surface — chat panel / teaser: glass-card material, no hover-lift. */
+/* Fixed glass surface: chat panel / teaser, glass-card material, no hover-lift. */
 .glass-panel {
   position: relative;
   isolation: isolate;
@@ -263,7 +263,7 @@ html {
   z-index: -1;
 }
 
-/* Pill badge — small glass chip with a cyan tint. */
+/* Pill badge, small glass chip with a cyan tint. */
 .pill {
   display: inline-flex;
   align-items: center;
@@ -290,7 +290,7 @@ html {
   box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
 }
 
-/* Gradient primary CTA — cyan sheen with depth + lift on hover. */
+/* Gradient primary CTA, cyan sheen with depth + lift on hover. */
 .btn-grad {
   background: linear-gradient(
     135deg,
@@ -307,7 +307,7 @@ html {
   box-shadow: 0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
-/* Floating outcome card — soft entrance + gentle idle bob (desktop only). */
+/* Floating outcome card, soft entrance + gentle idle bob (desktop only). */
 @keyframes floatbob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
@@ -401,7 +401,7 @@ html {
 }
 
 /* ============================================================
-   Stack orbit — tech-stack constellation (Engineered Stack flex).
+   Stack orbit, tech-stack constellation (Engineered Stack flex).
    Ring layers rotate; each chip counter-rotates at the same duration
    so labels stay upright. Speed set per-ring via --orbit-dur.
    ============================================================ */
@@ -427,7 +427,7 @@ html {
   }
 }
 
-/* Meme-reference orbit poster — molecule lines and drifting chips. */
+/* Meme-reference orbit poster, molecule lines and drifting chips. */
 @keyframes meme-tile-float {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -8px; }
@@ -607,9 +607,9 @@ html {
   border-radius: 6px;
 }
 
-/* Hover tooltip — non-blocking so it never steals the pointer from the moving
+/* Hover tooltip, non-blocking so it never steals the pointer from the moving
    tiles underneath (positioning handled by inline translate utilities). */
-/* Hover tooltip — a solid speech bubble with a tail pointing at the tile.
+/* Hover tooltip, a solid speech bubble with a tail pointing at the tile.
    Non-blocking + solid (no backdrop-filter) so it can follow a moving tile
    smoothly. */
 .orbit-tooltip {
@@ -679,7 +679,7 @@ html {
 
 /* Tiles use the site's glass language (translucent surface + cyan hairline +
    theme-flipped glyph) instead of solid-white stickers, so the orbit reads as
-   part of JoNeX rather than a pasted-in graphic. */
+   part of JoNex rather than a pasted-in graphic. */
 .meme-tile-bg {
   fill: rgba(16, 38, 66, 0.62);
 }
@@ -739,9 +739,9 @@ html {
 .orbit-bubble {
   will-change: transform;
 }
-/* Clean glass circle (no blue droplet) — matches the site's glass surfaces. */
-/* Same glass material as the site's cards (.glass-card tokens), just circular —
-   dark glass in dark mode, white glass in light — so the bubbles match the rest
+/* Clean glass circle (no blue droplet), matches the site's glass surfaces. */
+/* Same glass material as the site's cards (.glass-card tokens), just circular,
+   dark glass in dark mode, white glass in light, so the bubbles match the rest
    of the site. */
 /* No backdrop-filter here: re-blurring the backdrop behind 6 moving circles
    every frame is what made the orbit laggy. The layered translucent gradient
@@ -824,7 +824,7 @@ html {
 }
 
 /* ============================================================
-   AI Voice — self-playing call demo (AiVoice section).
+   AI Voice, self-playing call demo (AiVoice section).
    ============================================================ */
 @keyframes ai-voice-in {
   from { opacity: 0; transform: translateY(10px); }

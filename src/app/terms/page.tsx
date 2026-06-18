@@ -3,22 +3,22 @@ import { LegalPage } from "@/components/legal/LegalPage";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "JoNeX AI Terms of Service governing use of our platform and services.",
+  description: "JoNex AI Terms of Service governing use of our platform and services.",
 };
 
 export default function TermsPage() {
   return (
     <LegalPage title="Terms of Service" lastUpdated="December 25, 2025">
       <p>
-        These Terms of Service (&quot;Terms&quot;) govern your use of the JoNeX
-        AI platform, website, and services operated by JoNeX (&quot;we,&quot;
+        These Terms of Service (&quot;Terms&quot;) govern your use of the JoNex
+        AI platform, website, and services operated by JoNex (&quot;we,&quot;
         &quot;us,&quot; or &quot;our&quot;). By using our services, you agree to
         these Terms.
       </p>
 
       <h2>1. Services</h2>
       <p>
-        JoNeX provides AI-powered voice agents, chatbots, and automation
+        JoNex provides AI-powered voice agents, chatbots, and automation
         services for businesses. Our services include:
       </p>
       <ul>
@@ -60,7 +60,7 @@ export default function TermsPage() {
       <p>
         Our AI agents generate responses based on the input they receive. While
         we strive for accuracy, AI-generated responses may occasionally contain
-        errors or inaccuracies. JoNeX is not liable for decisions made based on
+        errors or inaccuracies. JoNex is not liable for decisions made based on
         AI-generated content. Our AI agents are not a substitute for
         professional advice (legal, medical, financial, or otherwise).
       </p>
@@ -77,7 +77,7 @@ export default function TermsPage() {
 
       <h2>6. Client Services</h2>
       <p>
-        For businesses that engage JoNeX to build and operate AI agents:
+        For businesses that engage JoNex to build and operate AI agents:
       </p>
       <ul>
         <li>
@@ -97,7 +97,7 @@ export default function TermsPage() {
 
       <h2>7. Intellectual Property</h2>
       <p>
-        All JoNeX technology, including our AI models, workflows, integrations,
+        All JoNex technology, including our AI models, workflows, integrations,
         website content, and branding, remains our intellectual property. You
         may not copy, modify, distribute, or reverse-engineer any part of our
         platform without written permission.
@@ -105,7 +105,7 @@ export default function TermsPage() {
 
       <h2>8. Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by law, JoNeX shall not be liable for
+        To the maximum extent permitted by law, JoNex shall not be liable for
         any indirect, incidental, special, consequential, or punitive damages
         arising from your use of our services. Our total liability for any claim
         shall not exceed the amount you paid us in the 12 months preceding the
@@ -123,7 +123,7 @@ export default function TermsPage() {
 
       <h2>10. Indemnification</h2>
       <p>
-        You agree to indemnify and hold harmless JoNeX, its founders, employees,
+        You agree to indemnify and hold harmless JoNex, its founders, employees,
         and partners from any claims, damages, or expenses arising from your use
         of our services, your violation of these Terms, or your violation of any
         applicable law.
@@ -148,7 +148,7 @@ export default function TermsPage() {
       <h2>13. Contact Us</h2>
       <p>If you have questions about these Terms, contact us at:</p>
       <ul>
-        <li>JoNeX AI</li>
+        <li>JoNex AI</li>
         <li>
           Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
         </li>

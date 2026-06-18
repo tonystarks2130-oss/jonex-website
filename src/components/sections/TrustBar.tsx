@@ -68,7 +68,7 @@ export function TrustBar() {
         </p>
         <div
           className="marquee-group marquee-mask w-full overflow-hidden"
-          aria-label="Tools JoNeX builds and automates on"
+          aria-label="Tools JoNex builds and automates on"
         >
           <div className="flex w-max animate-marquee">
             <ul className="flex shrink-0 items-center gap-10 pr-10 lg:gap-14 lg:pr-14">

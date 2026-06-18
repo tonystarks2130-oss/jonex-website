@@ -11,7 +11,7 @@ import { LOGO_SRC } from "@/lib/integrations";
 /**
  * Structured data (DESIGN_CONTRACT §AEO / "Sardaukar test"). The machine-readable
  * identity answer engines (ChatGPT / Perplexity / Google) lift verbatim. Every
- * field is factual and traces to content.ts — no invented socials, no empty
+ * field is factual and traces to content.ts, no invented socials, no empty
  * superlatives. Rendered server-side into <head> via a JSON-LD script tag.
  */
 const SITE = "https://jonex.site";
@@ -23,7 +23,7 @@ const graph = {
       "@type": "Organization",
       "@id": `${SITE}/#organization`,
       name: BRAND.full,
-      alternateName: "JoNeX",
+      alternateName: "JoNex",
       url: SITE,
       logo: LOGO_SRC,
       description: BRAND.positioning,
@@ -51,7 +51,7 @@ const graph = {
       name: BRAND.full,
       url: SITE,
       description:
-        "Engineered AI systems and technology consulting: AI voice receptionists, agentic AI, intelligent automation, and custom software built and owned by the client — with healthcare-grade, compliance-conscious depth.",
+        "Engineered AI systems and technology consulting: AI voice receptionists, agentic AI, intelligent automation, and custom software built and owned by the client, with healthcare-grade, compliance-conscious depth.",
       provider: { "@id": `${SITE}/#organization` },
       areaServed: { "@type": "Place", name: "Worldwide" },
       serviceType: [
@@ -85,7 +85,7 @@ const graph = {
 };
 
 export function JsonLd() {
-  // Data is 100% static + typed (content.ts / integrations.ts) — no user input.
+  // Data is 100% static + typed (content.ts / integrations.ts), no user input.
   // The only JSON-LD injection vector is a literal "<" closing the <script>;
   // escape it so a future copy edit can never break out of the tag.
   const json = JSON.stringify(graph).replace(/</g, "\\u003c");

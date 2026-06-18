@@ -2,7 +2,7 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { FAQS } from "@/lib/content";
 
 /**
- * FAQ (DESIGN_CONTRACT IA §13) — objection-handling. Native <details> for
+ * FAQ (DESIGN_CONTRACT IA §13), objection-handling. Native <details> for
  * keyboard-accessible accordion (no JS). Copy lives in content.ts (shared with
  * the FAQPage JSON-LD); healthcare-compliance entry is the one taraai can't answer.
  */

@@ -5,8 +5,8 @@ import { useEffect } from "react";
 /**
  * Scroll-reveal driver (DESIGN_CONTRACT §Motion). Mounted once in layout.
  *
- * Adds `.reveal-ready` to <html> on mount — which is what ARMS the hidden-state
- * CSS — so if JS never runs, `[data-reveal]` content stays fully visible (SEO/AEO
+ * Adds `.reveal-ready` to <html> on mount, which is what ARMS the hidden-state
+ * CSS, so if JS never runs, `[data-reveal]` content stays fully visible (SEO/AEO
  * + a11y). Then an IntersectionObserver adds `.is-visible` as elements enter.
  * Honors prefers-reduced-motion (CSS neutralises the transform either way).
  */

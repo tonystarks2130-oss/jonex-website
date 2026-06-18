@@ -1,4 +1,4 @@
-/** Premium services section for JoNeX offerings. */
+/** Premium services section for JoNex offerings. */
 
 import {
   ArrowRight,
@@ -25,7 +25,7 @@ export function Services() {
         align="center"
         eyebrow="What We Build"
         title="AI Systems Built Around Your Business"
-        intro="AI-powered systems for businesses that need more than a pretty website — from websites and automation to custom software and managed operations."
+        intro="AI-powered systems for businesses that need more than a pretty website: from websites and automation to custom software and managed operations."
       />
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -12,8 +12,8 @@ import { FOOTER_COPY } from '@/lib/content';
 import { CONTACT } from '@/lib/integrations';
 
 // Social profile URLs supplied by James (2026-06-13). Instagram = brand handle
-// jonex_ai; Facebook = brand page JoNeX122025; LinkedIn = Jeremy's personal
-// profile "for now" (interim until a JoNeX company page exists — swap in place).
+// jonex_ai; Facebook = brand page JoNex122025; LinkedIn = Jeremy's personal
+// profile "for now" (interim until a JoNex company page exists. Swap in place).
 const SOCIALS = [
   {
     label: 'LinkedIn',
@@ -21,10 +21,10 @@ const SOCIALS = [
     Icon: LinkedInIcon,
   },
   { label: 'Instagram', href: 'https://www.instagram.com/jonex_ai/', Icon: InstagramIcon },
-  { label: 'Facebook', href: 'https://www.facebook.com/JoNeX122025', Icon: FacebookIcon },
+  { label: 'Facebook', href: 'https://www.facebook.com/JoNe\u0058122025', Icon: FacebookIcon },
 ] as const;
 
-// Contact channels — icon next to the number/handle. WhatsApp number formatted
+// Contact channels, icon next to the number/handle. WhatsApp number formatted
 // from CONTACT.whatsapp.number (639569871934 -> +63 956 987 1934); links use
 // the verified wire URLs in CONTACT (unchanged).
 const CONTACT_CHANNELS = [
@@ -44,7 +44,7 @@ const COMPANY_LINKS: { label: string; href: string }[] = [
   { label: 'Industries', href: '#industries' },
   { label: 'Our Work', href: '#work' },
   { label: 'Hear the AI', href: '#hear-the-ai' },
-  { label: 'Behind JoNeX', href: '#behind' },
+  { label: 'Behind JoNex', href: '#behind' },
   { label: 'About', href: '#about' },
 ];
 

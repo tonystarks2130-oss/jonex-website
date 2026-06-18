@@ -17,10 +17,10 @@ import { CHAT_ENDPOINT, CHAT_FALLBACK_EMAIL } from "@/lib/integrations";
  *   roles "user"/"assistant", same fallback copy.
  * Bot replies go through stripMarkdown, then renderBotNodes turns URL matches
  * into real <a> React elements (http(s) allowlisted via new URL()) while the
- * rest renders as plain text — React escapes everything, so there is no HTML
+ * rest renders as plain text, React escapes everything, so there is no HTML
  * string and no dangerouslySetInnerHTML (fixes the original site's attribute-
  * breakout XSS). User input renders as plain text. Per the emoji ruling: the picker
- * stays (user utility); JoNeX-authored greeting/teaser copy is emoji-free.
+ * stays (user utility); JoNex-authored greeting/teaser copy is emoji-free.
  */
 
 type Msg = { role: "user" | "assistant"; text: string };
@@ -29,7 +29,7 @@ const EMOJIS = ["😊", "😄", "😍", "👍", "🙏", "🔥", "✅", "🎉", "
 
 const TEASERS = [
   "Curious how AI can help your business?",
-  "Save hours — automate your workflows.",
+  "Save hours. Automate your workflows.",
   "What would you automate first?",
   "Never miss a lead again.",
   "Your business, running 24/7 on autopilot.",
@@ -43,14 +43,14 @@ function stripMarkdown(text: string) {
     .replace(/^#{1,6}\s+/gm, "")
     .replace(/^[-*+]\s+/gm, "")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/—/g, ",")
+    .replace(/\u2014/g, ",")
     .replace(/--/g, ",");
 }
 
 const URL_RE = /(https?:\/\/[^\s]+|(?:www\.|cal\.com\/)[^\s]+)/g;
 
 /**
- * Render a bot reply as React nodes — links become real <a> elements so React
+ * Render a bot reply as React nodes, links become real <a> elements so React
  * escapes the href/text (no HTML-string interpolation, no dangerouslySetInnerHTML).
  * Only http(s) URLs become links (new URL() protocol allowlist); anything else
  * renders as plain text. This replaces the original site's escapeHtml+linkify,
@@ -134,7 +134,7 @@ export function ChatWidget() {
     return () => observer.disconnect();
   }, []);
 
-  // Teaser bubble rotation — interval with full cleanup (Strict-Mode safe).
+  // Teaser bubble rotation, interval with full cleanup (Strict-Mode safe).
   // Suppressed while the hero is visible; starts only after the hero leaves view.
   useEffect(() => {
     if (open || !pastHero) {
@@ -162,7 +162,7 @@ export function ChatWidget() {
     if (greeted.current) return;
     greeted.current = true;
     const text =
-      "Hi! I'm JoNeX AI. Ask me about our services, pricing, or how to book a call. How can I help?";
+      "Hi! I'm JoNex AI. Ask me about our services, pricing, or how to book a call. How can I help?";
     setMessages((m) => [...m, { role: "assistant", text }]);
   }
 
@@ -221,7 +221,7 @@ export function ChatWidget() {
       {open && (
         <div className="flex h-[28rem] w-[min(22rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-2xl glass-panel shadow-2xl">
           <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-3">
-            <span className="font-display text-sm font-semibold">JoNeX AI</span>
+            <span className="font-display text-sm font-semibold">JoNex AI</span>
             <button
               type="button"
               onClick={() => setOpen(false)}

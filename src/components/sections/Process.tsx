@@ -2,9 +2,9 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { SPEARHEAD } from "@/lib/content";
 
 /**
- * Process (DESIGN_CONTRACT IA §9) — 4 steps [KEEP] + "live in ~2 weeks"
+ * Process (DESIGN_CONTRACT IA §9), 4 steps [KEEP] + "live in ~2 weeks"
  * anxiety-killer. NOTE: timeframe pending James's canonical call ("~2 weeks"
- * vs old FAQ "5–7 business days") — flagged in HANDOFF open items.
+ * vs old FAQ "5 to 7 business days"), flagged in HANDOFF open items.
  */
 const TIMEFRAMES = [
   "30-minute call",

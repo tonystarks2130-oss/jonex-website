@@ -14,7 +14,7 @@ import { FOUNDERS, type Founder } from "@/lib/content";
 import { CopyContacts } from "@/components/sections/CopyContacts";
 
 /**
- * "Behind JoNeX" (DESIGN_CONTRACT IA — Behind/Team) — founder cards in the
+ * "Behind JoNex" (DESIGN_CONTRACT IA - Behind/Team), founder cards in the
  * rapidmed.app style: portrait + name + role + a personal quote + a row of
  * social/contact buttons.
  *
@@ -23,7 +23,7 @@ import { CopyContacts } from "@/components/sections/CopyContacts";
  *
  * Each founder shows their confirmed photo, approved words, and live links. A
  * founder with no supplied links simply omits the link row (shown once they send
- * them) — names/roles are verified, faces/words/links are never guessed.
+ * them), names/roles are verified, faces/words/links are never guessed.
  */
 
 const SOCIAL_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -43,7 +43,7 @@ function FounderCard({ founder }: { founder: Founder }) {
         {founder.photo ? (
           <Image
             src={founder.photo}
-            alt={`${founder.name} — ${founder.role}`}
+            alt={`${founder.name}, ${founder.role}`}
             width={208}
             height={208}
             className="h-40 w-40 rounded-2xl object-cover sm:h-48 sm:w-48"
@@ -51,7 +51,7 @@ function FounderCard({ founder }: { founder: Founder }) {
         ) : (
           <span
             className="flex h-40 w-40 items-center justify-center rounded-2xl border border-border bg-bg-raised font-display text-4xl font-bold text-fg-muted sm:h-48 sm:w-48"
-            aria-label={`${founder.name} — photo coming soon`}
+            aria-label={`${founder.name}, photo coming soon`}
           >
             {founder.initials}
           </span>
@@ -128,7 +128,7 @@ export function Behind() {
   return (
     <Section id="behind" className="border-y border-border bg-bg-raised/40">
       <Heading
-        eyebrow="Behind JoNeX"
+        eyebrow="Behind JoNex"
         title="The people who build and stand behind your systems"
         intro="No faceless agency. You work directly with the founders who design, build, and support what you run on."
       />

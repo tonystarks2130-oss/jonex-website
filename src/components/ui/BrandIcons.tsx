@@ -47,7 +47,7 @@ export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 /**
- * Monochrome JoNeX badge (currentColor) — a "J" monogram in the brand ring, used
+ * Monochrome JoNex badge (currentColor), a "J" monogram in the brand ring, used
  * inline at icon size to mark the company email (vs a plain envelope for personal).
  * Single-color so it matches the surrounding mail/telegram glyphs in any theme.
  */

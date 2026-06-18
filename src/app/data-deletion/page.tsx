@@ -4,7 +4,7 @@ import { LegalPage } from "@/components/legal/LegalPage";
 export const metadata: Metadata = {
   title: "Data Deletion",
   description:
-    "How to request deletion of your personal data from JoNeX AI services.",
+    "How to request deletion of your personal data from JoNex AI services.",
 };
 
 const DELETION_MAILTO =
@@ -14,7 +14,7 @@ export default function DataDeletionPage() {
   return (
     <LegalPage title="Data Deletion Instructions" lastUpdated="December 25, 2025">
       <p>
-        JoNeX respects your right to control your personal data. If you have
+        JoNex respects your right to control your personal data. If you have
         interacted with our services through Facebook Messenger, our website, or
         our AI voice agents, you can request deletion of all data we hold about
         you.
@@ -49,7 +49,7 @@ export default function DataDeletionPage() {
           so we can locate your data.
         </li>
         <li>
-          <strong>Message us on Facebook:</strong> Send a message to our JoNeX
+          <strong>Message us on Facebook:</strong> Send a message to our JoNex
           Facebook Page requesting data deletion.
         </li>
       </ul>
@@ -121,7 +121,7 @@ export default function DataDeletionPage() {
       <ul>
         <li>Go to your Facebook Settings.</li>
         <li>Navigate to Security and Login &gt; Apps and Websites.</li>
-        <li>Find &quot;JoNeX&quot; and click Remove.</li>
+        <li>Find &quot;JoNex&quot; and click Remove.</li>
         <li>This will revoke our access to your Facebook data going forward.</li>
         <li>
           To delete data we already collected, follow the deletion request
@@ -132,7 +132,7 @@ export default function DataDeletionPage() {
       <h2>Contact Us</h2>
       <p>If you have questions about data deletion, contact us at:</p>
       <ul>
-        <li>JoNeX AI</li>
+        <li>JoNex AI</li>
         <li>
           Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
         </li>

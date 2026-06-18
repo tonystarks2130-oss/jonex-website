@@ -4,15 +4,15 @@ import { LegalPage } from "@/components/legal/LegalPage";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "JoNeX AI Privacy Policy. Learn how we collect, use, and protect your data.",
+    "JoNex AI Privacy Policy. Learn how we collect, use, and protect your data.",
 };
 
 export default function PrivacyPage() {
   return (
     <LegalPage title="Privacy Policy" lastUpdated="December 25, 2025">
       <p>
-        JoNeX (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the
-        JoNeX AI platform, including our website, Facebook Messenger chatbot,
+        JoNex (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the
+        JoNex AI platform, including our website, Facebook Messenger chatbot,
         voice AI agents, and related services. This Privacy Policy explains how
         we collect, use, and protect your information when you interact with our
         services.
@@ -169,7 +169,7 @@ export default function PrivacyPage() {
         contact us at:
       </p>
       <ul>
-        <li>JoNeX AI</li>
+        <li>JoNex AI</li>
         <li>
           Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
         </li>

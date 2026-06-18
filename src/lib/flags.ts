@@ -11,12 +11,12 @@ export const FLAGS = {
   trustBarMode: "integration" as "integration" | "client",
   /** Text-only mock testimonials, no faces/video, Jeremy swaps later. */
   testimonials: "mock" as "mock" | "real",
-  /** James's screen-recording proof — optional, off until provided. */
+  /** James's screen-recording proof, optional, off until provided. */
   screenRecording: "off" as "off" | "on",
-  /** Case-study stat numbers — draft until backed by real data. */
+  /** Case-study stat numbers, draft until backed by real data. */
   stats: "draft" as "draft" | "real",
   /**
-   * "Behind JoNeX" founder cards. "draft" = initials-avatar placeholders +
+   * "Behind JoNex" founder cards. "draft" = initials-avatar placeholders +
    * draft quotes (James has no headshot yet; photo mapping unconfirmed).
    * "real" = swap in confirmed photos + each founder's approved words.
    */

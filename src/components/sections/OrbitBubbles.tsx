@@ -29,8 +29,8 @@ const BUBBLES: Bubble[] = [
   { label: "Entra ID",      logo: "/logos/entra-id.svg",      size: 92, cx: 16, cy: 31, ax: 38, ay: 40, fx: 0.16, fy: 0.12, px: 5.5, py: 4.1 },
 ];
 
-const FLEE_RADIUS = 150; // px — how close the cursor gets before it bolts
-const FLEE_STRENGTH = 120; // px — how hard it darts away
+const FLEE_RADIUS = 150; // px - how close the cursor gets before it bolts
+const FLEE_STRENGTH = 120; // px - how hard it darts away
 const EASE = 0.1; // approach factor per frame (lower = more fluid glide)
 
 export function OrbitBubbles() {
@@ -42,7 +42,7 @@ export function OrbitBubbles() {
     if (!container) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Raw client coords only — we resolve them against the cached rect inside
+    // Raw client coords only, we resolve them against the cached rect inside
     // the animation frame, so pointermove never forces a layout (that was the
     // stutter when the cursor approached the bubbles).
     const pointer = { clientX: -9999, clientY: -9999, active: false };

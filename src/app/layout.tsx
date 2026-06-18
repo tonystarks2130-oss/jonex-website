@@ -22,16 +22,16 @@ const body = Inter({
 });
 
 const SITE_DESC =
-  "JoNeX engineers AI business systems you own — AI voice receptionists, agentic AI, intelligent automation, and custom software — with healthcare-grade depth. Not a no-code template shop.";
+  "JoNex engineers AI business systems you own: AI voice receptionists, agentic AI, intelligent automation, and custom software, with healthcare-grade depth. Not a no-code template shop.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jonex.site"),
   title: {
-    default: "JoNeX AI — Technology Consulting",
-    template: "%s · JoNeX AI",
+    default: "JoNex AI: Technology Consulting",
+    template: "%s · JoNex AI",
   },
   description: SITE_DESC,
-  applicationName: "JoNeX AI Technology Consulting",
+  applicationName: "JoNex AI Technology Consulting",
   keywords: [
     "AI voice receptionist",
     "agentic AI",
@@ -43,14 +43,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: "JoNeX AI Technology Consulting",
+    siteName: "JoNex AI Technology Consulting",
     url: "https://jonex.site",
-    title: "JoNeX AI — Technology Consulting",
+    title: "JoNex AI: Technology Consulting",
     description: SITE_DESC,
   },
   twitter: {
     card: "summary_large_image",
-    title: "JoNeX AI — Technology Consulting",
+    title: "JoNex AI: Technology Consulting",
     description: SITE_DESC,
   },
 };

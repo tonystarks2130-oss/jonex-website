@@ -55,7 +55,7 @@ export function HearTheAI() {
               HEAR THE DIFFERENCE
             </span>
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight text-fg md:text-4xl">
-              Listen to JoNeX handle real customer calls
+              Listen to JoNex handle real customer calls
             </h2>
             <p className="text-lg leading-8 text-fg-muted">
               Hear how our AI receptionist answers questions, captures details,

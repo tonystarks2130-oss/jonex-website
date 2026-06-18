@@ -44,7 +44,7 @@ const DECK: DeckItem[] = [
   },
   {
     id: "operator",
-    title: "JoNeX AI Operator",
+    title: "JoNex AI Operator",
     subtitle: "Conversation handled live",
     status: "Live",
     icon: Bot,
@@ -284,7 +284,7 @@ export function HeroArtifact() {
       ref={stageRef}
       role="region"
       aria-roledescription="carousel"
-      aria-label="JoNeX AI workflow catalog"
+      aria-label="JoNex AI workflow catalog"
       className="relative mx-auto h-[500px] w-full max-w-[620px] select-none md:mt-1 md:h-[530px] [perspective:1200px]"
     >
       <p className="sr-only" aria-live="polite">
@@ -436,7 +436,7 @@ const DeckCard = function DeckCard({
             {item.id === "reviews" && "Reputation grows on autopilot"}
             {item.id === "dashboard" && "You stay in control"}
           </div>
-          <span className="font-display text-xs font-semibold text-fg">JoNeX</span>
+          <span className="font-display text-xs font-semibold text-fg">JoNex</span>
         </div>
       </div>
     </button>

@@ -2,10 +2,10 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { CountUp } from "@/components/ui/CountUp";
 
 /**
- * Proof / results (DESIGN_CONTRACT IA §10) — capability stat block. These are
+ * Proof / results (DESIGN_CONTRACT IA §10), capability stat block. These are
  * honest statements about how we deliver (always-on, fast to live, fully owned),
  * not fabricated client metrics. Named client outcomes/testimonials are added
- * only once we have real, consented results — never invented.
+ * only once we have real, consented results. Never invented.
  */
 const STATS = [
   { value: "24/7", label: "Calls answered, never missed" },

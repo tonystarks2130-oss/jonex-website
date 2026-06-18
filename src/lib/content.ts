@@ -1,23 +1,23 @@
 /**
- * Verbatim site copy — source of truth is ../../../CONTENT.md, lifted
+ * Verbatim site copy: source of truth is ../../../CONTENT.md, lifted
  * first-hand from brand-guide-final.pdf. Strings here are exact, not
  * paraphrase. The reconcile gate diffs rendered copy against this file.
  *
  * Copy that is NOT in the brand guide (new FAQ entries, Problem→Outcome,
  * mock testimonials, meta strings) is drafted separately and approved by
- * James before it lands here — see CONTENT-NEW.md (Phase 1/2).
+ * James before it lands here. See CONTENT-NEW.md (Phase 1/2).
  */
 
 export const BRAND = {
-  full: "JoNeX AI Technology Consulting",
-  short: "JoNeX",
+  full: "JoNex AI Technology Consulting",
+  short: "JoNex",
   tagline: "Identify Bottlenecks. Build Intelligent Systems. Scale Operations.",
   positioning:
     "We help organizations identify operational bottlenecks and deploy AI-powered solutions through Agentic AI, AI Voice Agents, intelligent automation, and custom software development.",
 } as const;
 
 export const HERO = {
-  titleLead: "JoNeX AI",
+  titleLead: "JoNex AI",
   titleRest: "Technology Consulting",
   subhead:
     "We build AI-powered business systems that eliminate operational bottlenecks, automate workflows, and help organizations scale faster.",
@@ -32,14 +32,14 @@ export const HERO = {
     "AI Receptionist Systems",
     "Voice AI • Automation • Custom Software",
   ],
-  // Glass proof strip under the CTAs — honest capability claims, no stats.
+  // Glass proof strip under the CTAs, honest capability claims, no stats.
   proof: [
     "Never misses a caller",
     "Captures lead details",
     "Sends instant summaries",
     "Works 24/7",
   ],
-  // Floating outcome cards around the demo (desktop only) — what the AI does
+  // Floating outcome cards around the demo (desktop only), what the AI does
   // on a call. Descriptive, not fabricated metrics.
   outcomes: [
     { title: "Lead captured", detail: "Name • Phone • Service needed" },
@@ -240,7 +240,7 @@ export const SPEARHEAD = {
 } as const;
 
 /**
- * "Behind JoNeX" founders (DESIGN_CONTRACT IA — Behind/Team, rapidmed.app
+ * "Behind JoNex" founders (DESIGN_CONTRACT IA - Behind/Team, rapidmed.app
  * founder-card style: photo + name + role + personal quote + socials).
  *
  * Names + roles are VERIFIED (PROJECT_STATE team roster). Quotes are each person's
@@ -257,10 +257,10 @@ export type Founder = {
   initials: string;
   quote: string;
   photo: string | null;
-  /** Optional contact email — renders a "Get in touch" mailto when present. */
+  /** Optional contact email, renders a "Get in touch" mailto when present. */
   email?: string;
   socials: { label: string; href: string }[];
-  /** Optional click-to-copy contacts (e.g. email/Telegram) — shown as copy buttons
+  /** Optional click-to-copy contacts (e.g. email/Telegram), shown as copy buttons
    *  instead of profile links for founders who prefer a minimal contact surface. */
   copyContacts?: { label: "Email" | "Telegram"; value: string }[];
 };
@@ -287,7 +287,7 @@ export const FOUNDERS: Founder[] = [
     subRole: "Forward Deployed Engineer",
     initials: "Ja",
     quote:
-      "What excites me most is building systems that take real pain off our clients' shoulders — fixing what slows them down, simplifying what overwhelms them, and giving them the freedom to focus on growing their business.",
+      "What excites me most is building systems that take real pain off our clients' shoulders: fixing what slows them down, simplifying what overwhelms them, and giving them the freedom to focus on growing their business.",
     photo: "/team/james.jpg",
     socials: [],
     copyContacts: [
@@ -323,7 +323,7 @@ export const FOUNDERS: Founder[] = [
 export const FAQS = [
   {
     q: "I don't know exactly what I need yet.",
-    a: "That's the point of the free strategy call. We map your operation, find the bottleneck, and tell you what's worth building — no obligation.",
+    a: "That's the point of the free strategy call. We map your operation, find the bottleneck, and tell you what's worth building. No obligation.",
   },
   {
     q: "How fast can we go live?",
@@ -331,16 +331,16 @@ export const FAQS = [
   },
   {
     q: "Do you handle healthcare data and compliance?",
-    a: "Yes. We build compliance-conscious systems for clinics and healthcare groups — revenue-cycle automation, eligibility, and claims — with security designed in, not bolted on.",
+    a: "Yes. We build compliance-conscious systems for clinics and healthcare groups: revenue-cycle automation, eligibility, and claims, with security designed in, not bolted on.",
   },
   {
     q: "Do we own what you build, or rent it?",
-    a: "You own it. We engineer systems on your infrastructure — no rented black box you can't leave.",
+    a: "You own it. We engineer systems on your infrastructure, not a rented black box you can't leave.",
   },
 ] as const;
 
 export const FOOTER_COPY = {
-  name: "JoNeX AI Technology Consulting",
+  name: "JoNex AI Technology Consulting",
   tagline: "Identify Bottlenecks. Build Intelligent Systems. Scale Operations.",
   blurb:
     "Helping organizations transform operations through Agentic AI, AI Voice Agents, intelligent automation, custom software development, and technology consulting.",
@@ -396,12 +396,12 @@ export const HEALTHCARE_SPECIALTY: {
   eyebrow: "Our Flagship Specialty",
   title: "Healthcare AI, engineered HIPAA-aligned",
   intro:
-    "Deployed in your own Azure tenant — you keep ownership of your data and your compliance chain. We build, configure, and manage the systems; protected health information stays under your control.",
+    "Deployed in your own Azure tenant, so you keep ownership of your data and your compliance chain. We build, configure, and manage the systems; protected health information stays under your control.",
   trustPoints: [
     {
       label: "Your Azure tenant",
       detail:
-        "Systems deploy into your cloud, not ours — you own the data and the BAA chain.",
+        "Systems deploy into your cloud, not ours, so you own the data and the BAA chain.",
     },
     {
       label: "HIPAA-aligned by design",
@@ -416,7 +416,7 @@ export const HEALTHCARE_SPECIALTY: {
     {
       label: "End-to-end",
       detail:
-        "Discovery, build, deploy, and managed services — we don't hand you a half-built system.",
+        "Discovery, build, deploy, and managed services. We don't hand you a half-built system.",
     },
   ],
   capabilities: [
@@ -449,7 +449,7 @@ export const HEALTHCARE_SPECIALTY: {
     {
       name: "Internal Dashboards",
       detail:
-        "Role-based KPIs — schedule, no-show rate, and pending charges at a glance.",
+        "Role-based KPIs: schedule, no-show rate, and pending charges at a glance.",
     },
   ],
   servedSegments: [
@@ -477,15 +477,15 @@ export const AI_VOICE_HIGHLIGHT: {
   eyebrow: "Flagship Service",
   title: "Hear how a clinic call actually goes",
   intro:
-    "Every call answered, day or night. The AI receptionist books appointments, handles the routine questions, and routes anything urgent to your staff — so the front desk never has to choose between the phone and the patient in the room.",
+    "Every call answered, day or night. The AI receptionist books appointments, handles the routine questions, and routes anything urgent to your staff, so the front desk never has to choose between the phone and the patient in the room.",
   sampleClinic: "Brightsmile Dental",
   sampleLabel: "Example call",
   transcript: [
-    { speaker: "AI", line: "Thanks for calling Brightsmile Dental, this is Dex — how can I help?" },
+    { speaker: "AI", line: "Thanks for calling Brightsmile Dental, this is Dex. How can I help?" },
     { speaker: "Caller", line: "I chipped a tooth and I need to come in this week." },
     {
       speaker: "AI",
-      line: "I'm sorry to hear that. I can book you in — can I get your name and a callback number?",
+      line: "I'm sorry to hear that. I can book you in. Can I get your name and a callback number?",
     },
     { speaker: "Caller", line: "Maria Santos, (415) 555-0142." },
     {
@@ -517,7 +517,7 @@ export const STACK_ORBIT_COPY = {
   eyebrow: "Full-Stack Engineering",
   title: "One team. The entire stack.",
   intro:
-    "From the clinical systems you already run to the cloud, AI, and automation underneath — we engineer across the whole stack, end to end. No hand-offs, no gaps.",
+    "From the clinical systems you already run to the cloud, AI, and automation underneath, we engineer across the whole stack, end to end. No hand-offs, no gaps.",
 } as const;
 
 export const ORBIT_INTEGRATIONS = [
@@ -531,7 +531,7 @@ export const ORBIT_INTEGRATIONS = [
     name: "Epic",
     logo: "/logos/ehr/epic.png",
     blurb:
-      "The enterprise EHR standard. We integrate through SMART-on-FHIR — automation and patient tools work alongside Epic with no workflow disruption.",
+      "The enterprise EHR standard. We integrate through SMART-on-FHIR, so automation and patient tools work alongside Epic with no workflow disruption.",
   },
   {
     name: "Oracle Health",

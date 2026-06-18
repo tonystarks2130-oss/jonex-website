@@ -3,7 +3,7 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { SPEARHEAD } from "@/lib/content";
 
 /**
- * Spearhead (DESIGN_CONTRACT IA §4) — the demoable AI-receptionist hook.
+ * Spearhead (DESIGN_CONTRACT IA §4), the demoable AI-receptionist hook.
  * Live-site copy [KEEP], elevated.
  */
 const CARDS = [
@@ -25,7 +25,7 @@ const CARDS = [
   {
     icon: Clock,
     title: "Never Clocks Out",
-    body: "An AI team member that works 24/7 — your business runs even when you don't.",
+    body: "An AI team member that works 24/7, so your business runs even when you don't.",
   },
 ];
 
@@ -35,7 +35,7 @@ export function Spearhead() {
       <Heading
         eyebrow="AI Voice Agents"
         title={SPEARHEAD.headline}
-        intro="A receptionist that sounds human, never misses a lead, and works around the clock — the spearhead of a fully engineered operations system."
+        intro="A receptionist that sounds human, never misses a lead, and works around the clock: the spearhead of a fully engineered operations system."
       />
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map(({ icon: Icon, title, body }) => (

@@ -297,7 +297,7 @@ export function StackOrbit() {
   const { eyebrow, title, intro } = STACK_ORBIT_COPY;
   const [hovered, setHovered] = useState<OrbitIntegration | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
-  // Orbit never stops for interaction — hovering a tile just pops a tooltip.
+  // Orbit never stops for interaction, hovering a tile just pops a tooltip.
   const orbitPaused = prefersReducedMotion;
 
   const stageRef = useRef<HTMLDivElement>(null);
@@ -352,10 +352,10 @@ export function StackOrbit() {
       className="overflow-hidden border-y border-border bg-bg text-fg"
     >
       <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
-        {/* Left — copy (shared site header style, consistent with every section) */}
+        {/* Left: copy (shared site header style, consistent with every section) */}
         <Heading eyebrow={eyebrow} title={title} intro={intro} />
 
-        {/* Right — orbit */}
+        {/* Right: orbit */}
         <div
           ref={stageRef}
           className="stack-orbit-stage relative mx-auto aspect-square w-full max-w-[560px]"
@@ -387,7 +387,7 @@ export function StackOrbit() {
             <div className="relative">
               <Image
                 src="/orbit/robot-nurse-desk.png"
-                alt="AI nurse receptionist at the center of the JoNeX stack"
+                alt="AI nurse receptionist at the center of the JoNex stack"
                 width={779}
                 height={590}
                 className="meme-nurse-image h-auto w-full object-contain"

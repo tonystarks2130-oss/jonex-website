@@ -29,7 +29,7 @@ export function Hero() {
           </div>
           <h1 className="mt-7 font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-[4rem] xl:text-[4.25rem]">
             The AI that picks up your{" "}
-            <span className="text-accent">phone</span> — and runs the operations
+            <span className="text-accent">phone</span>, and runs the operations
             behind it.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-fg-muted">
@@ -62,7 +62,7 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* HeroArtifact — Live Call Visualizer + floating outcome cards. */}
+        {/* HeroArtifact: Live Call Visualizer + floating outcome cards. */}
         <HeroArtifact />
       </Container>
     </section>

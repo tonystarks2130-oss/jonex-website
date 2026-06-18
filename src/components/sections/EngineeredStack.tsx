@@ -1,4 +1,4 @@
-// Engineered stack — categorized capability showcase.
+// Engineered stack, categorized capability showcase.
 
 import {
   Stethoscope,
@@ -19,7 +19,7 @@ export function EngineeredStack() {
       <Heading
         eyebrow="Our Engineered Stack"
         title="Enterprise systems, engineered end-to-end"
-        intro="We work across the modern AI and automation stack — and go deep where it matters most: secure, HIPAA-aligned healthcare systems built on enterprise cloud, integrated with the clinical software you already run."
+        intro="We work across the modern AI and automation stack, and go deep where it matters most: secure, HIPAA-aligned healthcare systems built on enterprise cloud, integrated with the clinical software you already run."
       />
 
       <div className="mt-12 grid gap-4 md:grid-cols-2">

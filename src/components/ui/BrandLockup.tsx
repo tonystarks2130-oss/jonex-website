@@ -26,7 +26,7 @@ export function BrandLockup({
     <>
       <Image
         src="/brand/jonex-icon.png"
-        alt="JoNeX"
+        alt="JoNex"
         width={44}
         height={44}
         className="h-[42px] w-[42px] shrink-0 rounded-full ring-1 ring-border"
@@ -49,7 +49,7 @@ export function BrandLockup({
       <a
         href={href}
         className={outerClassName}
-        aria-label="JoNeX — AI Technology & Consulting"
+        aria-label="JoNex: AI Technology & Consulting"
       >
         {lockup}
       </a>

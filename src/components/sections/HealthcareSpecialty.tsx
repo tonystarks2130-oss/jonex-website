@@ -1,4 +1,4 @@
-// Healthcare specialty — JoNeX's flagship vertical, HIPAA-aligned positioning.
+// Healthcare specialty, JoNex's flagship vertical, HIPAA-aligned positioning.
 
 import {
   Cloud,

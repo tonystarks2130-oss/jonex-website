@@ -11,7 +11,7 @@ import { Section, Heading } from "@/components/ui/primitives";
 import { INDUSTRIES } from "@/lib/content";
 
 /**
- * Industries (DESIGN_CONTRACT IA §7) — 6, Healthcare leads + deepest.
+ * Industries (DESIGN_CONTRACT IA §7), 6, Healthcare leads + deepest.
  * Copy verbatim from the brand guide.
  */
 const ICONS: Record<string, LucideIcon> = {
@@ -29,7 +29,7 @@ export function Industries() {
       <Heading
         eyebrow="Industries We Serve"
         title="Built for the operations that run your sector"
-        intro="Healthcare is our flagship — real revenue-cycle automation, not just receptionists. Every vertical gets systems engineered to its workflow."
+        intro="Healthcare is our flagship: real revenue-cycle automation, not just receptionists. Every vertical gets systems engineered to its workflow."
       />
       <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {INDUSTRIES.map((ind) => {
