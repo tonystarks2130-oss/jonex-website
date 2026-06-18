@@ -14,10 +14,6 @@ export function BrandLockup({
   href,
   tagline = "responsive",
 }: BrandLockupProps) {
-  const dividerClassName =
-    tagline === "always"
-      ? "inline text-lg font-light text-fg-muted/40"
-      : "hidden text-lg font-light text-fg-muted/40 xl:inline";
   const taglineClassName =
     tagline === "always"
       ? "inline whitespace-nowrap text-sm font-medium text-fg-muted"
@@ -32,11 +28,8 @@ export function BrandLockup({
         className="h-[42px] w-[42px] shrink-0 rounded-full ring-1 ring-border"
         priority
       />
-      <span className="flex items-baseline gap-2 whitespace-nowrap">
+      <span className="flex items-baseline gap-3 whitespace-nowrap">
         <span className="text-lg font-bold">{BRAND.short}</span>
-        <span className={dividerClassName} aria-hidden="true">
-          |
-        </span>
         <span className={taglineClassName}>
           AI Technology & Consulting
         </span>
