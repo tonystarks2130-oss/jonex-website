@@ -529,7 +529,7 @@ function BookingBody() {
         </p>
         <p className="mt-2 font-display text-lg font-semibold text-fg">Tue &middot; 10:30 AM</p>
         <p className="mt-1 text-xs leading-5 text-fg-muted">
-          Dental cleaning &mdash; new patient
+          Dental cleaning &middot; new patient
         </p>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-2">
@@ -550,7 +550,7 @@ function RecordsBody() {
     <>
       <div className="space-y-2">
         <ActionRow icon={Database} label="Contact created" />
-        <ActionRow icon={UserPlus} label="Deal added &mdash; New lead" />
+        <ActionRow icon={UserPlus} label="Deal added &middot; New lead" />
         <ActionRow icon={MessageSquareText} label="Call notes attached" />
       </div>
       <div className="mt-3 rounded-2xl border border-border/70 bg-bg/45 p-3 md:mt-4 md:p-4">
