@@ -46,27 +46,6 @@ export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/**
- * Monochrome JoNex AI mark (currentColor): a clean robot head matching the filled
- * style of the social glyphs. Eyes and mouth are cut through (evenodd) so they stay
- * transparent in any theme. Marks the company email vs a plain envelope.
- */
-export function JonexMarkIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <rect x="11.2" y="2.2" width="1.6" height="2.4" rx="0.6" />
-      <circle cx="12" cy="2" r="1.15" />
-      <rect x="3.2" y="9" width="1.7" height="4.5" rx="0.8" />
-      <rect x="19.1" y="9" width="1.7" height="4.5" rx="0.8" />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M8.5 5.2H15.5A4 4 0 0 1 19.5 9.2V14.8A4 4 0 0 1 15.5 18.8H8.5A4 4 0 0 1 4.5 14.8V9.2A4 4 0 0 1 8.5 5.2ZM9.3 9.9A1.7 1.7 0 1 0 9.3 13.3A1.7 1.7 0 1 0 9.3 9.9ZM14.7 9.9A1.7 1.7 0 1 0 14.7 13.3A1.7 1.7 0 1 0 14.7 9.9ZM9.75 15H14.25A0.75 0.75 0 0 1 14.25 16.5H9.75A0.75 0.75 0 0 1 9.75 15Z"
-      />
-    </svg>
-  );
-}
-
 export function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
