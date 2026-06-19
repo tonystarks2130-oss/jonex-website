@@ -8,7 +8,7 @@ import { TelegramIcon } from "@/components/ui/BrandIcons";
 
 type CopyContact = { label: "Email" | "Telegram"; value: string };
 
-// The company email (@jonex.site) gets the JoNex robot mark; personal email gets a
+// The company email (@jonex.site) shows the JoNex robot mark; personal email gets a
 // plain envelope, so the two are tellable apart at a glance.
 function isCompanyEmail({ label, value }: CopyContact) {
   return label === "Email" && value.toLowerCase().endsWith("@jonex.site");
@@ -58,11 +58,11 @@ export function CopyContacts({ contacts, name }: { contacts: CopyContact[]; name
               >
                 {companyEmail ? (
                   <Image
-                    src="/brand/jonex-email-circle-grey.png"
+                    src="/brand/jonex-email-robot.png"
                     alt=""
                     width={36}
                     height={36}
-                    className="h-7 w-7 object-contain opacity-90 transition-opacity group-hover:opacity-100"
+                    className="h-7 w-7 object-contain"
                   />
                 ) : (
                   <Icon className="h-4 w-4" />
