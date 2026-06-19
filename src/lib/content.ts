@@ -572,3 +572,106 @@ export const ORBIT_INTEGRATIONS = [
 ] as const;
 
 export type OrbitIntegration = (typeof ORBIT_INTEGRATIONS)[number];
+
+/**
+ * Client testimonials: REAL, supplied by the team. Personal names shown as
+ * first name + last initial only (never full surnames). Quotes are verbatim;
+ * `short` is a contiguous verbatim excerpt used on the grid cards. Never edit
+ * or invent a quote. `featured` gets the large lead card.
+ */
+export type Testimonial = {
+  name: string;
+  role: string;
+  company?: string;
+  /** Sector label (inferred from the business; confirm with the client). */
+  industry?: string;
+  /** Location shown as a short code only (e.g. PH), never the full address. */
+  location?: string;
+  /** What we delivered for them, summarised from their testimonial. */
+  solution?: string;
+  initial: string;
+  quote: string;
+  short: string;
+  featured?: boolean;
+};
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Benjie M.",
+    role: "CEO / Owner",
+    company: "Cherish Cafe",
+    industry: "Cafe",
+    solution: "24/7 AI Chatbot",
+    location: "Masbate City, PH",
+    initial: "B",
+    quote:
+      "JoNex AI Technology Consulting completely transformed our customer service experience. Their 24/7 AI chatbot allows us to respond instantly to customer inquiries, capture more leads, and provide reliable support anytime. The entire solution was seamless, and the impact on our business has been remarkable.",
+    short:
+      "Their 24/7 AI chatbot allows us to respond instantly to customer inquiries, capture more leads, and provide reliable support anytime.",
+    featured: true,
+  },
+  {
+    name: "Chesca A.",
+    role: "Owner",
+    company: "Cherish Resort",
+    industry: "Resort",
+    solution: "Website & Booking",
+    location: "Masbate City, PH",
+    initial: "C",
+    quote:
+      "The website, online booking system, and digital ordering solution created by JoNex AI Technology Consulting transformed the way we serve our guests. The entire experience became faster, more organized, and more convenient for both our team and customers. Their technology solutions truly elevated our business.",
+    short:
+      "The entire experience became faster, more organized, and more convenient for both our team and customers.",
+  },
+  {
+    name: "Anna A.",
+    role: "HR Head",
+    company: "Rodama Co.",
+    industry: "Agribusiness",
+    solution: "Recruitment AI",
+    location: "Masbate, PH",
+    initial: "A",
+    quote:
+      "Working with JoNex AI Technology Consulting was one of the best decisions we made for our hiring process. Their AI-powered resume screening and recruitment automation reduced hours of manual work into minutes, allowing our HR team to identify top candidates faster and operate more efficiently.",
+    short:
+      "Their AI-powered resume screening and recruitment automation reduced hours of manual work into minutes, allowing our HR team to identify top candidates faster.",
+  },
+  {
+    name: "Nelia A.",
+    role: "Head of Accounting",
+    industry: "Finance",
+    solution: "Cashflow Automation",
+    location: "Masbate, PH",
+    initial: "N",
+    quote:
+      "JoNex AI Technology Consulting completely changed the way we manage our cash flow and financial processes. Their intelligent cash flow automation system eliminated hours of manual work, improved accuracy, and gave our team real-time visibility into our financial operations.",
+    short:
+      "Their intelligent cash flow automation system eliminated hours of manual work, improved accuracy, and gave our team real-time visibility into our financial operations.",
+  },
+  {
+    name: "Chin A.",
+    role: "Co-owner",
+    company: "Skye Trading Corp.",
+    industry: "Trading",
+    solution: "AI Automation",
+    location: "Masbate, PH",
+    initial: "C",
+    quote:
+      "Thanks to JoNex AI Technology Consulting, our AI automation systems became simple, efficient, and easy to manage. Their team delivered innovative solutions that improved our daily operations and helped us increase overall productivity.",
+    short:
+      "Their team delivered innovative solutions that improved our daily operations and helped us increase overall productivity.",
+  },
+  {
+    name: "Dexter B.",
+    role: "Founder",
+    company: "Craft Point Media",
+    industry: "AI Automation",
+    solution: "Workflow Automation",
+    location: "New Jersey, US",
+    initial: "D",
+    quote:
+      "Partnering with JoNex AI Technology Consulting helped us streamline our creative and operational workflows through intelligent automation. Their innovative solutions saved us valuable time, improved efficiency, and allowed our team to focus more on creativity and business growth.",
+    short:
+      "Their innovative solutions saved us valuable time, improved efficiency, and allowed our team to focus more on creativity and business growth.",
+  },
+];

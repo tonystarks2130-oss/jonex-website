@@ -131,6 +131,96 @@ html {
   transform: none;
 }
 
+/* "Pop" reveal variant: scale up + fade as it enters (testimonial cards,
+   staggered via inline transition-delay). Settles once, never loops. */
+.reveal-ready [data-reveal].reveal-pop {
+  transform: scale(0.92) translateY(14px);
+}
+.reveal-ready [data-reveal].reveal-pop.is-visible {
+  transform: none;
+}
+
+/* Testimonial showcase feature panel: keyed by the active item, so React swaps
+   it whole (old gone instantly, no ghost) and the new quote fades + rises in.
+   The rail cards slide via a FLIP transform set in JS (no view transitions). */
+@keyframes tm-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.tm-panel-in {
+  animation: tm-panel-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tm-panel-in {
+    animation: none;
+  }
+}
+
+/* Showcase hero backdrop: premium gradient + soft accent glow (stands in for
+   the reference's full-bleed photo, since we use no images). Theme-aware. */
+.testimonial-hero {
+  background:
+    radial-gradient(120% 90% at var(--glow-x, 12%) 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    linear-gradient(135deg, var(--bg-raised), var(--surface));
+  transition: background-position 0.6s ease;
+}
+
+/* Rail tile: tall portrait card, gradient fill (stands in for the reference's
+   destination photo, since we use no images). Theme-aware. */
+.tm-tile {
+  background: linear-gradient(165deg, var(--surface), var(--bg-raised));
+}
+
+/* Timed progress bar: fills across one auto-advance interval, pauses on hover. */
+@keyframes timer-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.timer-bar {
+  width: 0%;
+  animation-name: timer-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.timer-bar[data-paused="true"] {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .timer-bar {
+    display: none;
+  }
+}
+
+/* Modal entrance: gentle fade + slight scale. Reduced-motion → no animation. */
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.modal-pop {
+  animation: modal-pop 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-pop {
+    animation: none;
+  }
+}
+
 /* Gradient section seam, a soft top divider, never a flat band edge. */
 .seam-top {
   position: relative;
@@ -357,7 +447,8 @@ html {
     transition: none !important;
   }
   /* Neutralise reveal + lift motion; reveal content stays fully visible. */
-  .reveal-ready [data-reveal] {
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal].reveal-pop {
     opacity: 1;
     transform: none;
     transition: none;

@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { CalButton } from "@/components/integrations/CalButton";
+import { NavSearch } from "@/components/sections/NavSearch";
 import { BrandLockup } from "@/components/ui/BrandLockup";
 import { Container } from "@/components/ui/primitives";
 
@@ -38,6 +39,7 @@ export function Nav() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
+          <NavSearch />
           {/* Hide booking CTA on phones (wrapper guarantees it, regardless of
               the button's own inline-flex); hero CTA carries mobile booking. */}
           <div className="hidden sm:block">

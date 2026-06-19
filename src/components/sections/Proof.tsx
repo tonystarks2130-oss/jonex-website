@@ -1,11 +1,15 @@
 import { Section, Heading } from "@/components/ui/primitives";
 import { CountUp } from "@/components/ui/CountUp";
+import { TESTIMONIALS } from "@/lib/content";
+import { TestimonialShowcase } from "@/components/sections/TestimonialShowcase";
 
 /**
- * Proof / results (DESIGN_CONTRACT IA §10), capability stat block. These are
- * honest statements about how we deliver (always-on, fast to live, fully owned),
- * not fabricated client metrics. Named client outcomes/testimonials are added
- * only once we have real, consented results. Never invented.
+ * Proof / results (DESIGN_CONTRACT IA §10). Two bands:
+ *  1. Capability stats: honest statements about how we deliver (always-on,
+ *     fast to live, fully owned), not fabricated client metrics.
+ *  2. Client testimonials: REAL, team-supplied (content.ts TESTIMONIALS).
+ *     Rendered as a floating field of teaser cards; click one for the full
+ *     verbatim quote in a modal. Names are first name + last initial only.
  */
 const STATS = [
   { value: "24/7", label: "Calls answered, never missed" },
@@ -30,6 +34,15 @@ export function Proof() {
             <p className="mt-2 text-sm text-fg-muted">{s.label}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-20">
+        <Heading
+          eyebrow="What clients say"
+          title="Trusted by the businesses we build for"
+          intro="Tap any name to open their story."
+        />
+        <TestimonialShowcase items={TESTIMONIALS} />
       </div>
     </Section>
   );
