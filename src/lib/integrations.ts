@@ -55,7 +55,7 @@ export const LOGO_SRC =
 export const CONTACT = {
   whatsapp: { number: "639569871934", url: "https://wa.me/639569871934" },
   // Contact email used across the site + Meta ads / data-deletion compliance.
-  email: { address: "jnex2130@gmail.com", url: "mailto:jnex2130@gmail.com" },
+  email: { address: "jeremy@jonex.site", url: "mailto:jeremy@jonex.site" },
   // Telegram @jereai (JoNex_AI account, supplied 2026-06-11), clean username link.
   telegram: { handle: "@jereai", url: "https://t.me/jereai" },
 } as const;
