@@ -12,7 +12,7 @@
 export const CHAT_ENDPOINT = "https://api.jonex.site/webhook/jonex-chat";
 
 /** Fallback contact when the chat webhook is unreachable. */
-export const CHAT_FALLBACK_EMAIL = "jnex2130@gmail.com";
+export const CHAT_FALLBACK_EMAIL = "jeremy@jonex.site";
 
 /** cal.com booking. embed.js scans for [data-cal-link] and opens the popup. */
 export const CAL = {
