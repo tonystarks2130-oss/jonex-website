@@ -150,7 +150,7 @@ export default function TermsPage() {
       <ul>
         <li>JoNex AI</li>
         <li>
-          Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
+          Email: <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a>
         </li>
         <li>Website: jonex.site</li>
       </ul>

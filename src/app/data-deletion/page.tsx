@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const DELETION_MAILTO =
-  "mailto:jnex2130@gmail.com?subject=Data%20Deletion%20Request&body=I%20would%20like%20to%20request%20deletion%20of%20my%20data.%20My%20name%20is%3A%20%0AThe%20Facebook%20account%20or%20phone%20number%20associated%20with%20my%20interactions%20is%3A%20";
+  "mailto:jeremy@jonex.site?subject=Data%20Deletion%20Request&body=I%20would%20like%20to%20request%20deletion%20of%20my%20data.%20My%20name%20is%3A%20%0AThe%20Facebook%20account%20or%20phone%20number%20associated%20with%20my%20interactions%20is%3A%20";
 
 export default function DataDeletionPage() {
   return (
@@ -43,7 +43,7 @@ export default function DataDeletionPage() {
       <ul>
         <li>
           <strong>Email us directly:</strong> Send an email to{" "}
-          <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a> with the
+          <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a> with the
           subject line &quot;Data Deletion Request.&quot; Include your name and
           the Facebook account or phone number associated with your interactions
           so we can locate your data.
@@ -134,7 +134,7 @@ export default function DataDeletionPage() {
       <ul>
         <li>JoNex AI</li>
         <li>
-          Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
+          Email: <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a>
         </li>
         <li>Website: jonex.site</li>
       </ul>

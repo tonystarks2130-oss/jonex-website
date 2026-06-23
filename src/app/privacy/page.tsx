@@ -132,14 +132,14 @@ export default function PrivacyPage() {
       </ul>
       <p>
         To exercise any of these rights, contact us at{" "}
-        <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>.
+        <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a>.
       </p>
 
       <h2>8. Data Deletion</h2>
       <p>
         You can request deletion of your data at any time by visiting our{" "}
         <a href="/data-deletion">Data Deletion page</a> or emailing us at{" "}
-        <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>. We will
+        <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a>. We will
         process your request within 30 days.
       </p>
 
@@ -171,7 +171,7 @@ export default function PrivacyPage() {
       <ul>
         <li>JoNex AI</li>
         <li>
-          Email: <a href="mailto:jnex2130@gmail.com">jnex2130@gmail.com</a>
+          Email: <a href="mailto:jeremy@jonex.site">jeremy@jonex.site</a>
         </li>
         <li>Website: jonex.site</li>
       </ul>
